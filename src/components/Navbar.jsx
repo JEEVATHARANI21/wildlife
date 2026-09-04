@@ -40,10 +40,19 @@ export default function Navbar() {
     >
       <a
         href="#"
-        className="font-sans text-sm tracking-[0.25em] uppercase"
-        style={{ color: 'var(--text)', letterSpacing: '0.25em' }}
+        className="flex items-center gap-3.5 group"
       >
-        WILD<span style={{ color: 'var(--muted)' }}>/</span>STUDIO
+        <img
+          src="/logo.png"
+          alt="UntamedTrails Logo"
+          className="w-9 h-9 object-contain brightness-110 drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+        />
+        <span
+          className="font-sans text-sm tracking-[0.25em] uppercase font-medium"
+          style={{ color: 'var(--text)' }}
+        >
+          UNTAMED<span style={{ color: 'var(--muted)', fontWeight: 300 }}>TRAILS</span>
+        </span>
       </a>
 
       <ul className="hidden md:flex items-center gap-10">

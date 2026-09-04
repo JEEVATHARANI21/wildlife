@@ -178,15 +178,23 @@ export default function Hero() {
             zIndex: 20,
           }}
         >
-          <span style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '0.7rem',
-            letterSpacing: '0.25em',
-            color: 'var(--text)',
-            textTransform: 'uppercase',
-          }}>
-            WILD<span style={{ color: 'var(--muted)' }}>/</span>STUDIO
-          </span>
+          <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none' }}>
+            <img
+              src="/logo.png"
+              alt="UntamedTrails"
+              style={{ width: '34px', height: '34px', objectFit: 'contain', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))' }}
+            />
+            <span style={{
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '0.75rem',
+              letterSpacing: '0.25em',
+              color: 'var(--text)',
+              textTransform: 'uppercase',
+              fontWeight: 500,
+            }}>
+              UNTAMED<span style={{ color: 'var(--muted)', fontWeight: 300 }}>TRAILS</span>
+            </span>
+          </a>
           <div style={{ display: 'flex', gap: '2.5rem' }}>
             {['WORK', 'ABOUT', 'CONTACT'].map(l => (
               <a key={l} href={`#${l.toLowerCase()}`} style={{

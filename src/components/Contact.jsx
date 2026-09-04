@@ -60,7 +60,7 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    window.location.href = `mailto:hello@wildstudio.in?subject=Enquiry from ${formData.name}&body=${formData.message}`
+    window.location.href = `mailto:hello@untamedtrails.in?subject=Enquiry from ${formData.name}&body=${formData.message}`
   }
 
   return (
@@ -111,7 +111,7 @@ export default function Contact() {
         {/* CTA */}
         <div ref={contentRef} className="flex flex-col items-center gap-8 mt-12">
           <a
-            href="mailto:hello@wildstudio.in"
+            href="mailto:hello@untamedtrails.in"
             className="group flex items-center gap-4"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -131,11 +131,11 @@ export default function Contact() {
           </a>
 
           <a
-            href="mailto:hello@wildstudio.in"
+            href="mailto:hello@untamedtrails.in"
             className="font-sans text-sm"
             style={{ color: 'var(--muted)', borderBottom: '1px solid var(--border)', paddingBottom: '2px' }}
           >
-            hello@wildstudio.in
+            hello@untamedtrails.in
           </a>
 
           {/* Minimal contact form */}
@@ -213,13 +213,20 @@ export default function Contact() {
         <div style={{ width: 40, height: 1, background: 'var(--border)', marginTop: '5rem', marginBottom: '2rem' }} />
 
         {/* Footer */}
-        <footer className="flex flex-col items-center gap-4">
-          <p
-            className="font-sans text-sm tracking-[0.25em] uppercase"
-            style={{ color: 'var(--text)' }}
-          >
-            WILD<span style={{ color: 'var(--muted)' }}>/</span>STUDIO
-          </p>
+        <footer className="flex flex-col items-center gap-5">
+          <div className="flex items-center gap-3">
+            <img
+              src="/logo.png"
+              alt="UntamedTrails"
+              className="w-10 h-10 object-contain drop-shadow-md"
+            />
+            <p
+              className="font-sans text-sm tracking-[0.25em] uppercase font-medium"
+              style={{ color: 'var(--text)' }}
+            >
+              UNTAMED<span style={{ color: 'var(--muted)', fontWeight: 300 }}>TRAILS</span>
+            </p>
+          </div>
           <div className="flex items-center gap-6">
             {['Instagram', 'Behance', 'LinkedIn'].map(s => (
               <a
@@ -233,7 +240,7 @@ export default function Contact() {
             ))}
           </div>
           <p className="font-sans text-[10px]" style={{ color: 'var(--border)' }}>
-            © 2026 WILD/STUDIO. All rights reserved.
+            © 2026 UNTAMEDTRAILS. All rights reserved.
           </p>
         </footer>
       </div>
