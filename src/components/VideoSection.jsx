@@ -1,92 +1,103 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
-// REPLACE WITH YOUR CINEMATIC WILDLIFE VIDEO
-// Drop your .mp4 file at: public/videos/wild.mp4
-const VIDEO_SRC = null  // set to '/videos/wild.mp4' once you have footage
-
-// REPLACE WITH YOUR PHOTOGRAPH
-const BG_IMAGE = 'https://images.unsplash.com/photo-1534177616072-ef7dc120449d?w=1920&q=80&auto=format&fit=crop'
+// Real video from D:\wildlife\video (copied to /videos/wild.mp4)
+const VIDEO_SRC = '/videos/wild.mp4'
 
 export default function VideoSection() {
   const videoRef = useRef(null)
   const [soundOn, setSoundOn] = useState(false)
-  const [playing, setPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {
+        // Autoplay policy fallback: muted autoplay will work
+        if (videoRef.current) {
+          videoRef.current.muted = true
+          videoRef.current.play()
+        }
+      })
+    }
+  }, [])
 
   const handleSound = () => {
     if (!videoRef.current) return
-    videoRef.current.muted = soundOn
-    setSoundOn(!soundOn)
+    const nextSound = !soundOn
+    videoRef.current.muted = !nextSound
+    setSoundOn(nextSound)
   }
 
-  const handlePlay = () => {
+  const handlePlayToggle = () => {
     if (!videoRef.current) return
-    if (playing) {
+    if (isPlaying) {
       videoRef.current.pause()
+      setIsPlaying(false)
     } else {
       videoRef.current.play()
+      setIsPlaying(true)
     }
-    setPlaying(!playing)
   }
 
   return (
     <section
       className="relative w-full overflow-hidden flex flex-col items-center justify-center"
       style={{
-        minHeight: '80vh',
-        background: 'var(--bg)',
+        minHeight: '85vh',
+        background: '#090A09',
       }}
     >
-      {/* Background (image if no video yet) */}
-      {!VIDEO_SRC && (
-        <img
-          src={BG_IMAGE}
-          alt="Wildlife cinematic"
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: 0.35 }}
-        />
-      )}
-
-      {/* Actual video */}
-      {VIDEO_SRC && (
-        <video
-          ref={videoRef}
-          src={VIDEO_SRC}
-          className="absolute inset-0 w-full h-full object-cover"
-          loop
-          muted
-          playsInline
-          autoPlay
-          style={{ opacity: 0.55 }}
-        />
-      )}
-
-      {/* Dark overlay */}
-      <div
-        className="absolute inset-0"
+      {/* Background Cinematic Looping Video */}
+      <video
+        ref={videoRef}
+        src={VIDEO_SRC}
+        className="absolute inset-0 w-full h-full object-cover"
+        loop
+        muted={!soundOn}
+        playsInline
+        autoPlay
         style={{
-          background: 'linear-gradient(to top, rgba(11,12,10,0.85) 0%, rgba(11,12,10,0.4) 50%, rgba(11,12,10,0.7) 100%)',
+          opacity: 0.65,
+          filter: 'contrast(1.05) brightness(0.9)',
         }}
       />
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center px-8 py-24 gap-10">
-        {/* Divider */}
-        <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
+      {/* Cinematic Vignette and Dark Overlays */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(to top, rgba(9,10,9,0.95) 0%, rgba(9,10,9,0.3) 50%, rgba(9,10,9,0.85) 100%)',
+        }}
+      />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, transparent 35%, rgba(9,10,9,0.7) 100%)',
+        }}
+      />
+
+      {/* Foreground Content */}
+      <div className="relative z-10 flex flex-col items-center text-center px-8 py-24 gap-8">
+        {/* Subtle accent line */}
+        <div style={{ width: 48, height: 1, background: 'rgba(241,239,232,0.2)' }} />
 
         <div>
-          <p
-            className="font-sans text-[10px] tracking-[0.3em] uppercase mb-5"
-            style={{ color: 'var(--muted)' }}
-          >
-            In Motion
-          </p>
+          <div className="flex items-center justify-center gap-2.5 mb-3">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <p
+              className="font-sans text-[11px] tracking-[0.3em] uppercase text-emerald-400"
+            >
+              Documentary Footage · In Motion
+            </p>
+          </div>
+
           <h2
-            className="font-serif"
+            className="font-serif text-[#F1EFE8]"
             style={{
-              fontSize: 'clamp(3rem, 8vw, 7rem)',
+              fontSize: 'clamp(3rem, 7.5vw, 6.5rem)',
               fontWeight: 300,
-              color: 'var(--text)',
-              letterSpacing: '0.05em',
+              letterSpacing: '0.04em',
               lineHeight: 0.95,
             }}
           >
@@ -94,62 +105,77 @@ export default function VideoSection() {
           </h2>
         </div>
 
-        {/* Play button */}
-        <button
-          onClick={VIDEO_SRC ? handlePlay : undefined}
-          className="group flex items-center gap-4 mt-4 transition-all duration-300"
-          style={{ opacity: VIDEO_SRC ? 1 : 0.4 }}
-          title={VIDEO_SRC ? 'Play / Pause' : 'Drop your video at public/videos/wild.mp4'}
-        >
-          {/* Circle play icon */}
-          <div
-            style={{
-              width: 64,
-              height: 64,
-              border: '1px solid rgba(241,239,232,0.3)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'border-color 0.3s ease, background 0.3s ease',
-            }}
-            className="group-hover:border-[rgba(241,239,232,0.7)]"
+        {/* Interactive Controls Bar */}
+        <div className="flex items-center gap-4 mt-2">
+          {/* Play / Pause Toggle Button */}
+          <button
+            onClick={handlePlayToggle}
+            className="group flex items-center gap-3 px-6 py-3 rounded-full border border-[#2A2B28] bg-[#0B0C0A]/70 backdrop-blur-md text-[#F1EFE8] text-xs font-sans tracking-[0.2em] uppercase transition-all duration-300 hover:border-emerald-400 hover:bg-[#0B0C0A]"
           >
-            <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
-              <path d="M1 1l12 7L1 15V1z" fill="var(--text)" />
-            </svg>
-          </div>
-          <span
-            className="font-sans text-xs tracking-[0.2em] uppercase"
-            style={{ color: 'var(--muted)' }}
-          >
-            {playing ? 'Pause' : 'Play'} Experience
-          </span>
-        </button>
+            <span className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-emerald-400 group-hover:text-black transition-colors">
+              {isPlaying ? (
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
+                  <rect x="1" y="1" width="3" height="10" rx="1" />
+                  <rect x="6" y="1" width="3" height="10" rx="1" />
+                </svg>
+              ) : (
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
+                  <path d="M1 1l8 5-8 5V1z" />
+                </svg>
+              )}
+            </span>
+            <span>{isPlaying ? 'Pause' : 'Play'} Experience</span>
+          </button>
 
-        {/* Sound toggle */}
-        {VIDEO_SRC && (
+          {/* Sound On / Off Toggle */}
           <button
             onClick={handleSound}
-            className="flex items-center gap-2 mt-2"
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-full border text-xs font-sans tracking-[0.18em] uppercase transition-all duration-300 backdrop-blur-md ${
+              soundOn
+                ? 'border-emerald-400 bg-emerald-950/40 text-emerald-300 shadow-lg shadow-emerald-950/30'
+                : 'border-[#2A2B28] bg-[#0B0C0A]/70 text-[#A7A59B] hover:text-[#F1EFE8] hover:border-[#444]'
+            }`}
           >
-            <svg width="16" height="14" viewBox="0 0 16 14" fill="none">
-              <path d="M1 4h3l4-3v12l-4-3H1V4z" stroke="currentColor" strokeWidth="1" strokeLinejoin="round" />
-              {soundOn && (
+            <svg width="15" height="14" viewBox="0 0 16 14" fill="none">
+              <path
+                d="M1 4h3l4-3v12l-4-3H1V4z"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinejoin="round"
+              />
+              {soundOn ? (
                 <>
-                  <path d="M11 2c1.5 1 2.5 2.8 2.5 5s-1 4-2.5 5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
-                  <path d="M13 0c2.5 1.8 4 4.6 4 7s-1.5 5.2-4 7" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+                  <path
+                    d="M11 2c1.5 1 2.5 2.8 2.5 5s-1 4-2.5 5"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M13.5 0c2.2 1.8 3.5 4.6 3.5 7s-1.3 5.2-3.5 7"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                  />
                 </>
+              ) : (
+                <line
+                  x1="11"
+                  y1="3"
+                  x2="15"
+                  y2="11"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                />
               )}
             </svg>
-            <span className="font-sans text-[10px] tracking-[0.2em] uppercase" style={{ color: 'var(--muted)' }}>
-              {soundOn ? 'Sound On' : 'Sound Off'}
-            </span>
+            <span>{soundOn ? 'Sound On' : 'Sound Off'}</span>
           </button>
-        )}
+        </div>
 
-        {/* Divider */}
-        <div style={{ width: 40, height: 1, background: 'var(--border)' }} />
+        {/* Subtle accent line */}
+        <div style={{ width: 48, height: 1, background: 'rgba(241,239,232,0.2)' }} />
       </div>
     </section>
   )
