@@ -33,8 +33,12 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-16 py-6"
       style={{
         opacity: 0,
-        background: 'linear-gradient(to bottom, rgba(11,12,10,0.95), transparent)',
-        transition: 'background 0.5s ease',
+        background: scrolled
+          ? 'rgba(11, 12, 10, 0.88)'
+          : 'linear-gradient(to bottom, rgba(11,12,10,0.9), transparent)',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(42, 43, 40, 0.6)' : 'none',
+        transition: 'all 0.4s ease',
         pointerEvents: visible ? 'auto' : 'none',
       }}
     >
