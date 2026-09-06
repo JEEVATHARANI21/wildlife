@@ -8,110 +8,116 @@ gsap.registerPlugin(ScrollTrigger)
 const MOMENTS = [
   {
     id: '01',
-    title: 'The Stare Across Granite',
-    quote: 'Before sound travels through the valley, the eyes make contact.',
-    src: '/images/user/IMG_4761.JPG',
-    species: 'Indian Leopard (Panthera pardus fusca)',
-    location: 'Jawaï Rocks, Rajasthan',
+    category: 'LATEST CATALOGUE',
+    title: 'THE STARE ACROSS GRANITE',
+    species: 'INDIAN LEOPARD (PANTHERA PARDUS FUSCA)',
+    location: 'JAWAÏ ROCKS, RAJASTHAN',
+    subtitle: 'LIGHT & SHADOWS',
     description:
-      'High upon the sheer sun-baked granite escarpments, this solitary leopard perched in complete stillness. Every muscle taut, reading the thermal winds before disappearing into shadowed ravines.',
+      'Light and Shadows aims to magnify the withering world we live in using transitional elements of nature. Through the clouds of change and the fading mist, the leopard stands in quiet supremacy, signifying vanishing grandeur in an authentic photographic finish.',
+    src: '/images/user/IMG_4761.JPG',
   },
   {
     id: '02',
-    title: 'Forked Perception',
-    quote: 'Sensing vibrations through darkness — precision in miniature.',
-    src: '/images/user/IMG_4634.JPG',
-    species: 'Malabar Pit Viper (Craspedocephalus malabaricus)',
-    location: 'Agumbe Rainforest',
+    category: 'CANOPY CHRONICLES',
+    title: 'FORKED PERCEPTION',
+    species: 'MALABAR PIT VIPER (CRASPEDOCEPHALUS)',
+    location: 'AGUMBE RAINFOREST, KARNATAKA',
+    subtitle: 'SENSORY EMERGENCE',
     description:
-      'A master of arboreal ambush. Under the steady monsoon drip, its heat-sensing loreal pits and iridescent emerald scales remain imperceptible until the forked tongue tests the humid night air.',
+      'Sensing vibrations through darkness — precision in miniature. Perched in absolute equilibrium amidst wet tropical foliage, tasting the monsoon air in search of thermal signatures.',
+    src: '/images/user/IMG_4634.JPG',
   },
   {
     id: '03',
-    title: 'Suspended Gravity',
-    quote: 'Perched on a whisper of wood, waiting for monsoon droplets.',
-    src: '/images/user/IMG_4632.JPG',
-    species: 'Gliding Frog (Rhacophorus malabaricus)',
-    location: 'Western Ghats, India',
+    category: 'RAINFOREST NOCTURNE',
+    title: 'SUSPENDED GRAVITY',
+    species: 'MALABAR GLIDING FROG',
+    location: 'WESTERN GHATS, INDIA',
+    subtitle: 'NIGHT SENTINEL',
     description:
-      'Balancing effortlessly on a solitary dangling liana above a torrent. Webbed extremities adapted for high canopy flight, holding absolute stillness amidst nocturnal rainforest choir.',
+      'Perched on a whisper of wood, waiting for monsoon droplets. An emblem of undisturbed rainforest ecosystems, adapted with luminous pigments and webbed membranes for high-canopy navigation.',
+    src: '/images/user/IMG_4632.JPG',
   },
   {
     id: '04',
-    title: 'The Primeval Silhouette',
-    quote: 'Tusks that carved migration tracks across centuries.',
-    src: '/images/user/IMG_7965.PNG',
-    species: 'Asian Elephant (Elephas maximus)',
-    location: 'Kabini Reserve',
+    category: 'PRIMEVAL CORRIDORS',
+    title: 'THE ANCIENT TUSKER',
+    species: 'ASIAN ELEPHANT (ELEPHAS MAXIMUS)',
+    location: 'KABINI RESERVE, KARNATAKA',
+    subtitle: 'TEXTURE OF TIME',
     description:
-      'Decades etched into ivory and furrowed hide. Moving like smoke through towering teak groves, leaving colossal footprints that nurture micro-habitats across primeval corridors.',
+      'Decades etched into ivory and furrowed hide. Moving like smoke through towering teak groves, leaving colossal footprints that nurture micro-habitats across ancient migration corridors.',
+    src: '/images/user/IMG_7965.PNG',
   },
   {
     id: '05',
-    title: 'The Dewdrop Sentinel',
-    quote: 'Condensation clinging to scales finer than grains of sand.',
-    src: '/images/user/IMG_4642.JPG',
-    species: 'Banded Ground Gecko (Cyrtodactylus)',
-    location: 'Kudremukh Forest',
+    category: 'DEWPOINT MACRO',
+    title: 'THE DEWDROP SENTINEL',
+    species: 'BANDED GROUND GECKO',
+    location: 'KUDREMUKH RAINFOREST',
+    subtitle: 'LIQUID JEWELS',
     description:
-      'Pre-dawn condensation adorns the nocturnal hunter like liquid diamonds. Navigating leaf litter and wet boulders with adhesive lamellae in complete silence.',
+      'Condensation clinging to scales finer than grains of sand. Navigating leaf litter and wet boulders with micro-lamellae in absolute silence under starless midnight skies.',
+    src: '/images/user/IMG_4642.JPG',
   },
   {
     id: '06',
-    title: 'The Verdant Giant',
-    quote: 'A colossal shadow emerging into golden morning light.',
-    src: '/images/user/IMG_7964.JPG',
-    species: 'Wild Bull Elephant (Elephas maximus)',
-    location: 'Periyar Sanctuary',
+    category: 'VERDANT REALMS',
+    title: 'THE MONOLITH EMERGES',
+    species: 'WILD BULL GAUR & ELEPHANT',
+    location: 'PERIYAR SANCTUARY, KERALA',
+    subtitle: 'ELEMENTAL SILENCE',
     description:
-      'Parting the waist-high emerald grass as morning mist burns off the lake. An emblem of undisturbed wilderness, gentle yet possessing boundless elemental power.',
+      'Parting the waist-high emerald grass as morning mist burns off the lake. An emblem of undisturbed wilderness, gentle yet possessing boundless elemental strength.',
+    src: '/images/user/IMG_7964.JPG',
   },
 ]
 
 export default function Moments() {
   const containerRef = useRef(null)
-  const pinWrapRef = useRef(null)
+  const pinSectionRef = useRef(null)
   const [activeIdx, setActiveIdx] = useState(0)
 
-  // Motion container refs for left/right directional animation
   const imageBoxRef = useRef(null)
   const textBoxRef = useRef(null)
 
   useEffect(() => {
-    const totalMoments = MOMENTS.length
+    const total = MOMENTS.length
 
-    // ScrollTrigger to scrub through the moments
     const st = ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top top',
       end: 'bottom bottom',
-      pin: pinWrapRef.current,
-      scrub: 0.6,
+      pin: pinSectionRef.current,
+      scrub: 0.8,
       onUpdate: (self) => {
-        // Calculate current active moment based on scroll progress
-        const rawIdx = self.progress * (totalMoments - 1)
-        const newIdx = Math.min(totalMoments - 1, Math.round(rawIdx))
-        setActiveIdx(newIdx)
+        // Progress runs from 0.0 to 1.0 across the 400vh scroll track
+        const progress = self.progress
+        const rawIndex = progress * (total - 1)
+        const newIndex = Math.min(total - 1, Math.round(rawIndex))
+        setActiveIdx(newIndex)
 
-        // As user scrolls down: image moves to the RIGHT (+X), description moves to the LEFT (-X)
-        // As user scrolls up: image returns to the LEFT (-X), description returns to the RIGHT (+X)
-        // self.direction: 1 = scrolling down, -1 = scrolling up
-        const moveOffset = (self.progress - 0.5) * 60
+        // As user scrolls DOWN: image moves completely across to the right (+X), text is on the left
+        // As user scrolls UP: image moves completely across to the left (-X), text is on the right
+        // progress: 0 (top) -> 1 (bottom)
+        // Shift amplitude: -220px to +220px
+        const xOffset = (progress - 0.5) * 440
 
         if (imageBoxRef.current) {
           gsap.to(imageBoxRef.current, {
-            x: moveOffset,
-            duration: 0.4,
-            ease: 'power1.out',
+            x: xOffset,
+            duration: 0.5,
+            ease: 'power2.out',
             overwrite: 'auto',
           })
         }
 
         if (textBoxRef.current) {
           gsap.to(textBoxRef.current, {
-            x: -moveOffset * 0.75,
-            duration: 0.4,
-            ease: 'power1.out',
+            x: -xOffset * 0.4,
+            duration: 0.5,
+            ease: 'power2.out',
             overwrite: 'auto',
           })
         }
@@ -130,154 +136,125 @@ export default function Moments() {
       ref={containerRef}
       className="relative w-full"
       style={{
-        height: '380vh', // Provides ample scroll distance for smooth scrubbing
-        background: '#0B0C0A',
+        height: '420vh', // Long smooth scroll track for full left-to-right gliding
+        background: '#ECE9E2', // Elegant warm editorial background matching shaazjung.com
+        color: '#1A1B18',
       }}
     >
-      {/* Pinned Viewport Container */}
+      {/* Pinned Editorial Stage */}
       <div
-        ref={pinWrapRef}
-        className="sticky top-0 w-full h-[100svh] overflow-hidden flex flex-col justify-center px-8 md:px-16"
+        ref={pinSectionRef}
+        className="sticky top-0 w-full h-[100svh] overflow-hidden flex flex-col justify-between py-10 px-8 md:px-16 select-none"
       >
-        {/* Subtle background gradient glow */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-20"
-          style={{
-            background:
-              'radial-gradient(ellipse at 70% 50%, rgba(16,185,129,0.12) 0%, transparent 60%)',
-          }}
-        />
-
-        {/* Section Header */}
-        <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4 pt-16 md:pt-0">
-          <div>
-            <div className="flex items-center gap-2.5 mb-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-emerald-400 font-medium">
-                Field Encounters · Section 04
-              </p>
-            </div>
-            <h2
-              className="font-serif text-[#F1EFE8] leading-none"
-              style={{
-                fontSize: 'clamp(2.4rem, 5.5vw, 4.8rem)',
-                fontWeight: 300,
-                letterSpacing: '-0.01em',
-              }}
-            >
-              Moments That Last
-              <br />
-              <span className="italic font-light opacity-90">1/1000 Second</span>
-            </h2>
+        {/* Top Editorial Header & Catalogue Breadcrumb */}
+        <div className="flex justify-between items-center border-b border-[#D5D0C6] pb-4 z-20">
+          <div className="flex items-center gap-3">
+            <span className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#888]">
+              CATALOGUE {current.id} / 06
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#B3874B]" />
+            <span className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#B3874B] font-medium">
+              {current.category}
+            </span>
           </div>
 
-          {/* Scroll Direction Guide & Counter */}
-          <div className="flex items-center gap-6 font-sans text-xs text-[#A7A59B]">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-serif text-[#F1EFE8] font-light">
-                {current.id}
-              </span>
-              <span>/</span>
-              <span>06</span>
-            </div>
-            <span className="hidden md:inline text-[11px] tracking-widest uppercase text-[#777]">
-              [ Scroll ↓ moves right · Scroll ↑ moves left ]
+          <div className="flex items-center gap-6">
+            <span className="hidden md:inline font-sans text-[10px] tracking-[0.18em] uppercase text-[#777]">
+              [ Scroll ↓ slides image right · Scroll ↑ slides image left ]
+            </span>
+            <span className="font-serif text-lg text-[#1A1B18]">
+              {current.id}
+              <span className="text-[#999] text-xs font-sans"> / 06</span>
             </span>
           </div>
         </div>
 
-        {/* Dynamic Interactive Stage: Side-by-Side Image & Description */}
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full max-w-7xl mx-auto">
-          {/* Left: Titles List & Dynamic Detailed Description (Moves Left/Right on Scroll) */}
-          <div
-            ref={textBoxRef}
-            className="w-full lg:w-5/12 flex flex-col justify-center transition-all duration-300"
-          >
-            {/* Quick selector numbers */}
-            <div className="flex gap-2 mb-6">
-              {MOMENTS.map((m, i) => (
-                <div
-                  key={m.id}
-                  className={`h-1 rounded-full transition-all duration-500 ${
-                    i === activeIdx
-                      ? 'w-10 bg-emerald-400'
-                      : 'w-3 bg-[#2A2B28]'
-                  }`}
-                />
-              ))}
-            </div>
-
-            {/* Specimen details */}
-            <p className="font-sans text-[10px] md:text-[11px] tracking-[0.25em] uppercase text-emerald-400 mb-2 font-medium">
-              {current.species}
-            </p>
-
-            <h3
-              key={current.title}
-              className="font-serif text-[#F1EFE8] mb-4 leading-tight transition-opacity duration-300"
-              style={{
-                fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)',
-                fontWeight: 300,
-              }}
+        {/* Central Stage: Large Central Image & Side-by-Side Editorial Description */}
+        <div className="relative flex-1 flex items-center justify-center w-full max-w-7xl mx-auto my-auto py-4">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 w-full">
+            {/* Center Stage Photograph: Moves completely to the right as you scroll down, and to the left as you scroll up */}
+            <div
+              ref={imageBoxRef}
+              className="w-full lg:w-1/2 flex items-center justify-center will-change-transform z-10"
             >
-              {current.title}
-            </h3>
+              <div className="relative w-[320px] sm:w-[400px] md:w-[480px] aspect-[4/5] bg-[#0E0F0D] rounded-sm overflow-hidden shadow-2xl border border-black/10">
+                <img
+                  key={current.src}
+                  src={current.src}
+                  alt={current.title}
+                  className="w-full h-full object-cover object-center transition-all duration-700 ease-out"
+                />
 
-            <p className="font-sans text-xs text-[#A7A59B] uppercase tracking-wider mb-4">
-              📍 {current.location}
-            </p>
-
-            <blockquote className="border-l border-emerald-500/60 pl-4 my-3">
-              <p className="font-serif italic text-base md:text-lg text-[#F1EFE8]/90 leading-relaxed font-light">
-                "{current.quote}"
-              </p>
-            </blockquote>
-
-            <p className="font-sans text-xs md:text-sm text-[#A7A59B] font-light leading-relaxed mt-2 max-w-lg">
-              {current.description}
-            </p>
-          </div>
-
-          {/* Right: Dynamic High-Res Specimen Photograph (Moves Right on Scroll Down, Left on Scroll Up) */}
-          <div
-            ref={imageBoxRef}
-            className="w-full lg:w-7/12 transition-transform duration-300 ease-out"
-          >
-            <div className="relative w-full h-[38vh] md:h-[54vh] rounded-2xl md:rounded-3xl overflow-hidden border border-[#2A2B28] shadow-2xl bg-[#090A09] group">
-              <img
-                key={current.src}
-                src={current.src}
-                alt={current.title}
-                className="w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105"
-              />
-
-              {/* Edge Gradient & Vignette */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background:
-                    'linear-gradient(to top, rgba(11,12,10,0.8) 0%, transparent 55%)',
-                }}
-              />
-
-              {/* Top Tag */}
-              <div className="absolute top-5 left-5 z-20">
-                <span className="px-3 py-1 rounded-full text-[10px] font-sans tracking-[0.2em] uppercase bg-black/60 border border-[#2A2B28] text-emerald-400 backdrop-blur-md">
-                  Field Specimen {current.id}
-                </span>
+                {/* Subtle vignette border */}
+                <div
+                  className="absolute inset-0 pointer-events-none border border-black/15"
+                  style={{
+                    background:
+                      'radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.35) 100%)',
+                  }}
+                />
               </div>
+            </div>
 
-              {/* Bottom Subtle Bar */}
-              <div className="absolute bottom-5 left-6 right-6 z-20 flex justify-between items-center text-[10px] font-sans text-[#A7A59B]">
-                <span className="uppercase tracking-widest">
-                  1/1000s High Speed Capture
-                </span>
-                <span className="text-[#F1EFE8] font-mono">
-                  {activeIdx + 1} of {MOMENTS.length}
-                </span>
+            {/* Side Editorial Description: Positioned alongside the moving photograph (shaazjung.com layout) */}
+            <div
+              ref={textBoxRef}
+              className="w-full lg:w-1/2 flex flex-col justify-center will-change-transform z-20 max-w-lg"
+            >
+              <h2
+                className="font-serif text-[#B3874B] tracking-[0.05em] uppercase leading-tight mb-2"
+                style={{
+                  fontSize: 'clamp(2rem, 3.8vw, 3.5rem)',
+                  fontWeight: 400,
+                }}
+              >
+                {current.subtitle}
+              </h2>
+
+              <p className="font-sans text-[11px] tracking-[0.25em] uppercase font-semibold text-[#3A3B36] mb-5">
+                {current.category}
+              </p>
+
+              <p className="font-sans text-xs md:text-sm text-[#4A4B45] font-light leading-relaxed mb-6">
+                {current.description}
+              </p>
+
+              <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#888] mb-8">
+                LOCATION: <span className="text-[#1A1B18]">{current.location}</span>
+                <br />
+                SPECIES: <span className="text-[#1A1B18]">{current.species}</span>
+              </p>
+
+              <div>
+                <a
+                  href="#contact"
+                  className="inline-block px-8 py-3.5 bg-[#1C1D1A] text-[#F1EFE8] font-sans text-[10px] tracking-[0.25em] uppercase hover:bg-[#B3874B] transition-colors duration-300 shadow-md"
+                >
+                  Explore Catalogues
+                </a>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Bottom Pagination & Progress Line */}
+        <div className="flex justify-between items-center pt-4 border-t border-[#D5D0C6] z-20">
+          <div className="flex gap-2">
+            {MOMENTS.map((m, i) => (
+              <div
+                key={m.id}
+                className={`h-[2px] transition-all duration-500 ${
+                  i === activeIdx
+                    ? 'w-10 bg-[#B3874B]'
+                    : 'w-3 bg-[#D5D0C6]'
+                }`}
+              />
+            ))}
+          </div>
+
+          <span className="font-serif italic text-xs text-[#777]">
+            "{current.title}"
+          </span>
         </div>
       </div>
     </section>
