@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 const FRAME_TOTAL = 136
-// Your real tiger frames — ezgif-frame-001.jpg … ezgif-frame-136.jpg
 const getFrameSrc = (i) =>
   `/images/frames/ezgif-frame-${String(i).padStart(3, '0')}.jpg`
 
@@ -31,41 +30,82 @@ export default function Hero() {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const ctx    = canvas.getContext('2d')
+    if (!canvas) return
+    const ctx = canvas.getContext('2d', { alpha: false }) // Hardware accelerated, no alpha overhead
 
-    /* ── preload all frames ─────────────────────────────── */
-    const images = Array.from({ length: FRAME_TOTAL }, (_, i) => {
-      const img = new Image()
-      img.src = getFrameSrc(i + 1)
-      return img
-    })
+    // Allocate frame array (loaded lazily in batches)
+    const images = new Array(FRAME_TOTAL)
+    let currentFrame = 0
+    let rafId = null
 
-    /* ── resize canvas to fill viewport ─────────────────── */
+    const loadFrame = (index) => {
+      if (index < 0 || index >= FRAME_TOTAL) return null
+      if (!images[index]) {
+        const img = new Image()
+        img.src = getFrameSrc(index + 1)
+        images[index] = img
+        img.onload = () => {
+          if (currentFrame === index) {
+            renderFrame(index)
+          }
+        }
+      }
+      return images[index]
+    }
+
+    // Step 1: Immediately load first 10 frames and key milestone frames
+    for (let i = 0; i < 15; i++) loadFrame(i)
+    for (let i = 20; i < FRAME_TOTAL; i += 10) loadFrame(i)
+
+    // Step 2: Progressively load the rest in idle time without freezing the browser
+    const preloadRest = () => {
+      let nextToLoad = 0
+      const loadNextBatch = () => {
+        const batchEnd = Math.min(nextToLoad + 6, FRAME_TOTAL)
+        for (let i = nextToLoad; i < batchEnd; i++) {
+          loadFrame(i)
+        }
+        nextToLoad = batchEnd
+        if (nextToLoad < FRAME_TOTAL) {
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(loadNextBatch, { timeout: 1000 })
+          } else {
+            setTimeout(loadNextBatch, 50)
+          }
+        }
+      }
+      loadNextBatch()
+    }
+    setTimeout(preloadRest, 200)
+
+    // Size canvas (cap devicePixelRatio at 1.5 to prevent massive 4K canvas lag)
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5)
     const resize = () => {
-      canvas.width  = canvas.offsetWidth  * window.devicePixelRatio
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
+      if (!canvas) return
+      canvas.width = Math.floor(canvas.offsetWidth * dpr)
+      canvas.height = Math.floor(canvas.offsetHeight * dpr)
       renderFrame(currentFrame)
     }
 
-    let currentFrame = 0
-
     const renderFrame = (index) => {
-      const img = images[index]
+      if (!canvas || !ctx) return
+      const img = loadFrame(index)
       if (!img || !img.complete || img.naturalWidth === 0) return
-      const w = canvas.offsetWidth
-      const h = canvas.offsetHeight
+
+      const w = canvas.width
+      const h = canvas.height
       ctx.clearRect(0, 0, w, h)
 
-      // cover-fit
+      // Cover-fit calculation
       const scale = Math.max(w / img.naturalWidth, h / img.naturalHeight)
-      const dw = img.naturalWidth  * scale
+      const dw = img.naturalWidth * scale
       const dh = img.naturalHeight * scale
       const dx = (w - dw) / 2
       const dy = (h - dh) / 2
+
       ctx.drawImage(img, dx, dy, dw, dh)
 
-      // cinematic vignette
+      // Subtle vignette
       const grad = ctx.createRadialGradient(w / 2, h / 2, h * 0.15, w / 2, h / 2, h * 0.85)
       grad.addColorStop(0, 'transparent')
       grad.addColorStop(1, 'rgba(11,12,10,0.65)')
@@ -73,30 +113,35 @@ export default function Hero() {
       ctx.fillRect(0, 0, w, h)
     }
 
-    /* ── intro animation — fade in hero text after first frame loads ── */
-    images[0].onload = () => {
+    // Intro entrance animation
+    const firstImg = loadFrame(0)
+    const onFirstLoad = () => {
       resize()
+      renderFrame(0)
       gsap.fromTo(titleRef.current,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.4, delay: 0.3, ease: 'power3.out' }
+        { y: 35, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, delay: 0.2, ease: 'power3.out' }
       )
       gsap.fromTo(subtitleRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, delay: 0.7, ease: 'power3.out' }
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.0, delay: 0.5, ease: 'power3.out' }
       )
       gsap.fromTo(scrollHintRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 1, delay: 1.1 }
+        { opacity: 1, duration: 0.8, delay: 0.8 }
       )
     }
 
-    // Repaint when frames finish loading
-    images.forEach(img => { img.onload = () => renderFrame(currentFrame) })
+    if (firstImg.complete) {
+      onFirstLoad()
+    } else {
+      firstImg.onload = onFirstLoad
+    }
 
     window.addEventListener('resize', resize)
     resize()
 
-    /* ── GSAP ScrollTrigger — scrub frames on scroll ──── */
+    // Smooth scroll trigger with requestAnimationFrame throttling
     const st = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: 'top top',
@@ -105,22 +150,27 @@ export default function Hero() {
       onUpdate: (self) => {
         const idx = Math.min(
           FRAME_TOTAL - 1,
-          Math.floor(self.progress * FRAME_TOTAL)
+          Math.floor(self.progress * (FRAME_TOTAL - 1))
         )
         if (idx !== currentFrame) {
           currentFrame = idx
-          renderFrame(idx)
+          // Preload adjacent frames
+          loadFrame(idx - 1)
+          loadFrame(idx + 1)
+          loadFrame(idx + 2)
+
+          if (rafId) cancelAnimationFrame(rafId)
+          rafId = requestAnimationFrame(() => {
+            renderFrame(idx)
+          })
         }
 
-        // counter
         if (counterRef.current) {
           counterRef.current.textContent = String(idx + 1).padStart(3, '0')
         }
-        // progress bar
         if (progressRef.current) {
           progressRef.current.style.width = `${self.progress * 100}%`
         }
-        // quote
         if (quoteRef.current) {
           const q = QUOTES.slice().reverse().find(q => q.frame <= idx + 1)
           if (q) quoteRef.current.textContent = q.text
@@ -130,18 +180,15 @@ export default function Hero() {
 
     return () => {
       st.kill()
+      if (rafId) cancelAnimationFrame(rafId)
       window.removeEventListener('resize', resize)
     }
   }, [])
 
   return (
-    /*
-     *  sectionRef  → 700vh tall scroll container (gives scrub room)
-     *  stickyRef   → pinned 100svh viewport (canvas lives here)
-     */
     <section
       ref={sectionRef}
-      style={{ height: '700vh', background: '#0B0C0A' }}
+      style={{ height: '450vh', background: '#0B0C0A' }}
     >
       <div
         ref={stickyRef}
@@ -153,13 +200,13 @@ export default function Hero() {
           overflow: 'hidden',
         }}
       >
-        {/* ── CANVAS ───────────────────────────────────── */}
+        {/* CANVAS */}
         <canvas
           ref={canvasRef}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
         />
 
-        {/* ── Bottom gradient for text legibility ───────── */}
+        {/* Bottom gradient */}
         <div
           style={{
             position: 'absolute', inset: 0,
@@ -168,7 +215,7 @@ export default function Hero() {
           }}
         />
 
-        {/* ── NAV wordmark ─────────────────────────────── */}
+        {/* Top Navbar Header */}
         <div
           style={{
             position: 'absolute', top: 0, left: 0, right: 0,
@@ -209,7 +256,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── TITLE ────────────────────────────────────── */}
+        {/* TITLE */}
         <div
           style={{
             position: 'absolute', bottom: '4.5rem', left: '4rem',
@@ -255,7 +302,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── QUOTE ────────────────────────────────────── */}
+        {/* QUOTE */}
         <div style={{
           position: 'absolute', bottom: '4.5rem', right: '4rem',
           zIndex: 20, textAlign: 'right', maxWidth: 320,
@@ -276,7 +323,7 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* ── FRAME COUNTER + PROGRESS ─────────────────── */}
+        {/* FRAME COUNTER + PROGRESS */}
         <div style={{
           position: 'absolute', bottom: '2rem', left: '50%',
           transform: 'translateX(-50%)',
@@ -294,7 +341,6 @@ export default function Hero() {
             }}
           >001</span>
 
-          {/* Progress track */}
           <div style={{
             width: 160, height: 1,
             background: 'rgba(42,43,40,0.8)',
@@ -319,7 +365,7 @@ export default function Hero() {
           }}>{String(FRAME_TOTAL).padStart(3, '0')}</span>
         </div>
 
-        {/* ── SCROLL HINT (visible only at frame 0) ────── */}
+        {/* SCROLL HINT */}
         <div
           ref={scrollHintRef}
           style={{

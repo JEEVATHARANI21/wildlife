@@ -29,55 +29,64 @@ export default function Showreel3D() {
     const width = container.clientWidth
     const height = container.clientHeight
 
-    // Scene, Camera, Renderer
+    // Scene, Camera, Renderer (Optimized pixelRatio capped at 1.5 to save GPU memory)
     const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100)
     camera.position.z = 8.5
 
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance',
+    })
     renderer.setSize(width, height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
     container.appendChild(renderer.domElement)
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.8)
+    // Lighting (Lighter standard lighting model)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.0)
     scene.add(ambientLight)
 
-    const pointLight = new THREE.PointLight(0xfff5e6, 2.5, 50)
-    pointLight.position.set(5, 5, 5)
-    scene.add(pointLight)
+    const directionalLight = new THREE.DirectionalLight(0xfff8ee, 1.5)
+    directionalLight.position.set(4, 6, 5)
+    scene.add(directionalLight)
 
     // Group for carousel cylinder
     const group = new THREE.Group()
     scene.add(group)
 
-    // Geometry & Texture Loader
+    // Geometry & Texture Loader (Low polygon count for max 60+ FPS)
     const textureLoader = new THREE.TextureLoader()
-    const cardGeometry = new THREE.PlaneGeometry(1.6, 2.2, 16, 16)
+    const cardGeometry = new THREE.PlaneGeometry(1.6, 2.2, 1, 1)
 
     const count = SHOWREEL_IMAGES.length
     const radius = 4.2
     const meshes = []
+    const materials = []
+    const textures = []
 
     SHOWREEL_IMAGES.forEach((item, index) => {
       const angle = (index / count) * Math.PI * 2
 
       const texture = textureLoader.load(item.src)
       texture.colorSpace = THREE.SRGBColorSpace
+      texture.minFilter = THREE.LinearFilter
+      texture.generateMipmaps = false // Reduces GPU texture upload time & VRAM
+      textures.push(texture)
 
-      const material = new THREE.MeshPhysicalMaterial({
+      // MeshStandardMaterial is significantly faster to render than MeshPhysicalMaterial
+      const material = new THREE.MeshStandardMaterial({
         map: texture,
         side: THREE.DoubleSide,
-        roughness: 0.2,
-        metalness: 0.1,
-        clearcoat: 0.4,
-        clearcoatRoughness: 0.1,
+        roughness: 0.35,
+        metalness: 0.05,
       })
+      materials.push(material)
 
       const mesh = new THREE.Mesh(cardGeometry, material)
       mesh.position.x = Math.sin(angle) * radius
       mesh.position.z = Math.cos(angle) * radius
-      mesh.position.y = Math.sin(index * 0.8) * 0.25 // subtle playful wavy float
+      mesh.position.y = Math.sin(index * 0.8) * 0.25
       mesh.rotation.y = angle
 
       mesh.userData = { id: item.id, item: item, angle: angle }
@@ -85,14 +94,12 @@ export default function Showreel3D() {
       meshes.push(mesh)
     })
 
-    // Tilt group slightly forward like a playful stage
     group.rotation.x = 0.08
 
-    // Interactive Drag / Velocity
+    // Interactive Drag
     let isDragging = false
     let prevMouseX = 0
     let targetRotationY = 0
-    let velocityY = 0.003
     let autoRotate = true
 
     const onMouseDown = (e) => {
@@ -110,11 +117,10 @@ export default function Showreel3D() {
 
     const onMouseUp = () => {
       isDragging = false
-      // Find which image is closest to camera
       setTimeout(() => {
         let closestMesh = meshes[0]
         let maxZ = -999
-        meshes.forEach(m => {
+        meshes.forEach((m) => {
           const worldPos = new THREE.Vector3()
           m.getWorldPosition(worldPos)
           if (worldPos.z > maxZ) {
@@ -125,7 +131,7 @@ export default function Showreel3D() {
         if (closestMesh && closestMesh.userData.item) {
           setActiveItem(closestMesh.userData.item)
         }
-      }, 200)
+      }, 100)
     }
 
     // Raycaster for clicking cards directly
@@ -144,9 +150,7 @@ export default function Showreel3D() {
         const item = clickedMesh.userData.item
         if (item) {
           setActiveItem(item)
-          // rotate clicked mesh to center
-          const targetAngle = -clickedMesh.userData.angle
-          targetRotationY = targetAngle
+          targetRotationY = -clickedMesh.userData.angle
         }
       }
     }
@@ -168,28 +172,42 @@ export default function Showreel3D() {
       touchStartX = e.touches[0].clientX
       targetRotationY += deltaX * 0.006
     }
-    domEl.addEventListener('touchstart', onTouchStart)
-    domEl.addEventListener('touchmove', onTouchMove)
+    domEl.addEventListener('touchstart', onTouchStart, { passive: true })
+    domEl.addEventListener('touchmove', onTouchMove, { passive: true })
 
-    // Animate Loop
+    // Only render when the section is in view to conserve CPU/GPU
+    let isVisible = true
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(container)
+
+    // Render loop
     let animationFrameId
     const clock = new THREE.Clock()
 
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate)
+
+      // Skip render calculations when scrolled out of view
+      if (!isVisible) return
+
       const elapsedTime = clock.getElapsedTime()
 
       if (autoRotate && isRotating) {
-        targetRotationY += 0.0025
+        targetRotationY += 0.002
       }
 
       // Smooth damping interpolation
-      group.rotation.y += (targetRotationY - group.rotation.y) * 0.07
+      group.rotation.y += (targetRotationY - group.rotation.y) * 0.08
 
       // Floating wave animation on cards
-      meshes.forEach((m, idx) => {
-        m.position.y = Math.sin(elapsedTime * 1.5 + idx) * 0.18
-      })
+      for (let i = 0; i < meshes.length; i++) {
+        meshes[i].position.y = Math.sin(elapsedTime * 1.5 + i) * 0.18
+      }
 
       renderer.render(scene, camera)
     }
@@ -208,6 +226,7 @@ export default function Showreel3D() {
 
     return () => {
       cancelAnimationFrame(animationFrameId)
+      observer.disconnect()
       window.removeEventListener('resize', handleResize)
       domEl.removeEventListener('mousedown', onMouseDown)
       window.removeEventListener('mousemove', onMouseMove)
@@ -219,9 +238,9 @@ export default function Showreel3D() {
         container.removeChild(domEl)
       }
       cardGeometry.dispose()
-      meshes.forEach(m => {
-        m.material.dispose()
-      })
+      materials.forEach((m) => m.dispose())
+      textures.forEach((t) => t.dispose())
+      renderer.dispose()
     }
   }, [isRotating])
 
@@ -263,7 +282,7 @@ export default function Showreel3D() {
         className="w-full h-[68vh] md:h-[76vh] relative cursor-grab active:cursor-grabbing"
       />
 
-      {/* Active Card HUD Info Panel (Pacôme Pertant experimental minimal style) */}
+      {/* Active Card HUD Info Panel */}
       <div className="relative z-10 pb-16 px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-t border-[#2A2B28]/60 pt-6">
         <div className="flex items-baseline gap-6">
           <span className="font-serif text-3xl md:text-5xl text-[#F1EFE8]/30 font-light">
