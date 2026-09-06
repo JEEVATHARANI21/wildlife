@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import Intro from './components/Intro'
 import Showreel3D from './components/Showreel3D'
 import Album from './components/Album'
 import Moments from './components/Moments'
@@ -45,10 +44,8 @@ export default function App() {
     <div className="grain" style={{ background: 'var(--bg)' }}>
       <CustomCursor />
       <Navbar />
-      {/* 01 Heroic Page: Sticky canvas video frame sequence */}
+      {/* 01 Heroic Page: Sticky video hero */}
       <Hero />
-      {/* 02 Intro Statement */}
-      <Intro />
       {/* Pacôme Pertant style Playful 3D Showreel featuring user photos */}
       <Showreel3D />
       {/* 03 Section 3: Interactive Album - click/swipe to change next/prev image */}
