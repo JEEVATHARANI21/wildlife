@@ -8,8 +8,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => {
-      // Only show navbar after scrolling past the 700vh hero section
-      const threshold = window.innerHeight * 7
+      // Only show navbar after scrolling past the hero section
+      const threshold = window.innerHeight * 1.8
       setVisible(window.scrollY > threshold)
       setScrolled(window.scrollY > threshold + 80)
     }
