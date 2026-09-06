@@ -169,12 +169,15 @@ const AUTO_CHANGE_INTERVAL = 3800 // 3.8 seconds per photo
 export default function Album() {
   const sectionRef = useRef(null)
   const headerRef = useRef(null)
+
   const [active, setActive] = useState(0)
+  const [incoming, setIncoming] = useState(null)
   const [animating, setAnimating] = useState(false)
-  const [direction, setDirection] = useState(1)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
-  const imgRef = useRef(null)
+  // Layer refs for cross-fade blur dissolve
+  const activeImgRef = useRef(null)
+  const incomingImgRef = useRef(null)
   const metaRef = useRef(null)
   const specRef = useRef(null)
 
@@ -183,7 +186,7 @@ export default function Album() {
   const touchStartY = useRef(0)
   const isDragging = useRef(false)
 
-  // Slide transition
+  // Cinematic blur cross-dissolve transition (Zero black/blank flicker)
   const goTo = useCallback(
     (nextIdx, dir = 1) => {
       if (animating) return
@@ -191,46 +194,81 @@ export default function Album() {
       if (bounded === active) return
 
       setAnimating(true)
-      setDirection(dir)
+      setIncoming(bounded)
 
-      const tl = gsap.timeline({
-        onComplete: () => setAnimating(false),
-      })
-
-      // Exit animation
-      tl.to(imgRef.current, {
-        x: -80 * dir,
-        scale: 0.97,
+      // Animate metadata smoothly
+      gsap.to([metaRef.current, specRef.current], {
         opacity: 0,
-        duration: 0.35,
+        y: -10 * dir,
+        duration: 0.3,
         ease: 'power2.in',
       })
-      tl.to(
-        [metaRef.current, specRef.current],
-        {
-          y: -15 * dir,
-          opacity: 0,
-          duration: 0.28,
-          stagger: 0.04,
-          ease: 'power2.in',
-        },
-        '-=0.28'
-      )
 
-      tl.call(() => setActive(bounded))
+      // We wait for the incoming layer to render in DOM before fading
+      requestAnimationFrame(() => {
+        if (!incomingImgRef.current || !activeImgRef.current) {
+          setActive(bounded)
+          setIncoming(null)
+          setAnimating(false)
+          return
+        }
 
-      // Enter animation
-      tl.fromTo(
-        imgRef.current,
-        { x: 80 * dir, scale: 1.03, opacity: 0 },
-        { x: 0, scale: 1, opacity: 1, duration: 0.52, ease: 'power3.out' }
-      )
-      tl.fromTo(
-        [metaRef.current, specRef.current],
-        { y: 20 * dir, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.48, stagger: 0.06, ease: 'power3.out' },
-        '-=0.38'
-      )
+        const tl = gsap.timeline({
+          onComplete: () => {
+            setActive(bounded)
+            setIncoming(null)
+            setAnimating(false)
+
+            // Reset transform & filter on the base active layer
+            if (activeImgRef.current) {
+              gsap.set(activeImgRef.current, {
+                opacity: 1,
+                filter: 'blur(0px)',
+                scale: 1,
+                x: 0,
+              })
+            }
+
+            // Reveal metadata for new photo
+            gsap.fromTo(
+              [metaRef.current, specRef.current],
+              { opacity: 0, y: 15 * dir },
+              { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' }
+            )
+          },
+        })
+
+        // Current image dissolves into a subtle cinematic blur & gentle scale
+        tl.to(
+          activeImgRef.current,
+          {
+            opacity: 0,
+            filter: 'blur(16px)',
+            scale: 1.05,
+            duration: 0.8,
+            ease: 'power2.inOut',
+          },
+          0
+        )
+
+        // Incoming image emerges from blur to pin-sharp focus (Overlapping cross-dissolve)
+        tl.fromTo(
+          incomingImgRef.current,
+          {
+            opacity: 0,
+            filter: 'blur(18px)',
+            scale: 0.96,
+          },
+          {
+            opacity: 1,
+            filter: 'blur(0px)',
+            scale: 1,
+            duration: 0.85,
+            ease: 'power2.out',
+          },
+          0.05
+        )
+      })
     },
     [active, animating]
   )
@@ -238,7 +276,7 @@ export default function Album() {
   const next = useCallback(() => goTo(active + 1, 1), [active, goTo])
   const prev = useCallback(() => goTo(active - 1, -1), [active, goTo])
 
-  // ── AUTO-CHANGE TIMER (Automatically switches to next image every 3.8s) ──
+  // ── AUTO-CHANGE TIMER (Every 3.8s) ──
   useEffect(() => {
     if (!isAutoPlaying) return
 
@@ -287,6 +325,7 @@ export default function Album() {
   }
 
   const currentPhoto = ALBUM[active]
+  const incomingPhoto = incoming !== null ? ALBUM[incoming] : null
 
   return (
     <section
@@ -343,40 +382,51 @@ export default function Album() {
         </div>
       </div>
 
-      {/* Main Full-Width Interactive Swipe Stage */}
+      {/* Main Full-Width Interactive Blur-Dissolve Stage */}
       <div
         className="relative w-full mx-auto px-4 md:px-16 select-none"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
-        onMouseEnter={() => setIsAutoPlaying(false)} // Pause on hover for reader comfort
-        onMouseLeave={() => setIsAutoPlaying(true)}  // Resume when mouse leaves
+        onMouseEnter={() => setIsAutoPlaying(false)} // Pause on hover
+        onMouseLeave={() => setIsAutoPlaying(true)}  // Resume on leave
       >
         <div className="relative w-full h-[65vh] md:h-[78vh] rounded-2xl md:rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing border border-[#2A2B28]/60 shadow-2xl bg-[#090A09]">
-          {/* Main Photo */}
+          {/* Current Active Base Image Layer */}
           <img
-            ref={imgRef}
+            ref={activeImgRef}
             src={currentPhoto.src}
             alt={currentPhoto.title}
             draggable={false}
-            className="w-full h-full object-cover object-center transition-transform duration-700 ease-out"
+            className="absolute inset-0 w-full h-full object-cover object-center will-change-[filter,transform,opacity]"
           />
+
+          {/* Incoming Cross-Fade Blur Image Layer (Dissolves in seamlessly over the old image) */}
+          {incomingPhoto && (
+            <img
+              ref={incomingImgRef}
+              src={incomingPhoto.src}
+              alt={incomingPhoto.title}
+              draggable={false}
+              className="absolute inset-0 w-full h-full object-cover object-center will-change-[filter,transform,opacity]"
+            />
+          )}
 
           {/* Cinematic Vignette and Dark Gradient */}
           <div
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0 pointer-events-none z-10"
             style={{
               background:
                 'linear-gradient(to top, rgba(11,12,10,0.92) 0%, rgba(11,12,10,0.2) 50%, rgba(11,12,10,0.4) 100%)',
             }}
           />
 
-          {/* Left / Right Click Swipe Zones */}
+          {/* Left / Right Click Navigation Zones */}
           <div
             onClick={prev}
             className="absolute top-0 left-0 w-1/2 h-full z-20 cursor-w-resize flex items-center pl-6 opacity-0 hover:opacity-100 transition-opacity duration-300"
-            title="Previous (Click or Swipe)"
+            title="Previous Specimen"
           >
             <div className="w-12 h-12 rounded-full bg-[#0B0C0A]/80 border border-[#2A2B28] flex items-center justify-center text-[#F1EFE8] backdrop-blur-md">
               ←
@@ -386,14 +436,14 @@ export default function Album() {
           <div
             onClick={next}
             className="absolute top-0 right-0 w-1/2 h-full z-20 cursor-e-resize flex items-center justify-end pr-6 opacity-0 hover:opacity-100 transition-opacity duration-300"
-            title="Next (Click or Swipe)"
+            title="Next Specimen"
           >
             <div className="w-12 h-12 rounded-full bg-[#0B0C0A]/80 border border-[#2A2B28] flex items-center justify-center text-[#F1EFE8] backdrop-blur-md">
               →
             </div>
           </div>
 
-          {/* Floating Category Tag & Auto-play indicator */}
+          {/* Floating Category Tag */}
           <div className="absolute top-6 left-6 md:top-8 md:left-8 z-30 pointer-events-none flex items-center gap-2">
             <span className="px-3.5 py-1.5 rounded-full text-[10px] font-sans tracking-[0.25em] uppercase bg-[#0B0C0A]/70 border border-[#2A2B28] text-emerald-400 backdrop-blur-md">
               {currentPhoto.category}
