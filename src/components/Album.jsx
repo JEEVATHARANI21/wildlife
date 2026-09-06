@@ -16,7 +16,8 @@ const ALBUM = [
     lens: '400mm f/2.8',
     iso: 'ISO 800',
     shutter: '1/1600s',
-    story: 'Observed this elusive leopard surveying the valley from ancient granite boulders. Two hours of complete silence culminated in this piercing gaze.',
+    story:
+      'Observed this elusive leopard surveying the valley from ancient granite boulders. Two hours of complete silence culminated in this piercing gaze.',
   },
   {
     id: 2,
@@ -28,7 +29,8 @@ const ALBUM = [
     lens: '100mm Macro f/2.8',
     iso: 'ISO 640',
     shutter: '1/250s',
-    story: 'Tasting the humid monsoon air with its forked tongue. The precise scales and iridescent green hue shimmer under dense tropical canopy.',
+    story:
+      'Tasting the humid monsoon air with its forked tongue. The precise scales and iridescent green hue shimmer under dense tropical canopy.',
   },
   {
     id: 3,
@@ -40,7 +42,8 @@ const ALBUM = [
     lens: '90mm Macro',
     iso: 'ISO 400',
     shutter: '1/200s',
-    story: 'Perched on a solitary vine above a torrential mountain stream, waiting for nocturnal insects in absolute equilibrium.',
+    story:
+      'Perched on a solitary vine above a torrential mountain stream, waiting for nocturnal insects in absolute equilibrium.',
   },
   {
     id: 4,
@@ -52,7 +55,8 @@ const ALBUM = [
     lens: '600mm f/4',
     iso: 'ISO 320',
     shutter: '1/1000s',
-    story: 'Every crack along the tusk and furrowed skin speaks of decades migrating across primeval forest corridors.',
+    story:
+      'Every crack along the tusk and furrowed skin speaks of decades migrating across primeval forest corridors.',
   },
   {
     id: 5,
@@ -64,7 +68,8 @@ const ALBUM = [
     lens: '105mm Macro',
     iso: 'ISO 500',
     shutter: '1/160s',
-    story: 'Microscopic water droplets cling to the scales and eyes of this rare nocturnal gecko following pre-dawn condensation.',
+    story:
+      'Microscopic water droplets cling to the scales and eyes of this rare nocturnal gecko following pre-dawn condensation.',
   },
   {
     id: 6,
@@ -76,7 +81,8 @@ const ALBUM = [
     lens: '300mm f/2.8',
     iso: 'ISO 400',
     shutter: '1/800s',
-    story: 'Enormous strength framed against pure void. The curled horns tell tales of territorial clashes deep in the teak forests.',
+    story:
+      'Enormous strength framed against pure void. The curled horns tell tales of territorial clashes deep in the teak forests.',
   },
   {
     id: 7,
@@ -88,7 +94,8 @@ const ALBUM = [
     lens: '100mm Macro',
     iso: 'ISO 800',
     shutter: '1/125s',
-    story: 'Basking amidst submerged freshwater vegetation as night falls, vocal sacs vibrating to call across the swamp.',
+    story:
+      'Basking amidst submerged freshwater vegetation as night falls, vocal sacs vibrating to call across the swamp.',
   },
   {
     id: 8,
@@ -100,7 +107,8 @@ const ALBUM = [
     lens: '500mm f/4',
     iso: 'ISO 250',
     shutter: '1/1250s',
-    story: 'Towering elephant stepping through waist-high grassland in radiant golden morning light.',
+    story:
+      'Towering elephant stepping through waist-high grassland in radiant golden morning light.',
   },
   {
     id: 9,
@@ -112,7 +120,8 @@ const ALBUM = [
     lens: '70-200mm f/2.8',
     iso: 'ISO 1000',
     shutter: '1/500s',
-    story: 'Camouflaged seamlessly among thorny vines, motionless for hours waiting for unsuspecting tree frogs.',
+    story:
+      'Camouflaged seamlessly among thorny vines, motionless for hours waiting for unsuspecting tree frogs.',
   },
   {
     id: 10,
@@ -124,7 +133,8 @@ const ALBUM = [
     lens: '65mm 2x-5x Ultra Macro',
     iso: 'ISO 200',
     shutter: '1/100s',
-    story: 'Life suspended in transparent jelly clutches beneath broad leaves, developing tadpoles visible to the naked eye.',
+    story:
+      'Life suspended in transparent jelly clutches beneath broad leaves, developing tadpoles visible to the naked eye.',
   },
   {
     id: 11,
@@ -136,7 +146,8 @@ const ALBUM = [
     lens: '100mm Macro',
     iso: 'ISO 400',
     shutter: '1/320s',
-    story: 'Slender as a whip, floating horizontally like a vine swaying in the forest breeze.',
+    story:
+      'Slender as a whip, floating horizontally like a vine swaying in the forest breeze.',
   },
   {
     id: 12,
@@ -148,9 +159,12 @@ const ALBUM = [
     lens: '105mm Macro',
     iso: 'ISO 640',
     shutter: '1/180s',
-    story: 'Grasping vertical bark with suction pads, throat glowing luminous yellow in the flashlight illumination.',
+    story:
+      'Grasping vertical bark with suction pads, throat glowing luminous yellow in the flashlight illumination.',
   },
 ]
+
+const AUTO_CHANGE_INTERVAL = 3800 // 3.8 seconds per photo
 
 export default function Album() {
   const sectionRef = useRef(null)
@@ -158,6 +172,7 @@ export default function Album() {
   const [active, setActive] = useState(0)
   const [animating, setAnimating] = useState(false)
   const [direction, setDirection] = useState(1)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
 
   const imgRef = useRef(null)
   const metaRef = useRef(null)
@@ -167,58 +182,72 @@ export default function Album() {
   const touchStartX = useRef(0)
   const touchStartY = useRef(0)
   const isDragging = useRef(false)
-  const dragDistance = useRef(0)
 
-  const goTo = useCallback((nextIdx, dir = 1) => {
-    if (animating) return
-    const bounded = (nextIdx + ALBUM.length) % ALBUM.length
-    if (bounded === active) return
+  // Slide transition
+  const goTo = useCallback(
+    (nextIdx, dir = 1) => {
+      if (animating) return
+      const bounded = (nextIdx + ALBUM.length) % ALBUM.length
+      if (bounded === active) return
 
-    setAnimating(true)
-    setDirection(dir)
+      setAnimating(true)
+      setDirection(dir)
 
-    const tl = gsap.timeline({
-      onComplete: () => setAnimating(false),
-    })
+      const tl = gsap.timeline({
+        onComplete: () => setAnimating(false),
+      })
 
-    // Exit animation with subtle scale and velocity blur
-    tl.to(imgRef.current, {
-      x: -90 * dir,
-      scale: 0.96,
-      opacity: 0,
-      duration: 0.38,
-      ease: 'power2.in',
-    })
-    tl.to(
-      [metaRef.current, specRef.current],
-      {
-        y: -20 * dir,
+      // Exit animation
+      tl.to(imgRef.current, {
+        x: -80 * dir,
+        scale: 0.97,
         opacity: 0,
-        duration: 0.3,
-        stagger: 0.05,
+        duration: 0.35,
         ease: 'power2.in',
-      },
-      '-=0.3'
-    )
+      })
+      tl.to(
+        [metaRef.current, specRef.current],
+        {
+          y: -15 * dir,
+          opacity: 0,
+          duration: 0.28,
+          stagger: 0.04,
+          ease: 'power2.in',
+        },
+        '-=0.28'
+      )
 
-    tl.call(() => setActive(bounded))
+      tl.call(() => setActive(bounded))
 
-    // Enter animation
-    tl.fromTo(
-      imgRef.current,
-      { x: 90 * dir, scale: 1.04, opacity: 0 },
-      { x: 0, scale: 1, opacity: 1, duration: 0.55, ease: 'power3.out' }
-    )
-    tl.fromTo(
-      [metaRef.current, specRef.current],
-      { y: 25 * dir, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: 'power3.out' },
-      '-=0.4'
-    )
-  }, [active, animating])
+      // Enter animation
+      tl.fromTo(
+        imgRef.current,
+        { x: 80 * dir, scale: 1.03, opacity: 0 },
+        { x: 0, scale: 1, opacity: 1, duration: 0.52, ease: 'power3.out' }
+      )
+      tl.fromTo(
+        [metaRef.current, specRef.current],
+        { y: 20 * dir, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.48, stagger: 0.06, ease: 'power3.out' },
+        '-=0.38'
+      )
+    },
+    [active, animating]
+  )
 
-  const next = () => goTo(active + 1, 1)
-  const prev = () => goTo(active - 1, -1)
+  const next = useCallback(() => goTo(active + 1, 1), [active, goTo])
+  const prev = useCallback(() => goTo(active - 1, -1), [active, goTo])
+
+  // ── AUTO-CHANGE TIMER (Automatically switches to next image every 3.8s) ──
+  useEffect(() => {
+    if (!isAutoPlaying) return
+
+    const timer = setInterval(() => {
+      next()
+    }, AUTO_CHANGE_INTERVAL)
+
+    return () => clearInterval(timer)
+  }, [isAutoPlaying, next])
 
   // Keyboard navigation
   useEffect(() => {
@@ -266,14 +295,14 @@ export default function Album() {
       className="relative w-full py-28 md:py-36 overflow-hidden"
       style={{ background: '#0B0C0A' }}
     >
-      {/* Editorial Header in Pacôme Pertant style */}
+      {/* Editorial Header */}
       <div
         ref={headerRef}
         className="px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6"
       >
         <div>
           <div className="flex items-center gap-3 mb-3">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-[#A7A59B]">
               Specimen Archive · Section 03
             </p>
@@ -286,21 +315,29 @@ export default function Album() {
           </h2>
         </div>
 
-        {/* Dynamic Counter & Swipe Tip */}
-        <div className="flex items-center gap-8 font-sans text-xs">
+        {/* Counter, Auto-play indicator & Controls */}
+        <div className="flex items-center gap-6 font-sans text-xs">
+          {/* Play/Pause Auto-change Button */}
+          <button
+            onClick={() => setIsAutoPlaying((prev) => !prev)}
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#2A2B28] bg-[#111310] text-[11px] uppercase tracking-wider text-[#A7A59B] hover:text-[#F1EFE8] hover:border-emerald-500 transition-all"
+            title={isAutoPlaying ? 'Pause automatic change' : 'Resume automatic change'}
+          >
+            <span
+              className={`w-2 h-2 rounded-full ${
+                isAutoPlaying ? 'bg-emerald-400 animate-pulse' : 'bg-[#555]'
+              }`}
+            />
+            <span>{isAutoPlaying ? 'Auto Slide: On' : 'Auto Slide: Paused'}</span>
+          </button>
+
           <div className="flex items-center gap-2">
             <span className="text-xl md:text-2xl font-serif text-[#F1EFE8] font-light">
               {String(active + 1).padStart(2, '0')}
             </span>
             <span className="text-[#A7A59B]">/</span>
-            <span className="text-[#A7A59B]">{String(ALBUM.length).padStart(2, '0')}</span>
-          </div>
-
-          <div className="hidden md:flex items-center gap-3 text-[#A7A59B] text-[11px] tracking-wider uppercase">
-            <span>[ Click or Swipe to Change ]</span>
-            <span className="flex gap-1.5">
-              <kbd className="px-2 py-1 bg-[#181A16] border border-[#2A2B28] rounded text-[10px]">←</kbd>
-              <kbd className="px-2 py-1 bg-[#181A16] border border-[#2A2B28] rounded text-[10px]">→</kbd>
+            <span className="text-[#A7A59B]">
+              {String(ALBUM.length).padStart(2, '0')}
             </span>
           </div>
         </div>
@@ -313,10 +350,10 @@ export default function Album() {
         onTouchEnd={onTouchEnd}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
+        onMouseEnter={() => setIsAutoPlaying(false)} // Pause on hover for reader comfort
+        onMouseLeave={() => setIsAutoPlaying(true)}  // Resume when mouse leaves
       >
-        <div
-          className="relative w-full h-[65vh] md:h-[78vh] rounded-2xl md:rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing border border-[#2A2B28]/60 shadow-2xl bg-[#090A09]"
-        >
+        <div className="relative w-full h-[65vh] md:h-[78vh] rounded-2xl md:rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing border border-[#2A2B28]/60 shadow-2xl bg-[#090A09]">
           {/* Main Photo */}
           <img
             ref={imgRef}
@@ -356,14 +393,14 @@ export default function Album() {
             </div>
           </div>
 
-          {/* Floating Category Tag */}
-          <div className="absolute top-6 left-6 md:top-8 md:left-8 z-30 pointer-events-none">
+          {/* Floating Category Tag & Auto-play indicator */}
+          <div className="absolute top-6 left-6 md:top-8 md:left-8 z-30 pointer-events-none flex items-center gap-2">
             <span className="px-3.5 py-1.5 rounded-full text-[10px] font-sans tracking-[0.25em] uppercase bg-[#0B0C0A]/70 border border-[#2A2B28] text-emerald-400 backdrop-blur-md">
               {currentPhoto.category}
             </span>
           </div>
 
-          {/* Bottom Story & EXIF Specimen Overlay (Pacôme Pertant / Wildlife Documentary style) */}
+          {/* Bottom Story & EXIF Specimen Overlay */}
           <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 z-30 pointer-events-none flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div ref={metaRef} className="max-w-2xl">
               <p className="font-sans text-[11px] tracking-[0.25em] uppercase text-[#A7A59B] mb-2">
@@ -371,7 +408,10 @@ export default function Album() {
               </p>
               <h3
                 className="font-serif text-[#F1EFE8] mb-3 leading-tight"
-                style={{ fontSize: 'clamp(1.8rem, 3.8vw, 3.2rem)', fontWeight: 300 }}
+                style={{
+                  fontSize: 'clamp(1.8rem, 3.8vw, 3.2rem)',
+                  fontWeight: 300,
+                }}
               >
                 {currentPhoto.title}
               </h3>
@@ -386,17 +426,23 @@ export default function Album() {
               className="flex items-center gap-4 bg-[#0B0C0A]/70 border border-[#2A2B28] rounded-xl px-5 py-3 backdrop-blur-md text-[11px] font-sans text-[#A7A59B]"
             >
               <div>
-                <span className="block text-[9px] uppercase tracking-widest text-[#666]">Optics</span>
+                <span className="block text-[9px] uppercase tracking-widest text-[#666]">
+                  Optics
+                </span>
                 <span className="text-[#F1EFE8]">{currentPhoto.lens}</span>
               </div>
               <div className="w-[1px] h-6 bg-[#2A2B28]" />
               <div>
-                <span className="block text-[9px] uppercase tracking-widest text-[#666]">Sensitivity</span>
+                <span className="block text-[9px] uppercase tracking-widest text-[#666]">
+                  Sensitivity
+                </span>
                 <span className="text-[#F1EFE8]">{currentPhoto.iso}</span>
               </div>
               <div className="w-[1px] h-6 bg-[#2A2B28]" />
               <div>
-                <span className="block text-[9px] uppercase tracking-widest text-[#666]">Speed</span>
+                <span className="block text-[9px] uppercase tracking-widest text-[#666]">
+                  Speed
+                </span>
                 <span className="text-[#F1EFE8]">{currentPhoto.shutter}</span>
               </div>
             </div>
