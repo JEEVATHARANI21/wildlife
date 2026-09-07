@@ -13,15 +13,12 @@ export default function WhatsAppButton() {
     >
       {/* Tooltip on hover */}
       <div
-        className={`hidden md:flex flex-col items-end px-3.5 py-1.5 rounded-xl bg-[#111310]/95 backdrop-blur-md border border-[#2A2B28] shadow-2xl text-right transition-all duration-300 ${
+        className={`hidden md:flex items-center px-3.5 py-1.5 rounded-xl bg-[#111310]/95 backdrop-blur-md border border-[#2A2B28] shadow-2xl transition-all duration-300 ${
           hovered ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-3 pointer-events-none'
         }`}
       >
-        <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#F1EFE8]">
-          WhatsApp Support
-        </span>
-        <span className="font-sans text-[11px] text-[#25D366] font-medium tracking-wide">
-          +91 90873 94546
+        <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#25D366]">
+          WhatsApp
         </span>
       </div>
 
@@ -33,8 +30,8 @@ export default function WhatsAppButton() {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         className="group relative flex items-center justify-center w-13 h-13 rounded-full bg-[#121411] border border-[#25D366]/40 hover:border-[#25D366] shadow-[0_4px_25px_rgba(0,0,0,0.8),0_0_20px_rgba(37,211,102,0.3)] hover:shadow-[0_4px_30px_rgba(0,0,0,0.9),0_0_30px_rgba(37,211,102,0.6)] transition-all duration-300 hover:scale-105 cursor-pointer"
-        title="Chat on WhatsApp: +91 90873 94546"
-        aria-label="Chat on WhatsApp at +91 90873 94546"
+        title="Chat on WhatsApp"
+        aria-label="Chat on WhatsApp"
       >
         {/* Radar ping pulse */}
         <span className="absolute inset-0 rounded-full bg-[#25D366]/20 animate-ping opacity-75 pointer-events-none" />
