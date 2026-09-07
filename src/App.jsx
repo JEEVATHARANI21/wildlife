@@ -13,6 +13,7 @@ import About from './components/About'
 import Contact from './components/Contact'
 import CustomCursor from './components/CustomCursor'
 import LegalModal from './components/LegalModal'
+import WhatsAppButton from './components/WhatsAppButton'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -71,6 +72,9 @@ export default function App() {
         onClose={() => setLegalModalOpen(false)}
         initialTab={legalTab}
       />
+
+      {/* Floating WhatsApp Contact & Support Button */}
+      <WhatsAppButton />
     </div>
   )
 }
