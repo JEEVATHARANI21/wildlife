@@ -28,6 +28,7 @@ export default function Hero() {
   const scrollHintRef = useRef(null)
 
   const [isPlaying, setIsPlaying] = useState(true)
+  const [mobileFit, setMobileFit] = useState(true)
 
   useEffect(() => {
     const video = videoRef.current
@@ -140,55 +141,41 @@ export default function Hero() {
     >
       <div
         ref={stickyRef}
-        style={{
-          position: 'sticky',
-          top: 0,
-          height: '100svh',
-          width: '100%',
-          overflow: 'hidden',
-        }}
+        className="sticky top-0 h-[100svh] w-full overflow-hidden flex flex-col justify-between"
       >
-        {/* High Performance 8-Second Cinematic Video */}
-        <video
-          ref={videoRef}
-          src={VIDEO_SRC}
-          className="absolute inset-0 w-full h-full object-cover select-none"
-          autoPlay
-          muted
-          loop
-          playsInline
-          style={{
-            transformOrigin: 'center center',
-            filter: 'contrast(1.04) brightness(0.95)',
-          }}
-        />
+        {/* Ambient atmospheric backlight on mobile when in Fit mode */}
+        {mobileFit && (
+          <div
+            className="md:hidden absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(ellipse at 50% 45%, rgba(179,135,75,0.2) 0%, rgba(16,185,129,0.08) 40%, transparent 70%)',
+            }}
+          />
+        )}
 
-        {/* Cinematic Vignette & Bottom Dark Gradient */}
+        {/* Desktop Cinematic Vignette & Bottom Dark Gradient */}
         <div
+          className="hidden md:block absolute inset-0 pointer-events-none"
           style={{
-            position: 'absolute',
-            inset: 0,
             background:
               'linear-gradient(to top, rgba(11,12,10,0.92) 0%, rgba(11,12,10,0.18) 55%, transparent 100%)',
-            pointerEvents: 'none',
           }}
         />
         <div
+          className="hidden md:block absolute inset-0 pointer-events-none"
           style={{
-            position: 'absolute',
-            inset: 0,
             background:
               'radial-gradient(ellipse at center, transparent 40%, rgba(11,12,10,0.6) 100%)',
-            pointerEvents: 'none',
           }}
         />
 
         {/* Top Navbar Header */}
         <div
-          className="absolute top-0 left-0 right-0 flex justify-between items-center px-5 sm:px-8 md:px-16 py-4 md:py-6 z-20"
+          className="relative md:absolute top-0 left-0 right-0 flex justify-between items-center px-5 sm:px-8 md:px-16 py-4 md:py-6 z-20"
           style={{
             background:
-              'linear-gradient(to bottom, rgba(11,12,10,0.8), transparent)',
+              'linear-gradient(to bottom, rgba(11,12,10,0.85), transparent)',
           }}
         >
           <a
@@ -278,33 +265,92 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Hero Title */}
-        <div className="absolute z-20 left-5 sm:left-8 md:left-16 bottom-14 sm:bottom-16 md:bottom-20">
+        {/* High Performance 8-Second Cinematic Video Player */}
+        <div
+          className={`transition-all duration-500 ease-out ${
+            mobileFit
+              ? 'relative z-10 w-[94%] max-w-lg aspect-video mx-auto my-auto rounded-2xl overflow-hidden shadow-[0_16px_50px_rgba(0,0,0,0.9)] border border-white/15'
+              : 'absolute inset-0 w-full h-full'
+          } md:absolute md:inset-0 md:w-full md:h-full md:max-w-none md:aspect-auto md:rounded-none md:border-none md:shadow-none md:z-0 md:m-0`}
+        >
+          <video
+            ref={videoRef}
+            src={VIDEO_SRC}
+            className={`w-full h-full object-cover select-none transition-all duration-500 ${
+              mobileFit ? 'object-center' : 'object-[24%_center]'
+            } md:object-center`}
+            autoPlay
+            muted
+            loop
+            playsInline
+            style={{
+              filter: 'contrast(1.04) brightness(0.96)',
+            }}
+          />
+
+          {/* Quick Fit / Fill Mode Toggle Button (Mobile Only) */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              setMobileFit((prev) => !prev)
+            }}
+            className="md:hidden absolute top-3 right-3 z-30 px-3 py-1 rounded-full bg-black/70 border border-white/20 text-[9px] tracking-wider uppercase text-[#F1EFE8] backdrop-blur-md flex items-center gap-1.5 shadow-xl active:scale-95 transition-all cursor-pointer"
+            title={mobileFit ? 'Switch to Full Bleed' : 'Switch to Fit Screen'}
+          >
+            <span>{mobileFit ? '⛶ Full Bleed' : '▣ Fit Screen'}</span>
+          </button>
+        </div>
+
+        {/* Hero Title & Information */}
+        <div
+          className={`${
+            mobileFit
+              ? 'relative z-20 px-5 text-center flex flex-col items-center gap-2 pb-2'
+              : 'absolute z-20 left-5 sm:left-8 md:left-16 bottom-14 sm:bottom-16 md:bottom-20'
+          } md:absolute md:z-20 md:left-16 md:bottom-20 md:text-left md:items-start md:px-0 md:pb-0`}
+        >
           <h1
             ref={titleRef}
-            className="font-serif text-[clamp(3.2rem,8.5vw,9.5rem)] font-light text-[var(--text)] leading-[0.9] tracking-[0.08em] opacity-0"
+            className={`font-serif font-light text-[var(--text)] leading-[0.9] tracking-[0.08em] opacity-0 ${
+              mobileFit
+                ? 'text-2xl sm:text-3xl'
+                : 'text-[clamp(3rem,8vw,9.5rem)]'
+            } md:text-[clamp(3.2rem,8.5vw,9.5rem)]`}
           >
             INTO THE
-            <br />
+            <span className={mobileFit ? 'inline' : 'hidden'}> </span>
+            <br className={mobileFit ? 'hidden md:inline' : 'inline'} />
             WILD
           </h1>
 
           <div
             ref={subtitleRef}
-            className="flex items-center gap-3 sm:gap-5 mt-3 sm:mt-5 opacity-0"
+            className="flex items-center gap-3 sm:gap-5 mt-1 sm:mt-3 md:mt-5 opacity-0"
           >
-            <span className="font-sans text-[10px] sm:text-xs tracking-[0.25em] text-[var(--muted)] uppercase">
+            <span className="font-sans text-[9px] sm:text-xs tracking-[0.25em] text-[var(--muted)] uppercase">
               Wildlife Photography
             </span>
-            <span className="w-6 sm:w-9 h-[1px] bg-[var(--border)] inline-block" />
-            <span className="font-sans text-[10px] sm:text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
+            <span className="w-4 sm:w-8 h-[1px] bg-[var(--border)] inline-block" />
+            <span className="font-sans text-[9px] sm:text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
               Tamil Nadu · India
             </span>
           </div>
+
+          {/* Atmospheric Quote for mobile when in Fit mode */}
+          {mobileFit && (
+            <p className="md:hidden font-serif text-xs italic text-[#F1EFE8]/75 mt-0.5">
+              The forest holds its breath.
+            </p>
+          )}
         </div>
 
-        {/* Dynamic Atmospheric Quote */}
-        <div className="hidden sm:block absolute z-20 right-6 md:right-16 bottom-16 md:bottom-20 text-right max-w-[260px] md:max-w-[340px]">
+        {/* Dynamic Atmospheric Quote (Desktop / Full bleed) */}
+        <div
+          className={`${
+            mobileFit ? 'hidden' : 'block'
+          } sm:block md:block absolute z-20 right-6 md:right-16 bottom-16 md:bottom-20 text-right max-w-[260px] md:max-w-[340px]`}
+        >
           <p
             ref={quoteRef}
             className="font-serif text-[clamp(0.95rem,1.4vw,1.25rem)] italic font-light text-[#F1EFE8]/75 leading-relaxed transition-opacity duration-400"
@@ -314,7 +360,13 @@ export default function Hero() {
         </div>
 
         {/* 8-Second Timeline Progress Bar & Time Counter */}
-        <div className="absolute z-20 bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2 flex items-center gap-3 sm:gap-4">
+        <div
+          className={`z-20 flex items-center gap-3 sm:gap-4 ${
+            mobileFit
+              ? 'relative pb-3 sm:pb-4 justify-center'
+              : 'absolute bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2'
+          } md:absolute md:bottom-7 md:left-1/2 md:-translate-x-1/2 md:pb-0`}
+        >
           <span
             ref={counterRef}
             className="font-sans text-[10px] sm:text-xs text-[var(--text)] tabular-nums min-w-[3ch] tracking-wider"
@@ -338,7 +390,7 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* Scroll To Explore Indicator */}
+        {/* Scroll To Explore Indicator (Desktop) */}
         <div
           ref={scrollHintRef}
           className="hidden md:flex flex-col items-center gap-3 absolute z-20 right-8 md:right-16 top-1/2 -translate-y-1/2 opacity-0"
