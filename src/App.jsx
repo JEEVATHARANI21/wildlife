@@ -10,7 +10,6 @@ import Album from './components/Album'
 import Moments from './components/Moments'
 import VideoSection from './components/VideoSection'
 import About from './components/About'
-import Prints from './components/Prints'
 import Contact from './components/Contact'
 import CustomCursor from './components/CustomCursor'
 
@@ -55,8 +54,6 @@ export default function App() {
       <VideoSection />
       {/* About photographer */}
       <About />
-      {/* Fine art prints */}
-      <Prints />
       {/* Contact */}
       <Contact />
     </div>
