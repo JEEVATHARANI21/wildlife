@@ -8,7 +8,6 @@ import Hero from './components/Hero'
 import Showreel3D from './components/Showreel3D'
 import Album from './components/Album'
 import Moments from './components/Moments'
-import Expeditions from './components/Expeditions'
 import VideoSection from './components/VideoSection'
 import About from './components/About'
 import Prints from './components/Prints'
@@ -52,8 +51,6 @@ export default function App() {
       <Album />
       {/* Moments with user specimens */}
       <Moments />
-      {/* Expeditions */}
-      <Expeditions />
       {/* Video section */}
       <VideoSection />
       {/* About photographer */}
