@@ -299,7 +299,7 @@ export default function Album() {
 
   return (
     <section
-      id="work"
+      id="gallery"
       ref={sectionRef}
       className="relative w-full pt-10 md:pt-14 pb-24 md:pb-32 overflow-hidden"
       style={{ background: '#0B0C0A' }}
@@ -311,15 +311,15 @@ export default function Album() {
       >
         <div>
           <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-[#A7A59B]">
-              Specimen Archive · Section 03
+            <span className="w-2 h-2 rounded-full bg-[#B3874B] animate-pulse" />
+            <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-[#B3874B] font-medium">
+              Fine Art Specimen Archive · Section 03
             </p>
           </div>
           <h2
             className="font-serif text-[#F1EFE8] leading-tight text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light"
           >
-            The Collection
+            Wildlife Photography <span className="italic text-[#B3874B] font-normal">Gallery</span>
           </h2>
         </div>
 

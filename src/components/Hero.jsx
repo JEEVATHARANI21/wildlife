@@ -136,6 +136,7 @@ export default function Hero() {
 
   return (
     <section
+      id="home"
       ref={sectionRef}
       style={{ height: '180vh', background: '#0B0C0A' }}
     >
@@ -328,12 +329,12 @@ export default function Hero() {
             ref={subtitleRef}
             className="flex items-center gap-3 sm:gap-5 mt-1 sm:mt-3 md:mt-5 opacity-0"
           >
-            <span className="font-sans text-[9px] sm:text-xs tracking-[0.25em] text-[var(--muted)] uppercase">
-              Wildlife Photography
+            <span className="font-sans text-[9px] sm:text-xs tracking-[0.25em] text-[#B3874B] uppercase font-semibold">
+              Wildlife Photography in Tamil Nadu
             </span>
             <span className="w-4 sm:w-8 h-[1px] bg-[var(--border)] inline-block" />
             <span className="font-sans text-[9px] sm:text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
-              Tamil Nadu · India
+              India · Fine Art Portfolio
             </span>
           </div>
 

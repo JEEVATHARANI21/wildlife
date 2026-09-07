@@ -84,17 +84,25 @@ export default function Navbar({ openLegal }) {
         </a>
 
         {/* Desktop Navigation Links */}
-        <ul className="hidden md:flex items-center gap-10">
-          {['WORK', 'ABOUT', 'CONTACT'].map((link) => (
-            <li key={link}>
+        <ul className="hidden lg:flex items-center gap-7">
+          {[
+            { label: 'GALLERY', href: '#gallery' },
+            { label: 'WILDLIFE', href: '#wildlife' },
+            { label: 'BIRDS', href: '#birds' },
+            { label: 'TOURS', href: '#tours' },
+            { label: 'TIPS', href: '#blog' },
+            { label: 'ABOUT', href: '#about' },
+            { label: 'CONTACT', href: '#contact' },
+          ].map((link) => (
+            <li key={link.label}>
               <a
-                href={`#${link.toLowerCase()}`}
-                className="nav-link font-sans text-xs tracking-[0.18em] uppercase"
+                href={link.href}
+                className="nav-link font-sans text-[11px] tracking-[0.16em] uppercase"
                 style={{ color: 'var(--muted)', transition: 'color 0.3s ease' }}
                 onMouseEnter={e => e.target.style.color = 'var(--text)'}
                 onMouseLeave={e => e.target.style.color = 'var(--muted)'}
               >
-                {link}
+                {link.label}
               </a>
             </li>
           ))}
@@ -129,7 +137,7 @@ export default function Navbar({ openLegal }) {
           type="button"
           onClick={() => setMobileMenuOpen((prev) => !prev)}
           aria-label="Toggle navigation menu"
-          className="md:hidden flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-[#141512]/90 border border-white/15 hover:border-[#B3874B] text-[#F1EFE8] transition-all focus:outline-none cursor-pointer"
+          className="lg:hidden flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-[#141512]/90 border border-white/15 hover:border-[#B3874B] text-[#F1EFE8] transition-all focus:outline-none cursor-pointer"
         >
           <span
             className={`block w-5 h-0.5 bg-[#F1EFE8] transition-transform duration-300 ${
@@ -151,14 +159,14 @@ export default function Navbar({ openLegal }) {
 
       {/* Fullscreen Mobile Drawer Menu */}
       <div
-        className={`fixed inset-0 z-50 md:hidden flex flex-col justify-between p-6 sm:p-8 bg-[#0B0C0A]/96 backdrop-blur-2xl border-b border-[#2A2B28] transition-all duration-400 ease-out ${
+        className={`fixed inset-0 z-50 lg:hidden flex flex-col justify-between p-6 sm:p-8 bg-[#0B0C0A]/98 backdrop-blur-2xl border-b border-[#2A2B28] transition-all duration-400 ease-out overflow-y-auto ${
           mobileMenuOpen
             ? 'opacity-100 pointer-events-auto translate-y-0'
             : 'opacity-0 pointer-events-none -translate-y-4'
         }`}
       >
         {/* Drawer Header */}
-        <div className="flex items-center justify-between pb-6 border-b border-[#2A2B28]/80">
+        <div className="flex items-center justify-between pb-4 border-b border-[#2A2B28]/80">
           <div className="flex items-center gap-3">
             <img
               src="/logo-icon.png"
@@ -179,27 +187,32 @@ export default function Navbar({ openLegal }) {
         </div>
 
         {/* Drawer Links */}
-        <div className="flex flex-col gap-6 my-auto py-8">
+        <div className="flex flex-col gap-3.5 my-auto py-6">
           {[
-            { label: 'Work & Collection', href: '#work', desc: 'Curated Wildlife Specimens' },
-            { label: 'About Photographer', href: '#about', desc: '12 Years Documenting the Wild' },
-            { label: 'Contact & Inquiries', href: '#contact', desc: 'Fine Art Prints & Collaborations' },
+            { label: 'Home', href: '#home', desc: 'Wildlife Photography in Tamil Nadu' },
+            { label: 'Gallery', href: '#gallery', desc: 'Wildlife Photography Gallery' },
+            { label: 'Wildlife', href: '#wildlife', desc: 'Wildlife Photography India' },
+            { label: 'Birds', href: '#birds', desc: 'Bird Photography' },
+            { label: 'Tours', href: '#tours', desc: 'Wildlife Photography Tours' },
+            { label: 'Blog', href: '#blog', desc: 'Wildlife Photography Tips' },
+            { label: 'About', href: '#about', desc: 'Professional Wildlife Photographer' },
+            { label: 'Contact', href: '#contact', desc: 'Wildlife Photographer Tamil Nadu' },
           ].map((item, idx) => (
             <a
               key={item.label}
               href={item.href}
               onClick={handleNavClick}
-              className="group flex flex-col gap-1 py-2 border-b border-white/5 transition-all"
+              className="group flex flex-col gap-0.5 py-1.5 border-b border-white/5 transition-all"
             >
               <div className="flex items-center justify-between">
-                <span className="font-serif text-2xl sm:text-3xl text-[#F1EFE8] group-hover:text-[#B3874B] transition-colors tracking-wide">
+                <span className="font-serif text-xl sm:text-2xl text-[#F1EFE8] group-hover:text-[#B3874B] transition-colors tracking-wide">
                   {item.label}
                 </span>
-                <span className="font-sans text-xs text-[#B3874B] opacity-0 group-hover:opacity-100 transition-opacity">
+                <span className="font-sans text-[10px] text-[#B3874B] opacity-70 group-hover:opacity-100 transition-opacity">
                   0{idx + 1} →
                 </span>
               </div>
-              <span className="font-sans text-[10px] tracking-widest uppercase text-[#888]">
+              <span className="font-sans text-[9px] tracking-wider uppercase text-[#888] group-hover:text-[#A7A59B]">
                 {item.desc}
               </span>
             </a>

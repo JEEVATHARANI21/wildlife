@@ -123,6 +123,7 @@ export default function Moments() {
 
   return (
     <section
+      id="wildlife"
       ref={containerRef}
       className="relative w-full"
       style={{
@@ -143,8 +144,8 @@ export default function Moments() {
               CATALOGUE {current.id} / 06
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-[#B3874B]" />
-            <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-[#B3874B] font-medium truncate max-w-[140px] sm:max-w-none">
-              {current.category}
+            <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.2em] uppercase text-[#B3874B] font-semibold truncate max-w-[140px] sm:max-w-none">
+              Wildlife Photography India · {current.category}
             </span>
           </div>
 

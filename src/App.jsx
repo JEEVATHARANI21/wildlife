@@ -8,6 +8,9 @@ import Hero from './components/Hero'
 import Showreel3D from './components/Showreel3D'
 import Album from './components/Album'
 import Moments from './components/Moments'
+import Birds from './components/Birds'
+import Tours from './components/Tours'
+import Blog from './components/Blog'
 import VideoSection from './components/VideoSection'
 import About from './components/About'
 import Contact from './components/Contact'
@@ -55,15 +58,21 @@ export default function App() {
       <Hero />
       {/* Pacôme Pertant style Playful 3D Showreel featuring user photos */}
       <Showreel3D />
-      {/* 03 Section 3: Interactive Album - click/swipe to change next/prev image */}
+      {/* 03 Section 3: Interactive Album - Wildlife Photography Gallery */}
       <Album />
-      {/* Moments with user specimens */}
+      {/* 04 Moments: Wildlife Photography India */}
       <Moments />
+      {/* 05 Avian Special: Bird Photography */}
+      <Birds />
+      {/* 06 Guided Expeditions: Wildlife Photography Tours */}
+      <Tours />
+      {/* 07 Field Knowledge: Wildlife Photography Tips */}
+      <Blog />
       {/* Video section */}
       <VideoSection />
-      {/* About photographer */}
+      {/* 08 About: Professional Wildlife Photographer */}
       <About />
-      {/* Contact */}
+      {/* 09 Contact: Wildlife Photographer Tamil Nadu */}
       <Contact openLegal={openLegal} />
 
       {/* Terms & Privacy Policy Modal */}

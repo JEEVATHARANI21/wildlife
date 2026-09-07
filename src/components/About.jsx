@@ -108,9 +108,12 @@ export default function About() {
       <div className="flex flex-col md:flex-row gap-10 sm:gap-16 md:gap-24 items-start">
         {/* Left — text */}
         <div className="md:w-6/12" ref={textRef}>
-          <p className="about-line font-sans text-[10px] tracking-[0.3em] uppercase mb-6" style={{ color: 'var(--muted)' }}>
-            About
-          </p>
+          <div className="about-line flex items-center gap-2.5 mb-3">
+            <span className="w-2 h-2 rounded-full bg-[#B3874B] animate-pulse" />
+            <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-[#B3874B] font-medium">
+              Professional Wildlife Photographer · About
+            </p>
+          </div>
 
           <h2
             className="about-line font-serif mb-8"
@@ -132,7 +135,7 @@ export default function About() {
             className="about-line font-sans text-sm leading-relaxed"
             style={{ color: 'var(--muted)', maxWidth: 440 }}
           >
-            Twelve years in the wild have taught me that patience is the
+            As a <strong className="text-[#F1EFE8] font-normal">professional wildlife photographer</strong> based in Tamil Nadu, twelve years in the wild have taught me that patience is the
             only equipment that truly matters. Every expedition begins with
             silence and ends with a single frame — the one that holds the
             breath of the forest, the weight of the moment, the animal in

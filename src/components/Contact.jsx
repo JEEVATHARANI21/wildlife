@@ -91,21 +91,32 @@ export default function Contact({ openLegal }) {
         {/* Divider */}
         <div style={{ width: 40, height: 1, background: 'var(--border)', marginBottom: '2.5rem' }} />
 
+        {/* SEO Topic Eyebrow */}
+        <div className="flex items-center gap-2.5 sm:gap-3 mb-4">
+          <span className="w-2 h-2 rounded-full bg-[#B3874B] animate-pulse" />
+          <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-[#B3874B] font-medium">
+            Inquiries · Wildlife Photographer Tamil Nadu
+          </p>
+        </div>
+
         {/* Big statement */}
         <div ref={titleRef}>
           <h2
             className="font-serif"
             style={{
-              fontSize: 'clamp(2.5rem, 9vw, 8rem)',
+              fontSize: 'clamp(2.2rem, 7.5vw, 6.8rem)',
               fontWeight: 300,
               color: 'var(--text)',
-              lineHeight: 0.95,
+              lineHeight: 0.98,
               letterSpacing: '-0.01em',
             }}
           >
-            Have a Story<br />
-            <span style={{ fontStyle: 'italic' }}>Worth Capturing?</span>
+            Wildlife Photographer<br />
+            <span style={{ fontStyle: 'italic' }}>Tamil Nadu, India</span>
           </h2>
+          <p className="font-sans text-xs sm:text-sm text-[#A7A59B] mt-4 max-w-lg mx-auto font-light leading-relaxed">
+            Connect with Vijay Mathiew for fine art print acquisitions, guided photography tours, private field mentoring, and editorial licensing.
+          </p>
         </div>
 
         {/* CTA */}
