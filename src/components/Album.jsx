@@ -301,7 +301,7 @@ export default function Album() {
     <section
       id="work"
       ref={sectionRef}
-      className="relative w-full py-28 md:py-36 overflow-hidden"
+      className="relative w-full pt-10 md:pt-14 pb-24 md:pb-32 overflow-hidden"
       style={{ background: '#0B0C0A' }}
     >
       {/* Editorial Header */}

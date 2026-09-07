@@ -283,7 +283,7 @@ export default function Showreel3D() {
       />
 
       {/* Active Card HUD Info Panel */}
-      <div className="relative z-10 pb-16 px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-t border-[#2A2B28]/60 pt-6">
+      <div className="relative z-10 pb-8 px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-t border-[#2A2B28]/60 pt-6">
         <div className="flex items-baseline gap-6">
           <span className="font-serif text-3xl md:text-5xl text-[#F1EFE8]/30 font-light">
             {String(activeItem.id).padStart(2, '0')}
