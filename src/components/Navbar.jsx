@@ -46,17 +46,23 @@ export default function Navbar() {
         href="#"
         className="flex items-center gap-3.5 group"
       >
-        <img
-          src="/logo.png"
-          alt="UntamedTrails Logo"
-          className="w-9 h-9 object-contain brightness-110 drop-shadow-md group-hover:scale-105 transition-transform duration-300"
-        />
-        <span
-          className="font-sans text-sm tracking-[0.25em] uppercase font-medium"
-          style={{ color: 'var(--text)' }}
-        >
-          UNTAMED<span style={{ color: 'var(--muted)', fontWeight: 300 }}>TRAILS</span>
-        </span>
+        <div className="flex items-center justify-center p-1.5 rounded-lg bg-black/40 border border-white/10 group-hover:border-[#B3874B]/50 transition-all duration-300">
+          <img
+            src="/logo-icon.png"
+            alt="UntamedTrails Logo"
+            className="h-10 md:h-11 w-auto object-contain brightness-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <div className="flex flex-col">
+          <span
+            className="font-sans text-base md:text-lg tracking-[0.26em] uppercase font-bold text-[#F1EFE8] leading-none"
+          >
+            UNTAMED<span className="text-[#B3874B] font-light">TRAILS</span>
+          </span>
+          <span className="font-sans text-[8px] tracking-[0.35em] uppercase text-[#888] mt-1 hidden sm:inline">
+            Wildlife Photography Studio
+          </span>
+        </div>
       </a>
 
       <ul className="hidden md:flex items-center gap-10">

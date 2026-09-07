@@ -201,38 +201,69 @@ export default function Hero() {
         >
           <a
             href="#"
+            className="group"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.85rem',
+              gap: '1rem',
               textDecoration: 'none',
             }}
           >
-            <img
-              src="/logo.png"
-              alt="UntamedTrails"
+            <div
               style={{
-                width: '34px',
-                height: '34px',
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.5))',
-              }}
-            />
-            <span
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '0.75rem',
-                letterSpacing: '0.25em',
-                color: 'var(--text)',
-                textTransform: 'uppercase',
-                fontWeight: 500,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0.45rem 0.75rem',
+                borderRadius: '0.75rem',
+                background: 'rgba(0,0,0,0.45)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
+                transition: 'all 0.3s ease',
               }}
             >
-              UNTAMED
-              <span style={{ color: 'var(--muted)', fontWeight: 300 }}>
-                TRAILS
+              <img
+                src="/logo-icon.png"
+                alt="UntamedTrails"
+                style={{
+                  height: '46px',
+                  width: 'auto',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.9))',
+                  transition: 'transform 0.3s ease',
+                }}
+              />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '1.25rem',
+                  letterSpacing: '0.28em',
+                  color: '#F1EFE8',
+                  textTransform: 'uppercase',
+                  fontWeight: 700,
+                  lineHeight: 1.15,
+                  textShadow: '0 2px 8px rgba(0,0,0,0.8)',
+                }}
+              >
+                UNTAMED<span style={{ color: '#B3874B', fontWeight: 300 }}>TRAILS</span>
               </span>
-            </span>
+              <span
+                style={{
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '0.62rem',
+                  letterSpacing: '0.35em',
+                  color: 'rgba(241,239,232,0.65)',
+                  textTransform: 'uppercase',
+                  marginTop: '0.3rem',
+                  fontWeight: 400,
+                }}
+              >
+                Wildlife Photography Studio
+              </span>
+            </div>
           </a>
 
           <div style={{ display: 'flex', gap: '2.5rem' }}>

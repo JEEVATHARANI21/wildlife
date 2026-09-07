@@ -213,19 +213,23 @@ export default function Contact() {
         <div style={{ width: 40, height: 1, background: 'var(--border)', marginTop: '5rem', marginBottom: '2rem' }} />
 
         {/* Footer */}
-        <footer className="flex flex-col items-center gap-5">
-          <div className="flex items-center gap-3">
-            <img
-              src="/logo.png"
-              alt="UntamedTrails"
-              className="w-10 h-10 object-contain drop-shadow-md"
-            />
+        <footer className="flex flex-col items-center gap-6">
+          <div className="flex flex-col items-center gap-3">
+            <div className="p-3 rounded-2xl bg-black/40 border border-white/10 shadow-2xl">
+              <img
+                src="/logo-icon.png"
+                alt="UntamedTrails"
+                className="h-14 md:h-16 w-auto object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
+              />
+            </div>
             <p
-              className="font-sans text-sm tracking-[0.25em] uppercase font-medium"
-              style={{ color: 'var(--text)' }}
+              className="font-sans text-xl md:text-2xl tracking-[0.3em] uppercase font-bold text-[#F1EFE8] mt-2"
             >
-              UNTAMED<span style={{ color: 'var(--muted)', fontWeight: 300 }}>TRAILS</span>
+              UNTAMED<span className="text-[#B3874B] font-light">TRAILS</span>
             </p>
+            <span className="font-sans text-[9px] tracking-[0.35em] uppercase text-[#888]">
+              Wildlife Photography Studio
+            </span>
           </div>
           <div className="flex items-center gap-6">
             {['Instagram', 'Behance', 'LinkedIn'].map(s => (
