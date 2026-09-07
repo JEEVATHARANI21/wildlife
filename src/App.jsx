@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -12,11 +12,19 @@ import VideoSection from './components/VideoSection'
 import About from './components/About'
 import Contact from './components/Contact'
 import CustomCursor from './components/CustomCursor'
+import LegalModal from './components/LegalModal'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
   const lenisRef = useRef(null)
+  const [legalModalOpen, setLegalModalOpen] = useState(false)
+  const [legalTab, setLegalTab] = useState('terms')
+
+  const openLegal = (tab = 'terms') => {
+    setLegalTab(tab)
+    setLegalModalOpen(true)
+  }
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -41,7 +49,7 @@ export default function App() {
   return (
     <div className="grain" style={{ background: 'var(--bg)' }}>
       <CustomCursor />
-      <Navbar />
+      <Navbar openLegal={openLegal} />
       {/* 01 Heroic Page: Sticky video hero */}
       <Hero />
       {/* Pacôme Pertant style Playful 3D Showreel featuring user photos */}
@@ -55,7 +63,14 @@ export default function App() {
       {/* About photographer */}
       <About />
       {/* Contact */}
-      <Contact />
+      <Contact openLegal={openLegal} />
+
+      {/* Terms & Privacy Policy Modal */}
+      <LegalModal
+        isOpen={legalModalOpen}
+        onClose={() => setLegalModalOpen(false)}
+        initialTab={legalTab}
+      />
     </div>
   )
 }

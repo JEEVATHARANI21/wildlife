@@ -201,7 +201,7 @@ export default function Hero() {
         >
           <a
             href="#"
-            className="group"
+            className="group logo-brand-group"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -226,26 +226,26 @@ export default function Hero() {
               <img
                 src="/logo-icon.png"
                 alt="UntamedTrails"
+                className="logo-icon-img animate-leopard-prowl"
                 style={{
                   height: '46px',
                   width: 'auto',
                   objectFit: 'contain',
-                  filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.9))',
-                  transition: 'transform 0.3s ease',
+                  transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease',
                 }}
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <span
+                className="logo-brand-title shimmer-gold-text"
                 style={{
                   fontFamily: 'Inter, sans-serif',
                   fontSize: '1.25rem',
                   letterSpacing: '0.28em',
-                  color: '#F1EFE8',
                   textTransform: 'uppercase',
                   fontWeight: 700,
                   lineHeight: 1.15,
-                  textShadow: '0 2px 8px rgba(0,0,0,0.8)',
+                  transition: 'letter-spacing 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               >
                 UNTAMED<span style={{ color: '#B3874B', fontWeight: 300 }}>TRAILS</span>

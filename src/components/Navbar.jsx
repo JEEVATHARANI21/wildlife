@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 
-export default function Navbar() {
+export default function Navbar({ openLegal }) {
   const navRef = useRef(null)
   const [visible, setVisible] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -44,18 +44,20 @@ export default function Navbar() {
     >
       <a
         href="#"
-        className="flex items-center gap-3.5 group"
+        className="flex items-center gap-3.5 group logo-brand-group"
       >
         <div className="flex items-center justify-center p-1.5 rounded-lg bg-black/40 border border-white/10 group-hover:border-[#B3874B]/50 transition-all duration-300">
           <img
             src="/logo-icon.png"
             alt="UntamedTrails Logo"
-            className="h-10 md:h-11 w-auto object-contain brightness-125 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-300"
+            className="h-10 md:h-11 w-auto object-contain brightness-125 logo-icon-img animate-leopard-prowl"
+            style={{ transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease' }}
           />
         </div>
         <div className="flex flex-col">
           <span
-            className="font-sans text-base md:text-lg tracking-[0.26em] uppercase font-bold text-[#F1EFE8] leading-none"
+            className="font-sans text-base md:text-lg tracking-[0.26em] uppercase font-bold text-[#F1EFE8] leading-none logo-brand-title shimmer-gold-text"
+            style={{ transition: 'letter-spacing 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
           >
             UNTAMED<span className="text-[#B3874B] font-light">TRAILS</span>
           </span>

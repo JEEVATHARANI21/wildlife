@@ -195,3 +195,56 @@
   overflow: hidden;
   position: relative;
 }
+
+/* ─── LOGO & BRAND ANIMATIONS ────────────────────────────── */
+@keyframes leopard-prowl {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.9));
+  }
+  50% {
+    transform: translateY(-2.5px) scale(1.025);
+    filter: drop-shadow(0 6px 18px rgba(179,135,75,0.45));
+  }
+}
+
+.animate-leopard-prowl {
+  animation: leopard-prowl 4.5s ease-in-out infinite;
+}
+
+@keyframes gold-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-gold-text {
+  background: linear-gradient(
+    90deg,
+    #F1EFE8 0%,
+    #F1EFE8 35%,
+    #D4AF37 50%,
+    #F1EFE8 65%,
+    #F1EFE8 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-shimmer 5s ease-in-out infinite;
+}
+
+.logo-brand-group {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo-brand-group:hover .logo-icon-img {
+  transform: translateX(6px) scale(1.06);
+  filter: drop-shadow(0 0 16px rgba(179, 135, 75, 0.7));
+}
+
+.logo-brand-group:hover .logo-brand-title {
+  letter-spacing: 0.32em;
+}

@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger)
 // REPLACE WITH YOUR PHOTOGRAPH — dark forest/dusk image
 const BG_IMAGE = 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=80&auto=format&fit=crop'
 
-export default function Contact() {
+export default function Contact({ openLegal }) {
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
   const contentRef = useRef(null)
@@ -214,16 +214,18 @@ export default function Contact() {
 
         {/* Footer */}
         <footer className="flex flex-col items-center gap-6">
-          <div className="flex flex-col items-center gap-3">
-            <div className="p-3 rounded-2xl bg-black/40 border border-white/10 shadow-2xl">
+          <div className="flex flex-col items-center gap-3 group logo-brand-group cursor-pointer">
+            <div className="p-3.5 rounded-2xl bg-black/40 border border-white/10 shadow-2xl group-hover:border-[#B3874B]/50 transition-all duration-300">
               <img
                 src="/logo-icon.png"
                 alt="UntamedTrails"
-                className="h-14 md:h-16 w-auto object-contain drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
+                className="h-14 md:h-16 w-auto object-contain logo-icon-img animate-leopard-prowl"
+                style={{ transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease' }}
               />
             </div>
             <p
-              className="font-sans text-xl md:text-2xl tracking-[0.3em] uppercase font-bold text-[#F1EFE8] mt-2"
+              className="font-sans text-xl md:text-2xl tracking-[0.3em] uppercase font-bold text-[#F1EFE8] mt-2 logo-brand-title shimmer-gold-text"
+              style={{ transition: 'letter-spacing 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
             >
               UNTAMED<span className="text-[#B3874B] font-light">TRAILS</span>
             </p>
@@ -231,6 +233,7 @@ export default function Contact() {
               Wildlife Photography Studio
             </span>
           </div>
+
           <div className="flex items-center gap-6 mt-2">
             <a
               href="https://www.instagram.com/vijaymathiew_photography?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
@@ -255,6 +258,24 @@ export default function Contact() {
               <span className="text-[#888] group-hover:translate-x-0.5 transition-transform">↗</span>
             </a>
           </div>
+
+          {/* Legal: Terms & Privacy Policy Links */}
+          <div className="flex items-center gap-5 text-xs text-[#888] font-sans mt-2">
+            <button
+              onClick={() => openLegal && openLegal('terms')}
+              className="hover:text-[#B3874B] transition-colors cursor-pointer uppercase tracking-widest text-[10px]"
+            >
+              Terms of Service
+            </button>
+            <span className="text-[#444]">·</span>
+            <button
+              onClick={() => openLegal && openLegal('privacy')}
+              className="hover:text-[#B3874B] transition-colors cursor-pointer uppercase tracking-widest text-[10px]"
+            >
+              Privacy Policy
+            </button>
+          </div>
+
           <p className="font-sans text-[10px]" style={{ color: 'var(--border)' }}>
             © 2026 UNTAMEDTRAILS. All rights reserved.
           </p>
