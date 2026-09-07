@@ -10,7 +10,6 @@ import Album from './components/Album'
 import Moments from './components/Moments'
 import Birds from './components/Birds'
 import Tours from './components/Tours'
-import Blog from './components/Blog'
 import VideoSection from './components/VideoSection'
 import About from './components/About'
 import Contact from './components/Contact'
@@ -66,8 +65,6 @@ export default function App() {
       <Birds />
       {/* 06 Guided Expeditions: Wildlife Photography Tours */}
       <Tours />
-      {/* 07 Field Knowledge: Wildlife Photography Tips */}
-      <Blog />
       {/* Video section */}
       <VideoSection />
       {/* 08 About: Professional Wildlife Photographer */}

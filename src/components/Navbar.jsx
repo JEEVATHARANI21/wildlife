@@ -90,7 +90,6 @@ export default function Navbar({ openLegal }) {
             { label: 'WILDLIFE', href: '#wildlife' },
             { label: 'BIRDS', href: '#birds' },
             { label: 'TOURS', href: '#tours' },
-            { label: 'TIPS', href: '#blog' },
             { label: 'ABOUT', href: '#about' },
             { label: 'CONTACT', href: '#contact' },
           ].map((link) => (
@@ -194,7 +193,6 @@ export default function Navbar({ openLegal }) {
             { label: 'Wildlife', href: '#wildlife', desc: 'Wildlife Photography India' },
             { label: 'Birds', href: '#birds', desc: 'Bird Photography' },
             { label: 'Tours', href: '#tours', desc: 'Wildlife Photography Tours' },
-            { label: 'Blog', href: '#blog', desc: 'Wildlife Photography Tips' },
             { label: 'About', href: '#about', desc: 'Professional Wildlife Photographer' },
             { label: 'Contact', href: '#contact', desc: 'Wildlife Photographer Tamil Nadu' },
           ].map((item, idx) => (
