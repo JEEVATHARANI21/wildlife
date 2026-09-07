@@ -63,7 +63,7 @@ export default function Prints() {
   return (
     <section
       ref={sectionRef}
-      className="px-8 md:px-16 py-24 md:py-40"
+      className="px-8 md:px-16 pt-14 md:pt-18 pb-12 md:pb-16"
       style={{ background: 'var(--bg)', borderTop: '1px solid var(--border)' }}
     >
       {/* Header */}
@@ -165,7 +165,7 @@ export default function Prints() {
 
       {/* Services row */}
       <div
-        className="mt-20 pt-10 grid grid-cols-2 md:grid-cols-4 gap-8"
+        className="mt-12 pt-8 grid grid-cols-2 md:grid-cols-4 gap-8"
         style={{ borderTop: '1px solid var(--border)' }}
       >
         {['Fine Art Archival Prints', 'Commercial Licensing', 'Editorial Publications', 'Field Expeditions & Workshops'].map(

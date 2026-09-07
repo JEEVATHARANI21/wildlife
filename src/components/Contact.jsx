@@ -68,7 +68,7 @@ export default function Contact() {
       id="contact"
       ref={sectionRef}
       className="relative w-full overflow-hidden"
-      style={{ minHeight: '100svh', background: 'var(--bg)' }}
+      style={{ background: 'var(--bg)' }}
     >
       {/* Background image */}
       <img
@@ -87,7 +87,7 @@ export default function Contact() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-8 py-24 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center px-8 pt-16 md:pt-20 pb-24 md:pb-32 text-center">
         {/* Divider */}
         <div style={{ width: 40, height: 1, background: 'var(--border)', marginBottom: '4rem' }} />
 

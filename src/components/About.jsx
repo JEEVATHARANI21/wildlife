@@ -102,7 +102,7 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="px-8 md:px-16 py-24 md:py-40"
+      className="px-8 md:px-16 pt-20 md:pt-28 pb-12 md:pb-16"
       style={{ background: 'var(--bg)' }}
     >
       <div className="flex flex-col md:flex-row gap-16 md:gap-24 items-start">
