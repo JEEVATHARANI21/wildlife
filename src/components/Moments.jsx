@@ -79,8 +79,8 @@ export default function Moments() {
   const pinSectionRef = useRef(null)
   const [activeIdx, setActiveIdx] = useState(0)
 
-  const imageBoxRef = useRef(null)
-  const textBoxRef = useRef(null)
+  // Single unified stageRef so BOTH image and description move in identical lockstep
+  const stageRef = useRef(null)
 
   useEffect(() => {
     const total = MOMENTS.length
@@ -92,30 +92,21 @@ export default function Moments() {
       pin: pinSectionRef.current,
       scrub: 0.8,
       onUpdate: (self) => {
-        // Progress runs from 0.0 to 1.0 across the 400vh scroll track
+        // Progress runs 0.0 (top) -> 1.0 (bottom)
         const progress = self.progress
         const rawIndex = progress * (total - 1)
         const newIndex = Math.min(total - 1, Math.round(rawIndex))
         setActiveIdx(newIndex)
 
-        // As user scrolls DOWN: image moves completely across to the right (+X), text is on the left
-        // As user scrolls UP: image moves completely across to the left (-X), text is on the right
-        // progress: 0 (top) -> 1 (bottom)
-        // Shift amplitude: -220px to +220px
-        const xOffset = (progress - 0.5) * 440
+        // USER REQUEST:
+        // Down scroll (progress 0 -> 1) -> moves LEFT (-X)
+        // Up scroll   (progress 1 -> 0) -> moves RIGHT (+X)
+        // Both image and description are locked together in stageRef moving to the same side
+        const xOffset = (0.5 - progress) * 380
 
-        if (imageBoxRef.current) {
-          gsap.to(imageBoxRef.current, {
+        if (stageRef.current) {
+          gsap.to(stageRef.current, {
             x: xOffset,
-            duration: 0.5,
-            ease: 'power2.out',
-            overwrite: 'auto',
-          })
-        }
-
-        if (textBoxRef.current) {
-          gsap.to(textBoxRef.current, {
-            x: -xOffset * 0.4,
             duration: 0.5,
             ease: 'power2.out',
             overwrite: 'auto',
@@ -136,15 +127,15 @@ export default function Moments() {
       ref={containerRef}
       className="relative w-full"
       style={{
-        height: '420vh', // Long smooth scroll track for full left-to-right gliding
-        background: '#ECE9E2', // Elegant warm editorial background matching shaazjung.com
+        height: '420vh', // Smooth scrub distance
+        background: '#ECE9E2', // Elegant Shaaz Jung warm editorial tone
         color: '#1A1B18',
       }}
     >
       {/* Pinned Editorial Stage */}
       <div
         ref={pinSectionRef}
-        className="sticky top-0 w-full h-[100svh] overflow-hidden flex flex-col justify-between py-10 px-8 md:px-16 select-none"
+        className="sticky top-0 w-full h-[100svh] overflow-hidden flex flex-col justify-between py-8 md:py-10 px-6 md:px-16 select-none"
       >
         {/* Top Editorial Header & Catalogue Breadcrumb */}
         <div className="flex justify-between items-center border-b border-[#D5D0C6] pb-4 z-20">
@@ -160,7 +151,7 @@ export default function Moments() {
 
           <div className="flex items-center gap-6">
             <span className="hidden md:inline font-sans text-[10px] tracking-[0.18em] uppercase text-[#777]">
-              [ Scroll ↓ slides image right · Scroll ↑ slides image left ]
+              [ Scroll ↓ moves left · Scroll ↑ moves right ]
             </span>
             <span className="font-serif text-lg text-[#1A1B18]">
               {current.id}
@@ -169,15 +160,15 @@ export default function Moments() {
           </div>
         </div>
 
-        {/* Central Stage: Large Central Image & Side-by-Side Editorial Description */}
-        <div className="relative flex-1 flex items-center justify-center w-full max-w-7xl mx-auto my-auto py-4">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 w-full">
-            {/* Center Stage Photograph: Moves completely to the right as you scroll down, and to the left as you scroll up */}
-            <div
-              ref={imageBoxRef}
-              className="w-full lg:w-1/2 flex items-center justify-center will-change-transform z-10"
-            >
-              <div className="relative w-[320px] sm:w-[400px] md:w-[480px] aspect-[4/5] bg-[#0E0F0D] rounded-sm overflow-hidden shadow-2xl border border-black/10">
+        {/* Central Stage: Both Image & Description locked side-by-side in stageRef, moving together */}
+        <div className="relative flex-1 flex items-center justify-center w-full my-auto overflow-visible">
+          <div
+            ref={stageRef}
+            className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-14 w-full max-w-5xl mx-auto will-change-transform z-10"
+          >
+            {/* Left Column: Photograph */}
+            <div className="w-full lg:w-[46%] flex items-center justify-center flex-shrink-0">
+              <div className="relative w-[300px] sm:w-[380px] md:w-[440px] aspect-[4/5] bg-[#0E0F0D] rounded-sm overflow-hidden shadow-2xl border border-black/10">
                 <img
                   key={current.src}
                   src={current.src}
@@ -196,30 +187,27 @@ export default function Moments() {
               </div>
             </div>
 
-            {/* Side Editorial Description: Positioned alongside the moving photograph (shaazjung.com layout) */}
-            <div
-              ref={textBoxRef}
-              className="w-full lg:w-1/2 flex flex-col justify-center will-change-transform z-20 max-w-lg"
-            >
+            {/* Right Column: Side-by-Side Description (Locked alongside the image, never overlaps) */}
+            <div className="w-full lg:w-[54%] flex flex-col justify-center flex-shrink-0 max-w-md lg:max-w-lg">
               <h2
                 className="font-serif text-[#B3874B] tracking-[0.05em] uppercase leading-tight mb-2"
                 style={{
-                  fontSize: 'clamp(2rem, 3.8vw, 3.5rem)',
+                  fontSize: 'clamp(2rem, 3.4vw, 3.2rem)',
                   fontWeight: 400,
                 }}
               >
                 {current.subtitle}
               </h2>
 
-              <p className="font-sans text-[11px] tracking-[0.25em] uppercase font-semibold text-[#3A3B36] mb-5">
+              <p className="font-sans text-[11px] tracking-[0.25em] uppercase font-semibold text-[#3A3B36] mb-4">
                 {current.category}
               </p>
 
-              <p className="font-sans text-xs md:text-sm text-[#4A4B45] font-light leading-relaxed mb-6">
+              <p className="font-sans text-xs md:text-sm text-[#4A4B45] font-light leading-relaxed mb-5">
                 {current.description}
               </p>
 
-              <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#888] mb-8">
+              <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#888] mb-6">
                 LOCATION: <span className="text-[#1A1B18]">{current.location}</span>
                 <br />
                 SPECIES: <span className="text-[#1A1B18]">{current.species}</span>
@@ -228,7 +216,7 @@ export default function Moments() {
               <div>
                 <a
                   href="#contact"
-                  className="inline-block px-8 py-3.5 bg-[#1C1D1A] text-[#F1EFE8] font-sans text-[10px] tracking-[0.25em] uppercase hover:bg-[#B3874B] transition-colors duration-300 shadow-md"
+                  className="inline-block px-7 py-3 bg-[#1C1D1A] text-[#F1EFE8] font-sans text-[10px] tracking-[0.25em] uppercase hover:bg-[#B3874B] transition-colors duration-300 shadow-md"
                 >
                   Explore Catalogues
                 </a>
