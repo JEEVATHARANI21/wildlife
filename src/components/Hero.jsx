@@ -185,100 +185,48 @@ export default function Hero() {
 
         {/* Top Navbar Header */}
         <div
+          className="absolute top-0 left-0 right-0 flex justify-between items-center px-5 sm:px-8 md:px-16 py-4 md:py-6 z-20"
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: '1.5rem 4rem',
             background:
-              'linear-gradient(to bottom, rgba(11,12,10,0.7), transparent)',
-            zIndex: 20,
+              'linear-gradient(to bottom, rgba(11,12,10,0.8), transparent)',
           }}
         >
           <a
             href="#"
-            className="group logo-brand-group"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              textDecoration: 'none',
-            }}
+            className="group logo-brand-group flex items-center gap-2.5 sm:gap-4 no-underline"
           >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '0.45rem 0.75rem',
-                borderRadius: '0.75rem',
-                background: 'rgba(0,0,0,0.45)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,0.12)',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
-                transition: 'all 0.3s ease',
-              }}
-            >
+            <div className="flex items-center justify-center p-1.5 sm:p-2 rounded-xl bg-black/45 backdrop-blur-md border border-white/12 shadow-[0_8px_24px_rgba(0,0,0,0.6)] transition-all">
               <img
                 src="/logo-icon.png"
                 alt="UntamedTrails"
-                className="logo-icon-img animate-leopard-prowl"
+                className="logo-icon-img animate-leopard-prowl h-9 sm:h-11 md:h-12 w-auto object-contain"
                 style={{
-                  height: '46px',
-                  width: 'auto',
-                  objectFit: 'contain',
                   transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease',
                 }}
               />
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="flex flex-col">
               <span
-                className="logo-brand-title shimmer-gold-text"
+                className="logo-brand-title shimmer-gold-text font-sans text-sm sm:text-base md:text-xl tracking-[0.24em] sm:tracking-[0.28em] uppercase font-bold leading-tight"
                 style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '1.25rem',
-                  letterSpacing: '0.28em',
-                  textTransform: 'uppercase',
-                  fontWeight: 700,
-                  lineHeight: 1.15,
                   transition: 'letter-spacing 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               >
                 UNTAMED<span style={{ color: '#B3874B', fontWeight: 300 }}>TRAILS</span>
               </span>
-              <span
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '0.62rem',
-                  letterSpacing: '0.35em',
-                  color: 'rgba(241,239,232,0.65)',
-                  textTransform: 'uppercase',
-                  marginTop: '0.3rem',
-                  fontWeight: 400,
-                }}
-              >
+              <span className="font-sans text-[7px] sm:text-[9px] tracking-[0.3em] text-[#F1EFE8]/70 uppercase mt-0.5 sm:mt-1 font-normal hidden xs:inline">
                 Wildlife Photography Studio
               </span>
             </div>
           </a>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center gap-8">
             {['WORK', 'ABOUT', 'CONTACT'].map((l) => (
               <a
                 key={l}
                 href={`#${l.toLowerCase()}`}
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.2em',
-                  color: 'var(--muted)',
-                  textDecoration: 'none',
-                  textTransform: 'uppercase',
-                }}
+                className="font-sans text-[11px] tracking-[0.2em] text-[#A7A59B] hover:text-[#F1EFE8] no-underline uppercase transition-colors"
               >
                 {l}
               </a>
@@ -287,22 +235,7 @@ export default function Hero() {
               href="https://www.instagram.com/vijaymathiew_photography?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '0.65rem',
-                letterSpacing: '0.2em',
-                color: '#F1EFE8',
-                textDecoration: 'none',
-                textTransform: 'uppercase',
-                padding: '0.35rem 0.85rem',
-                borderRadius: '999px',
-                border: '1px solid rgba(255,255,255,0.15)',
-                background: 'rgba(255,255,255,0.06)',
-                backdropFilter: 'blur(8px)',
-              }}
+              className="flex items-center gap-1.5 font-sans text-[11px] tracking-[0.2em] text-[#F1EFE8] hover:text-[#B3874B] no-underline uppercase px-3.5 py-1.5 rounded-full border border-white/15 bg-white/6 backdrop-blur-md transition-all"
               title="Follow on Instagram"
             >
               <svg
@@ -322,28 +255,34 @@ export default function Hero() {
               <span>Instagram</span>
             </a>
           </div>
+
+          {/* Mobile Quick Action Pill */}
+          <div className="flex md:hidden items-center gap-2">
+            <a
+              href="#work"
+              className="px-3 py-1 rounded-full border border-white/20 bg-white/10 text-[9px] tracking-[0.2em] uppercase text-[#F1EFE8] font-sans hover:bg-white/20 transition-all"
+            >
+              EXPLORE
+            </a>
+            <a
+              href="https://wa.me/919087394546"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-1.5 rounded-full border border-[#25D366]/40 bg-[#25D366]/10 text-[#25D366]"
+              title="WhatsApp Support"
+            >
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+              </svg>
+            </a>
+          </div>
         </div>
 
         {/* Hero Title */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '4.5rem',
-            left: '4rem',
-            zIndex: 20,
-          }}
-        >
+        <div className="absolute z-20 left-5 sm:left-8 md:left-16 bottom-14 sm:bottom-16 md:bottom-20">
           <h1
             ref={titleRef}
-            style={{
-              fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(4rem, 11vw, 10rem)',
-              fontWeight: 300,
-              color: 'var(--text)',
-              lineHeight: 0.88,
-              letterSpacing: '0.1em',
-              opacity: 0,
-            }}
+            className="font-serif text-[clamp(3.2rem,8.5vw,9.5rem)] font-light text-[var(--text)] leading-[0.9] tracking-[0.08em] opacity-0"
           >
             INTO THE
             <br />
@@ -352,134 +291,49 @@ export default function Hero() {
 
           <div
             ref={subtitleRef}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1.5rem',
-              marginTop: '1.5rem',
-              opacity: 0,
-            }}
+            className="flex items-center gap-3 sm:gap-5 mt-3 sm:mt-5 opacity-0"
           >
-            <span
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '0.65rem',
-                letterSpacing: '0.28em',
-                color: 'var(--muted)',
-                textTransform: 'uppercase',
-              }}
-            >
+            <span className="font-sans text-[10px] sm:text-xs tracking-[0.25em] text-[var(--muted)] uppercase">
               Wildlife Photography
             </span>
-            <span
-              style={{
-                width: 36,
-                height: 1,
-                background: 'var(--border)',
-                display: 'inline-block',
-              }}
-            />
-            <span
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '0.65rem',
-                letterSpacing: '0.2em',
-                color: 'var(--muted)',
-                textTransform: 'uppercase',
-              }}
-            >
+            <span className="w-6 sm:w-9 h-[1px] bg-[var(--border)] inline-block" />
+            <span className="font-sans text-[10px] sm:text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
               Tamil Nadu · India
             </span>
           </div>
         </div>
 
         {/* Dynamic Atmospheric Quote */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '4.5rem',
-            right: '4rem',
-            zIndex: 20,
-            textAlign: 'right',
-            maxWidth: 340,
-          }}
-        >
+        <div className="hidden sm:block absolute z-20 right-6 md:right-16 bottom-16 md:bottom-20 text-right max-w-[260px] md:max-w-[340px]">
           <p
             ref={quoteRef}
-            style={{
-              fontFamily: 'Cormorant Garamond, serif',
-              fontSize: 'clamp(0.95rem, 1.5vw, 1.25rem)',
-              fontStyle: 'italic',
-              fontWeight: 300,
-              color: 'rgba(241,239,232,0.7)',
-              lineHeight: 1.55,
-              transition: 'opacity 0.4s ease',
-            }}
+            className="font-serif text-[clamp(0.95rem,1.4vw,1.25rem)] italic font-light text-[#F1EFE8]/75 leading-relaxed transition-opacity duration-400"
           >
             The forest holds its breath.
           </p>
         </div>
 
         {/* 8-Second Timeline Progress Bar & Time Counter */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '2rem',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 20,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-          }}
-        >
+        <div className="absolute z-20 bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2 flex items-center gap-3 sm:gap-4">
           <span
             ref={counterRef}
-            style={{
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '0.65rem',
-              color: 'var(--text)',
-              tabularNums: true,
-              minWidth: '3ch',
-              letterSpacing: '0.05em',
-            }}
+            className="font-sans text-[10px] sm:text-xs text-[var(--text)] tabular-nums min-w-[3ch] tracking-wider"
           >
             01s
           </span>
 
           <div
             onClick={togglePlayback}
-            style={{
-              width: 160,
-              height: 2,
-              background: 'rgba(42,43,40,0.8)',
-              position: 'relative',
-              cursor: 'pointer',
-            }}
+            className="w-24 sm:w-36 md:w-44 h-0.5 bg-[rgba(42,43,40,0.8)] relative cursor-pointer"
             title={isPlaying ? 'Click to Pause' : 'Click to Play'}
           >
             <div
               ref={progressRef}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                height: '100%',
-                background: '#10B981',
-                width: '0%',
-                transition: 'width 0.1s linear',
-              }}
+              className="absolute top-0 left-0 h-full bg-[#10B981] w-0 transition-[width] duration-100 linear"
             />
           </div>
 
-          <span
-            style={{
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '0.65rem',
-              color: 'var(--muted)',
-              letterSpacing: '0.05em',
-            }}
-          >
+          <span className="font-sans text-[10px] sm:text-xs text-[var(--muted)] tracking-wider">
             08s
           </span>
         </div>
@@ -487,32 +341,15 @@ export default function Hero() {
         {/* Scroll To Explore Indicator */}
         <div
           ref={scrollHintRef}
-          style={{
-            position: 'absolute',
-            right: '4rem',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 20,
-            opacity: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '0.75rem',
-          }}
+          className="hidden md:flex flex-col items-center gap-3 absolute z-20 right-8 md:right-16 top-1/2 -translate-y-1/2 opacity-0"
         >
           <span
-            style={{
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '0.55rem',
-              letterSpacing: '0.22em',
-              color: 'var(--muted)',
-              writingMode: 'vertical-rl',
-              textTransform: 'uppercase',
-            }}
+            className="font-sans text-[9px] tracking-[0.22em] text-[var(--muted)] uppercase"
+            style={{ writingMode: 'vertical-rl' }}
           >
             Scroll to Explore
           </span>
-          <div className="scroll-pulse" style={{ color: 'var(--muted)' }}>
+          <div className="scroll-pulse text-[var(--muted)]">
             <svg width="14" height="22" viewBox="0 0 14 22" fill="none">
               <rect
                 x="1"

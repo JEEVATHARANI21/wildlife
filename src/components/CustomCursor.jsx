@@ -6,6 +6,11 @@ export default function CustomCursor() {
   const viewRef = useRef(null)
 
   useEffect(() => {
+    // Only enable custom cursor on devices with fine pointer (mouse/trackpad)
+    if (window.matchMedia('(pointer: coarse)').matches || !window.matchMedia('(hover: hover)').matches) {
+      return
+    }
+
     const dot = dotRef.current
     const ring = ringRef.current
     const view = viewRef.current

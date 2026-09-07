@@ -9,7 +9,7 @@ export default function WhatsAppButton() {
   return (
     <aside
       aria-label="WhatsApp Support"
-      className="fixed bottom-6 right-6 z-40 flex items-center gap-3 select-none"
+      className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex items-center gap-3 select-none"
     >
       {/* Tooltip on hover */}
       <div

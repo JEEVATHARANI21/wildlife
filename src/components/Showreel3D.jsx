@@ -172,8 +172,15 @@ export default function Showreel3D() {
       touchStartX = e.touches[0].clientX
       targetRotationY += deltaX * 0.006
     }
+    const onTouchEnd = () => {
+      onMouseUp()
+      setTimeout(() => {
+        autoRotate = true
+      }, 2500)
+    }
     domEl.addEventListener('touchstart', onTouchStart, { passive: true })
     domEl.addEventListener('touchmove', onTouchMove, { passive: true })
+    domEl.addEventListener('touchend', onTouchEnd, { passive: true })
 
     // Only render when the section is in view to conserve CPU/GPU
     let isVisible = true
@@ -234,6 +241,7 @@ export default function Showreel3D() {
       domEl.removeEventListener('click', onClick)
       domEl.removeEventListener('touchstart', onTouchStart)
       domEl.removeEventListener('touchmove', onTouchMove)
+      domEl.removeEventListener('touchend', onTouchEnd)
       if (container.contains(domEl)) {
         container.removeChild(domEl)
       }
@@ -247,17 +255,16 @@ export default function Showreel3D() {
   return (
     <section className="relative w-full overflow-hidden" style={{ minHeight: '100vh', background: '#090A09' }}>
       {/* Editorial Large Typography header in Pacôme Pertant style */}
-      <div className="relative z-10 pt-28 px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pointer-events-none">
+      <div className="relative z-10 pt-20 sm:pt-28 px-5 sm:px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pointer-events-none">
         <div>
-          <div className="flex items-center gap-3 mb-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-[#A7A59B]">
+          <div className="flex items-center gap-3 mb-2 sm:mb-3">
+            <span className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+            <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-[#A7A59B]">
               3D Interactive Showreel · Motion & Specimen
             </p>
           </div>
           <h2
-            className="font-serif text-[#F1EFE8] leading-none"
-            style={{ fontSize: 'clamp(2.5rem, 6.5vw, 6.5rem)', fontWeight: 300, letterSpacing: '-0.02em' }}
+            className="font-serif text-[#F1EFE8] leading-none text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight"
           >
             Tactile Biology
           </h2>
@@ -283,33 +290,37 @@ export default function Showreel3D() {
       />
 
       {/* Active Card HUD Info Panel */}
-      <div className="relative z-10 pb-8 px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-t border-[#2A2B28]/60 pt-6">
-        <div className="flex items-baseline gap-6">
+      <div className="relative z-10 pb-8 px-5 sm:px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-5 sm:gap-6 border-t border-[#2A2B28]/60 pt-5 sm:pt-6">
+        <div className="flex items-baseline gap-4 sm:gap-6">
           <span className="font-serif text-3xl md:text-5xl text-[#F1EFE8]/30 font-light">
             {String(activeItem.id).padStart(2, '0')}
           </span>
           <div>
-            <p className="text-[10px] tracking-[0.25em] uppercase text-emerald-400 font-sans mb-1">
+            <p className="text-[9px] sm:text-[10px] tracking-[0.25em] uppercase text-emerald-400 font-sans mb-0.5 sm:mb-1">
               {activeItem.category}
             </p>
-            <h3 className="font-serif text-2xl md:text-4xl text-[#F1EFE8] font-light">
+            <h3 className="font-serif text-xl sm:text-2xl md:text-4xl text-[#F1EFE8] font-light">
               {activeItem.title}
             </h3>
           </div>
         </div>
 
-        <div className="flex items-center gap-8 text-xs text-[#A7A59B] font-sans">
+        <div className="flex flex-wrap items-center gap-5 sm:gap-8 text-xs text-[#A7A59B] font-sans">
           <div>
-            <span className="block text-[9px] uppercase tracking-widest text-[#555] mb-1">Location</span>
-            <span>{activeItem.location}</span>
+            <span className="block text-[8px] sm:text-[9px] uppercase tracking-widest text-[#666] mb-0.5">Location</span>
+            <span className="text-[#F1EFE8]">{activeItem.location}</span>
           </div>
-          <div>
-            <span className="block text-[9px] uppercase tracking-widest text-[#555] mb-1">Format</span>
-            <span>High-Res Specimen</span>
+          <div className="hidden xs:block">
+            <span className="block text-[8px] sm:text-[9px] uppercase tracking-widest text-[#666] mb-0.5">Format</span>
+            <span className="text-[#F1EFE8]">High-Res Specimen</span>
           </div>
-          <div className="w-12 h-12 rounded-full border border-[#2A2B28] flex items-center justify-center text-[#F1EFE8] hover:border-emerald-500 transition-colors">
+          <a
+            href="#work"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-[#2A2B28] flex items-center justify-center text-[#F1EFE8] hover:border-emerald-500 transition-colors"
+            title="Explore Collection"
+          >
             ↗
-          </div>
+          </a>
         </div>
       </div>
     </section>

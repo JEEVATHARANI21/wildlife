@@ -102,10 +102,10 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="px-8 md:px-16 pt-20 md:pt-28 pb-12 md:pb-16"
+      className="px-5 sm:px-8 md:px-16 pt-16 sm:pt-20 md:pt-28 pb-12 md:pb-16"
       style={{ background: 'var(--bg)' }}
     >
-      <div className="flex flex-col md:flex-row gap-16 md:gap-24 items-start">
+      <div className="flex flex-col md:flex-row gap-10 sm:gap-16 md:gap-24 items-start">
         {/* Left — text */}
         <div className="md:w-6/12" ref={textRef}>
           <p className="about-line font-sans text-[10px] tracking-[0.3em] uppercase mb-6" style={{ color: 'var(--muted)' }}>

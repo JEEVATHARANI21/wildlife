@@ -87,9 +87,9 @@ export default function Contact({ openLegal }) {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center px-8 pt-16 md:pt-20 pb-24 md:pb-32 text-center">
+      <div className="relative z-10 flex flex-col items-center justify-center px-4 sm:px-8 pt-12 sm:pt-16 md:pt-20 pb-20 md:pb-32 text-center">
         {/* Divider */}
-        <div style={{ width: 40, height: 1, background: 'var(--border)', marginBottom: '4rem' }} />
+        <div style={{ width: 40, height: 1, background: 'var(--border)', marginBottom: '2.5rem' }} />
 
         {/* Big statement */}
         <div ref={titleRef}>

@@ -307,33 +307,32 @@ export default function Album() {
       {/* Editorial Header */}
       <div
         ref={headerRef}
-        className="px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6"
+        className="px-5 sm:px-8 md:px-16 flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-5 sm:gap-6"
       >
         <div>
-          <div className="flex items-center gap-3 mb-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 mb-2 sm:mb-3">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <p className="font-sans text-[11px] tracking-[0.3em] uppercase text-[#A7A59B]">
+            <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.3em] uppercase text-[#A7A59B]">
               Specimen Archive · Section 03
             </p>
           </div>
           <h2
-            className="font-serif text-[#F1EFE8] leading-tight"
-            style={{ fontSize: 'clamp(2.6rem, 6vw, 5.5rem)', fontWeight: 300 }}
+            className="font-serif text-[#F1EFE8] leading-tight text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light"
           >
             The Collection
           </h2>
         </div>
 
         {/* Controls */}
-        <div className="flex items-center gap-6 font-sans text-xs">
+        <div className="flex items-center gap-4 sm:gap-6 font-sans text-xs">
           {/* Auto-Slide Toggle Button */}
           <button
             onClick={() => setIsAutoPlaying((prev) => !prev)}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#2A2B28] bg-[#111310] text-[11px] uppercase tracking-wider text-[#A7A59B] hover:text-[#F1EFE8] hover:border-emerald-500 transition-all"
+            className="flex items-center gap-2 px-3 sm:px-3.5 py-1.5 rounded-full border border-[#2A2B28] bg-[#111310] text-[10px] sm:text-[11px] uppercase tracking-wider text-[#A7A59B] hover:text-[#F1EFE8] hover:border-emerald-500 transition-all cursor-pointer"
             title={isAutoPlaying ? 'Pause auto-slide' : 'Resume auto-slide'}
           >
             <span
-              className={`w-2 h-2 rounded-full ${
+              className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full ${
                 isAutoPlaying ? 'bg-emerald-400 animate-pulse' : 'bg-[#555]'
               }`}
             />
@@ -341,7 +340,7 @@ export default function Album() {
           </button>
 
           <div className="flex items-center gap-2">
-            <span className="text-xl md:text-2xl font-serif text-[#F1EFE8] font-light">
+            <span className="text-lg sm:text-2xl font-serif text-[#F1EFE8] font-light">
               {String(active + 1).padStart(2, '0')}
             </span>
             <span className="text-[#A7A59B]">/</span>
@@ -354,7 +353,7 @@ export default function Album() {
 
       {/* Main Interactive Stage with Seamless Dual-Layer Blur Crossfade */}
       <div
-        className="relative w-full mx-auto px-4 md:px-16 select-none"
+        className="relative w-full mx-auto px-3 sm:px-8 md:px-16 select-none"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         onMouseDown={onMouseDown}
@@ -421,21 +420,17 @@ export default function Album() {
           </div>
 
           {/* Bottom Story & EXIF Specimen Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12 z-30 pointer-events-none flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-12 z-30 pointer-events-none flex flex-col md:flex-row justify-between items-start md:items-end gap-4 sm:gap-6">
             <div ref={metaRef} className="max-w-2xl">
-              <p className="font-sans text-[11px] tracking-[0.25em] uppercase text-[#A7A59B] mb-2">
+              <p className="font-sans text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#A7A59B] mb-1.5 sm:mb-2">
                 {currentPhoto.location} · {currentPhoto.year}
               </p>
               <h3
-                className="font-serif text-[#F1EFE8] mb-3 leading-tight"
-                style={{
-                  fontSize: 'clamp(1.8rem, 3.8vw, 3.2rem)',
-                  fontWeight: 300,
-                }}
+                className="font-serif text-[#F1EFE8] mb-2 sm:mb-3 leading-tight text-xl sm:text-3xl md:text-4xl font-light"
               >
                 {currentPhoto.title}
               </h3>
-              <p className="font-sans text-xs md:text-sm text-[#A7A59B] font-light leading-relaxed max-w-xl">
+              <p className="font-sans text-[11px] sm:text-xs md:text-sm text-[#A7A59B] font-light leading-relaxed max-w-xl line-clamp-2 sm:line-clamp-none">
                 "{currentPhoto.story}"
               </p>
             </div>
@@ -443,24 +438,24 @@ export default function Album() {
             {/* Technical EXIF Metadata Tag */}
             <div
               ref={specRef}
-              className="flex items-center gap-4 bg-[#0B0C0A]/70 border border-[#2A2B28] rounded-xl px-5 py-3 backdrop-blur-md text-[11px] font-sans text-[#A7A59B]"
+              className="flex items-center gap-3 sm:gap-4 bg-[#0B0C0A]/80 border border-[#2A2B28] rounded-xl px-3.5 sm:px-5 py-2 sm:py-3 backdrop-blur-md text-[10px] sm:text-[11px] font-sans text-[#A7A59B]"
             >
               <div>
-                <span className="block text-[9px] uppercase tracking-widest text-[#666]">
+                <span className="block text-[8px] sm:text-[9px] uppercase tracking-widest text-[#666]">
                   Optics
                 </span>
                 <span className="text-[#F1EFE8]">{currentPhoto.lens}</span>
               </div>
-              <div className="w-[1px] h-6 bg-[#2A2B28]" />
+              <div className="w-[1px] h-5 sm:h-6 bg-[#2A2B28]" />
               <div>
-                <span className="block text-[9px] uppercase tracking-widest text-[#666]">
+                <span className="block text-[8px] sm:text-[9px] uppercase tracking-widest text-[#666]">
                   Sensitivity
                 </span>
                 <span className="text-[#F1EFE8]">{currentPhoto.iso}</span>
               </div>
-              <div className="w-[1px] h-6 bg-[#2A2B28]" />
+              <div className="w-[1px] h-5 sm:h-6 bg-[#2A2B28]" />
               <div>
-                <span className="block text-[9px] uppercase tracking-widest text-[#666]">
+                <span className="block text-[8px] sm:text-[9px] uppercase tracking-widest text-[#666]">
                   Speed
                 </span>
                 <span className="text-[#F1EFE8]">{currentPhoto.shutter}</span>
@@ -471,7 +466,7 @@ export default function Album() {
       </div>
 
       {/* Horizontal Interactive Thumbnail Reel */}
-      <div className="mt-8 px-4 md:px-16 overflow-x-auto scrollbar-none flex gap-3 py-2">
+      <div className="mt-6 sm:mt-8 px-3 sm:px-8 md:px-16 overflow-x-auto scrollbar-none flex gap-2.5 sm:gap-3 py-2">
         {ALBUM.map((item, index) => {
           const isCurrent = index === active
           return (
