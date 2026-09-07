@@ -266,7 +266,7 @@ export default function Hero() {
             </div>
           </a>
 
-          <div style={{ display: 'flex', gap: '2.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2.5rem' }}>
             {['WORK', 'ABOUT', 'CONTACT'].map((l) => (
               <a
                 key={l}
@@ -283,6 +283,44 @@ export default function Hero() {
                 {l}
               </a>
             ))}
+            <a
+              href="https://www.instagram.com/vijaymathiew_photography?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '0.65rem',
+                letterSpacing: '0.2em',
+                color: '#F1EFE8',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+                padding: '0.35rem 0.85rem',
+                borderRadius: '999px',
+                border: '1px solid rgba(255,255,255,0.15)',
+                background: 'rgba(255,255,255,0.06)',
+                backdropFilter: 'blur(8px)',
+              }}
+              title="Follow on Instagram"
+            >
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#B3874B"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+              </svg>
+              <span>Instagram</span>
+            </a>
           </div>
         </div>
 

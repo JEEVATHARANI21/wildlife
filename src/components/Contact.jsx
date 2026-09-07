@@ -231,17 +231,29 @@ export default function Contact() {
               Wildlife Photography Studio
             </span>
           </div>
-          <div className="flex items-center gap-6">
-            {['Instagram', 'Behance', 'LinkedIn'].map(s => (
-              <a
-                key={s}
-                href="#"
-                className="font-sans text-[10px] tracking-[0.18em] uppercase nav-link"
-                style={{ color: 'var(--muted)' }}
+          <div className="flex items-center gap-6 mt-2">
+            <a
+              href="https://www.instagram.com/vijaymathiew_photography?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 hover:border-[#B3874B] bg-white/5 text-[#F1EFE8] hover:text-[#B3874B] font-sans text-[11px] tracking-[0.2em] uppercase transition-all duration-300 shadow-md group"
+            >
+              <svg
+                className="w-4 h-4 text-[#B3874B] group-hover:scale-110 transition-transform"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                {s}
-              </a>
-            ))}
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+              </svg>
+              <span>@vijaymathiew_photography</span>
+              <span className="text-[#888] group-hover:translate-x-0.5 transition-transform">↗</span>
+            </a>
           </div>
           <p className="font-sans text-[10px]" style={{ color: 'var(--border)' }}>
             © 2026 UNTAMEDTRAILS. All rights reserved.
