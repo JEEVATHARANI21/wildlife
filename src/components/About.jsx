@@ -4,8 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// REPLACE WITH YOUR PORTRAIT PHOTOGRAPH
-const PORTRAIT = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80&auto=format&fit=crop&crop=faces'
+// Genuine wildlife photographer portrait
+const PORTRAIT = '/images/he.jpeg'
 
 const STATS = [
   { value: 12, suffix: '+', label: 'Years in the Wild' },
@@ -150,19 +150,19 @@ export default function About() {
         {/* Right — portrait */}
         <div className="md:w-6/12 flex flex-col gap-12">
           <div
-            className="overflow-hidden"
+            className="overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-[#090A09]"
             style={{ aspectRatio: '3/4', position: 'relative' }}
           >
             <img
               src={PORTRAIT}
               alt="The Photographer"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-[center_22%] transition-transform duration-700 hover:scale-105"
             />
             <div
               style={{
                 position: 'absolute',
                 inset: 0,
-                background: 'linear-gradient(to top, rgba(11,12,10,0.4) 0%, transparent 60%)',
+                background: 'linear-gradient(to top, rgba(11,12,10,0.5) 0%, transparent 50%)',
               }}
             />
           </div>
