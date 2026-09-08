@@ -84,11 +84,13 @@ export default function Navbar({ openLegal }) {
         </a>
 
         {/* Desktop Navigation Links */}
-        <ul className="hidden lg:flex items-center gap-7">
+        <ul className="hidden lg:flex items-center gap-6">
           {[
+            { label: 'DEALS', href: '#deals' },
+            { label: 'SHARED SAFARIS', href: '#shared-safaris' },
+            { label: 'DESTINATIONS', href: '#destinations' },
+            { label: 'OPERATORS', href: '#operators' },
             { label: 'GALLERY', href: '#gallery' },
-            { label: 'WILDLIFE', href: '#wildlife' },
-            { label: 'BIRDS', href: '#birds' },
             { label: 'ABOUT', href: '#about' },
             { label: 'CONTACT', href: '#contact' },
           ].map((link) => (
@@ -185,14 +187,15 @@ export default function Navbar({ openLegal }) {
         </div>
 
         {/* Drawer Links */}
-        <div className="flex flex-col gap-3.5 my-auto py-6">
+        <div className="flex flex-col gap-3 my-auto py-4">
           {[
-            { label: 'Home', href: '#home', desc: 'Wildlife Photography in Tamil Nadu' },
-            { label: 'Gallery', href: '#gallery', desc: 'Wildlife Photography Gallery' },
-            { label: 'Wildlife', href: '#wildlife', desc: 'Wildlife Photography India' },
-            { label: 'Birds', href: '#birds', desc: 'Bird Photography' },
-            { label: 'About', href: '#about', desc: 'Professional Wildlife Photographer' },
-            { label: 'Contact', href: '#contact', desc: 'Wildlife Photographer Tamil Nadu' },
+            { label: 'Safari Deals', href: '#deals', desc: 'Curated All-Inclusive Expeditions' },
+            { label: 'Shared Safaris', href: '#shared-safaris', desc: 'Gypsy Vehicle Seat Pooling' },
+            { label: 'Tiger Reserves', href: '#destinations', desc: '42+ National Parks & Habitats' },
+            { label: 'Operators', href: '#operators', desc: 'Govt Registered Safari Fleets' },
+            { label: 'Gallery', href: '#gallery', desc: 'Fine Art Wildlife Archive' },
+            { label: 'About', href: '#about', desc: 'Photographer & Naturalist' },
+            { label: 'Contact', href: '#contact', desc: 'WhatsApp Support & Custom Quotes' },
           ].map((item, idx) => (
             <a
               key={item.label}

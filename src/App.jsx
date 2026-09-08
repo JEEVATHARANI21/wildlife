@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
+import MarketplacePlatform from './components/marketplace/MarketplacePlatform'
 import Showreel3D from './components/Showreel3D'
 import Album from './components/Album'
 import Moments from './components/Moments'
@@ -54,6 +55,8 @@ export default function App() {
       <Navbar openLegal={openLegal} />
       {/* 01 Heroic Page: Sticky video hero */}
       <Hero />
+      {/* 02 Wildlife Travel Marketplace & Safari Discovery Platform */}
+      <MarketplacePlatform />
       {/* Pacôme Pertant style Playful 3D Showreel featuring user photos */}
       <Showreel3D />
       {/* 03 Section 3: Interactive Album - Wildlife Photography Gallery */}
