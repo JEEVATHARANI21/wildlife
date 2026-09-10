@@ -3,24 +3,29 @@ import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import MarketplacePlatform from './components/marketplace/MarketplacePlatform'
-import Showreel3D from './components/Showreel3D'
-import Album from './components/Album'
-import Moments from './components/Moments'
-import Birds from './components/Birds'
-import VideoSection from './components/VideoSection'
-import About from './components/About'
-import Contact from './components/Contact'
+import ToeholdNavbar from './components/toehold/ToeholdNavbar'
+import ToursHero from './components/toehold/ToursHero'
+import FeaturedTours from './components/toehold/FeaturedTours'
+import TourCatalog from './components/toehold/TourCatalog'
+import FoundersSection from './components/toehold/FoundersSection'
+import UntamedDifference from './components/toehold/UntamedDifference'
+import Testimonials from './components/toehold/Testimonials'
+import InstagramFeed from './components/toehold/InstagramFeed'
+import ContactFooter from './components/toehold/ContactFooter'
+import TourDetailModal from './components/toehold/TourDetailModal'
+
 import CustomCursor from './components/CustomCursor'
 import LegalModal from './components/LegalModal'
 import WhatsAppButton from './components/WhatsAppButton'
+
+import { TOURS_DATA } from './data/photoToursData'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
   const lenisRef = useRef(null)
+  const [activeCategory, setActiveCategory] = useState('animals') // 'animals' | 'birds'
+  const [selectedTour, setSelectedTour] = useState(null)
   const [legalModalOpen, setLegalModalOpen] = useState(false)
   const [legalTab, setLegalTab] = useState('terms')
 
@@ -31,7 +36,7 @@ export default function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smooth: true,
     })
@@ -49,28 +54,60 @@ export default function App() {
     }
   }, [])
 
+  // Featured flagship tours: mix of animal & bird tracks
+  const featuredTours = [
+    TOURS_DATA.animalTours[0], // Tadoba Feline Fortune
+    TOURS_DATA.animalTours[1], // Kabini Viceroy's Vista
+    TOURS_DATA.birdTours[0],   // Shola Endemics Valparai
+    TOURS_DATA.birdTours[1],   // Bharatpur Keoladeo
+  ]
+
   return (
-    <div className="grain" style={{ background: 'var(--bg)' }}>
+    <div className="grain" style={{ background: '#080908', color: '#F1EFE8' }}>
       <CustomCursor />
-      <Navbar openLegal={openLegal} />
-      {/* 01 Heroic Page: Sticky video hero */}
-      <Hero />
-      {/* 02 Wildlife Travel Marketplace & Safari Discovery Platform */}
-      <MarketplacePlatform />
-      {/* Pacôme Pertant style Playful 3D Showreel featuring user photos */}
-      <Showreel3D />
-      {/* 03 Section 3: Interactive Album - Wildlife Photography Gallery */}
-      <Album />
-      {/* 04 Moments: Wildlife Photography India */}
-      <Moments />
-      {/* 05 Avian Special: Bird Photography */}
-      <Birds />
-      {/* Video section */}
-      <VideoSection />
-      {/* 08 About: Professional Wildlife Photographer */}
-      <About />
-      {/* 09 Contact: Wildlife Photographer Tamil Nadu */}
-      <Contact openLegal={openLegal} />
+
+      {/* 1. Toehold-Style Primary & Secondary Navbar */}
+      <ToeholdNavbar />
+
+      <main>
+        {/* 2. Photo Tours Hero with Quote & Two-Track Switcher */}
+        <ToursHero onSelectCategory={setActiveCategory} />
+
+        {/* 3. Featured Flagship Expeditions */}
+        <FeaturedTours tours={featuredTours} onSelectTour={setSelectedTour} />
+
+        {/* 4. Filterable Tour Schedules (2 Distinct Categories: Animal Tracking & Bird Photography) */}
+        <TourCatalog
+          animalTours={TOURS_DATA.animalTours}
+          birdTours={TOURS_DATA.birdTours}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          onSelectTour={setSelectedTour}
+        />
+
+        {/* 5. The 2 Founders of Untamed Trails */}
+        <FoundersSection founders={TOURS_DATA.founders} />
+
+        {/* 6. The Untamed Edge / Why Travel With Us (Toehold Style) */}
+        <UntamedDifference features={TOURS_DATA.difference} />
+
+        {/* 7. Guest Testimonials & Reviews */}
+        <Testimonials testimonials={TOURS_DATA.testimonials} />
+
+        {/* 8. Instagram Live Feed Grid (@untamed__trails__) */}
+        <InstagramFeed posts={TOURS_DATA.instagramPosts} />
+
+        {/* 9. Contact, Inquiries & Footer */}
+        <ContactFooter openLegal={openLegal} />
+      </main>
+
+      {/* Comprehensive Tour Details Modal */}
+      {selectedTour && (
+        <TourDetailModal
+          tour={selectedTour}
+          onClose={() => setSelectedTour(null)}
+        />
+      )}
 
       {/* Terms & Privacy Policy Modal */}
       <LegalModal
@@ -79,7 +116,7 @@ export default function App() {
         initialTab={legalTab}
       />
 
-      {/* Floating WhatsApp Contact & Support Button */}
+      {/* Floating WhatsApp Quick Connect */}
       <WhatsAppButton />
     </div>
   )
