@@ -63,7 +63,7 @@ export default function App() {
   ]
 
   return (
-    <div className="grain" style={{ background: '#080908', color: '#F1EFE8' }}>
+    <div className="grain" style={{ background: '#080908', color: '#F2F0E8' }}>
       <CustomCursor />
 
       {/* 1. Toehold-Style Primary & Secondary Navbar */}

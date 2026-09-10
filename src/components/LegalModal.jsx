@@ -31,37 +31,37 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="absolute inset-0 bg-black/85 backdrop-blur-md transition-opacity duration-300"
+        className="absolute inset-0 bg-[#080908]/90 backdrop-blur-md transition-opacity duration-300"
       />
 
       {/* Modal Container */}
       <div
-        className="relative w-full max-w-3xl max-h-[85vh] flex flex-col rounded-2xl bg-[#0E0F0D] border border-[#2A2B28] shadow-2xl overflow-hidden z-10 text-[#F1EFE8]"
+        className="relative w-full max-w-3xl max-h-[85vh] flex flex-col rounded-2xl bg-[#151815] border border-[#242923] shadow-2xl overflow-hidden z-10 text-[#F2F0E8]"
         style={{
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 40px rgba(179, 135, 75, 0.15)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.95), 0 0 40px rgba(184, 115, 51, 0.15)',
         }}
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 md:px-8 py-5 border-b border-[#2A2B28] bg-[#141512]">
+        <div className="flex items-center justify-between px-6 md:px-8 py-5 border-b border-[#242923] bg-[#080908]">
           <div className="flex items-center gap-3">
             <img
               src="/logo-icon.png"
-              alt="UntamedTrails"
+              alt="Untamed Trails"
               className="h-8 w-auto object-contain"
             />
             <div>
-              <span className="font-sans text-xs tracking-[0.25em] uppercase font-bold text-[#F1EFE8]">
-                UNTAMED<span className="text-[#B3874B] font-light">TRAILS</span>
+              <span className="font-sans text-xs tracking-[0.25em] uppercase font-bold text-[#F2F0E8]">
+                UNTAMED <span className="text-[#B87333] font-normal">TRAILS</span>
               </span>
-              <span className="block font-sans text-[8px] tracking-[0.25em] uppercase text-[#777]">
-                Legal & Governance
+              <span className="block font-sans text-[8px] tracking-[0.25em] uppercase text-[#A7A59B]">
+                Legal & Expedition Governance
               </span>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:border-[#B3874B] hover:bg-white/5 transition-all text-sm cursor-pointer"
+            className="w-9 h-9 rounded-full border border-[#242923] flex items-center justify-center text-[#F2F0E8]/70 hover:text-[#F2F0E8] hover:border-[#B87333] hover:bg-[#242923] transition-all text-sm cursor-pointer"
             title="Close modal (Esc)"
           >
             ✕
@@ -69,18 +69,18 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-[#2A2B28] bg-[#0A0B09] px-6 md:px-8 gap-4 sm:gap-8">
+        <div className="flex border-b border-[#242923] bg-[#151815] px-6 md:px-8 gap-4 sm:gap-8">
           <button
             onClick={() => setActiveTab('terms')}
             className={`py-3.5 font-sans text-xs tracking-[0.2em] uppercase transition-all relative cursor-pointer ${
               activeTab === 'terms'
-                ? 'text-[#B3874B] font-medium'
-                : 'text-[#888] hover:text-[#DDD]'
+                ? 'text-[#D6A85C] font-semibold'
+                : 'text-[#A7A59B] hover:text-[#F2F0E8]'
             }`}
           >
             Terms of Service
             {activeTab === 'terms' && (
-              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#B3874B]" />
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#B87333]" />
             )}
           </button>
 
@@ -88,67 +88,58 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
             onClick={() => setActiveTab('privacy')}
             className={`py-3.5 font-sans text-xs tracking-[0.2em] uppercase transition-all relative cursor-pointer ${
               activeTab === 'privacy'
-                ? 'text-[#B3874B] font-medium'
-                : 'text-[#888] hover:text-[#DDD]'
+                ? 'text-[#D6A85C] font-semibold'
+                : 'text-[#A7A59B] hover:text-[#F2F0E8]'
             }`}
           >
             Privacy Policy
             {activeTab === 'privacy' && (
-              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#B3874B]" />
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#B87333]" />
             )}
           </button>
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 text-sm font-sans font-light leading-relaxed text-[#C5C3B8]">
+        <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 text-sm font-sans font-light leading-relaxed text-[#A7A59B]">
           {activeTab === 'terms' ? (
             <>
               <div>
-                <h3 className="font-serif text-2xl text-[#F1EFE8] mb-2 font-normal">
-                  Terms of Service
+                <h3 className="font-serif text-2xl text-[#F2F0E8] mb-2 font-normal">
+                  Terms of Service & Expedition Charter
                 </h3>
-                <p className="text-xs text-[#888] tracking-wider uppercase mb-4">
-                  Effective Date: September 2026 · UntamedTrails Studio
+                <p className="text-xs text-[#D6A85C] tracking-wider uppercase mb-4 font-semibold">
+                  Effective Date: September 2026 · Untamed Trails Photography Studio
                 </p>
                 <p>
-                  Welcome to <strong>UntamedTrails</strong>. By accessing this website and viewing or acquiring any fine art works, prints, or digital specimens, you agree to comply with and be bound by the following Terms and Conditions.
+                  Welcome to <strong>Untamed Trails</strong>. By accessing this website, registering for photography expeditions, or reserving tour seats, you agree to comply with and be bound by the following Terms and Conditions.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#B3874B] mb-1">
+                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#D6A85C] mb-1">
                     1. Intellectual Property & Copyright
                   </h4>
                   <p>
-                    All wildlife photographs, video footage, soundscapes, editorial narratives, and brand insignia published on this site are the sole and exclusive intellectual property of photographer <strong>Vijay Mathiew</strong> and UntamedTrails. All works are protected under the Indian Copyright Act, 1957, and international copyright treaties.
+                    All wildlife photographs, video footage, soundscapes, editorial narratives, and brand insignia published on this site are the sole intellectual property of <strong>Untamed Trails</strong> and its founders. All works are protected under the Indian Copyright Act, 1957.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#B3874B] mb-1">
-                    2. Commercial Licensing & Non-Personal Use
+                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#D6A85C] mb-1">
+                    2. Photo Tour Booking & Vehicle Policy
                   </h4>
                   <p>
-                    No image, clip, or content from this platform may be copied, reproduced, republished, modified, downloaded, distributed, or utilized for commercial purposes, advertising, synthetic AI training sets, or digital redistribution without a signed written license agreement issued by UntamedTrails.
+                    Untamed Trails guarantees a strict maximum of 4 photographers per safari Gypsy to assure unhindered 360-degree shooting angles and individual beanbag placements. Forest department permits are allocated per official sanctuary regulations.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#B3874B] mb-1">
-                    3. Fine Art Prints & Archival Authenticity
+                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#D6A85C] mb-1">
+                    3. Uncompromising Field Ethics
                   </h4>
                   <p>
-                    Limited edition prints are individually numbered, inspected, signed, and accompanied by an official Certificate of Authenticity. Collectors acquire ownership of the physical archival print but do not acquire reproduction or commercial licensing rights.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#B3874B] mb-1">
-                    4. Field Ethics & Wildlife Welfare
-                  </h4>
-                  <p>
-                    Every moment captured by UntamedTrails adheres to strict ethical wildlife photography protocols: non-intrusive observation, no baiting, zero habitat disruption, and complete respect for animal behavior in their natural wilderness corridors.
+                    Every participant must abide by our Non-Invasive Wildlife Ethics Code: zero baiting, no chasing or off-roading, and full compliance with forest guide instructions. The well-being of the animal always supersedes capturing an image.
                   </p>
                 </div>
               </div>
@@ -156,51 +147,42 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
           ) : (
             <>
               <div>
-                <h3 className="font-serif text-2xl text-[#F1EFE8] mb-2 font-normal">
-                  Privacy Policy
+                <h3 className="font-serif text-2xl text-[#F2F0E8] mb-2 font-normal">
+                  Privacy Policy & Confidentiality
                 </h3>
-                <p className="text-xs text-[#888] tracking-wider uppercase mb-4">
+                <p className="text-xs text-[#D6A85C] tracking-wider uppercase mb-4 font-semibold">
                   Effective Date: September 2026 · Client Data Governance
                 </p>
                 <p>
-                  At <strong>UntamedTrails</strong>, we respect your confidentiality and are committed to safeguarding personal information shared with our fine art studio.
+                  At <strong>Untamed Trails</strong>, we respect your confidentiality and are committed to safeguarding personal information shared with our expedition desk.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#B3874B] mb-1">
+                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#D6A85C] mb-1">
                     1. Information Collected
                   </h4>
                   <p>
-                    When you contact our studio via our contact forms or email, we collect your name, email address, and inquiry details solely to facilitate direct communications, licensing consultations, and print acquisitions.
+                    When you inquire via WhatsApp or our registration forms, we collect your name, phone number, and expedition preferences solely to facilitate tour planning and forest permit ticketing.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#B3874B] mb-1">
-                    2. Zero Data Selling or Third-Party Sharing
+                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#D6A85C] mb-1">
+                    2. Zero Data Selling
                   </h4>
                   <p>
-                    UntamedTrails does not sell, rent, lease, or monetize client personal data to any third-party advertisers, broker networks, or external agencies.
+                    Untamed Trails does not sell, rent, lease, or monetize client personal data to any third-party marketing brokers or external networks.
                   </p>
                 </div>
 
                 <div>
-                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#B3874B] mb-1">
-                    3. Communication Confidentiality
+                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#D6A85C] mb-1">
+                    3. Official Contact
                   </h4>
                   <p>
-                    Correspondence with collectors, commercial licensors, and gallery curators is kept strictly confidential. We maintain industry-standard security measures to safeguard all digital interactions.
-                  </p>
-                </div>
-
-                <div>
-                  <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-semibold text-[#B3874B] mb-1">
-                    4. Contact & Inquiries
-                  </h4>
-                  <p>
-                    For questions regarding our privacy practices or to request data removal, please contact our studio directly at <a href="mailto:hello@untamedtrails.in" className="text-[#B3874B] hover:underline">hello@untamedtrails.in</a> or via our official Instagram <a href="https://www.instagram.com/vijaymathiew_photography" target="_blank" rel="noopener noreferrer" className="text-[#B3874B] hover:underline">@vijaymathiew_photography</a>.
+                    For inquiries, please contact our desk at <a href="mailto:hello@untamedtrails.in" className="text-[#D6A85C] hover:underline">hello@untamedtrails.in</a> or via our official Instagram <a href="https://www.instagram.com/untamed__trails__?stkn=OTU3MGI0bHR6OWZz" target="_blank" rel="noopener noreferrer" className="text-[#D6A85C] hover:underline">@untamed__trails__</a>.
                   </p>
                 </div>
               </div>
@@ -209,13 +191,13 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
         </div>
 
         {/* Modal Footer */}
-        <div className="flex justify-between items-center px-6 md:px-8 py-4 border-t border-[#2A2B28] bg-[#141512]">
-          <span className="font-sans text-[10px] text-[#777] uppercase tracking-widest">
-            © 2026 UNTAMEDTRAILS
+        <div className="flex justify-between items-center px-6 md:px-8 py-4 border-t border-[#242923] bg-[#080908]">
+          <span className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest">
+            © 2026 UNTAMED TRAILS
           </span>
           <button
             onClick={onClose}
-            className="px-6 py-2 rounded-full bg-[#1C1D1A] hover:bg-[#B3874B] text-[#F1EFE8] font-sans text-xs tracking-wider uppercase transition-colors duration-300 cursor-pointer shadow-md"
+            className="btn-copper-primary px-6 py-2 rounded-full font-sans text-xs tracking-wider uppercase cursor-pointer shadow-md"
           >
             Close
           </button>
