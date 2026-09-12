@@ -1,5 +1,5 @@
 export default function InstagramFeed({ posts }) {
-  const instagramUrl = 'https://www.instagram.com/untamed__trails__?stkn=OTU3MGI0bHR6OWZz'
+  const instagramUrl = 'https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz'
 
   return (
     <section className="py-24 px-5 sm:px-8 md:px-16 bg-[#151815] border-b border-[#242923]">
@@ -33,7 +33,7 @@ export default function InstagramFeed({ posts }) {
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
               <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
             </svg>
-            <span>Follow @untamed__trails__</span>
+            <span>Follow @vm_wild_expeditions</span>
           </a>
         </div>
 

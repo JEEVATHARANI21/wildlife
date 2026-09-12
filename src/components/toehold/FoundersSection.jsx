@@ -79,16 +79,16 @@ export default function FoundersSection({ founders }) {
               {/* Action Link */}
               <div className="pt-4 border-t border-[#242923] flex items-center justify-between">
                 <a
-                  href="https://www.instagram.com/untamed__trails__?stkn=OTU3MGI0bHR6OWZz"
+                  href={founder.instagram || "https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-sans text-[#B87333] hover:text-[#D6A85C] font-semibold transition-colors"
                 >
-                  <span>Connect with Founder on Instagram</span>
+                  <span>Connect with {founder.name.split(' ')[0]} ({founder.instagramHandle})</span>
                   <span>↗</span>
                 </a>
                 <span className="text-[10px] font-sans text-[#A7A59B] tracking-wider uppercase">
-                  Untamed Trails
+                  VM Wild Expeditions
                 </span>
               </div>
             </div>

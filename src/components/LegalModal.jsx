@@ -182,7 +182,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                     3. Official Contact
                   </h4>
                   <p>
-                    For inquiries, please contact our desk at <a href="mailto:hello@untamedtrails.in" className="text-[#D6A85C] hover:underline">hello@untamedtrails.in</a> or via our official Instagram <a href="https://www.instagram.com/untamed__trails__?stkn=OTU3MGI0bHR6OWZz" target="_blank" rel="noopener noreferrer" className="text-[#D6A85C] hover:underline">@untamed__trails__</a>.
+                    For inquiries, please contact our desk at <a href="mailto:hello@untamedtrails.in" className="text-[#D6A85C] hover:underline">hello@untamedtrails.in</a> or via our official Instagram <a href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz" target="_blank" rel="noopener noreferrer" className="text-[#D6A85C] hover:underline">@vm_wild_expeditions</a>.
                   </p>
                 </div>
               </div>

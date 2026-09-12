@@ -71,12 +71,12 @@ export default function ContactFooter({ openLegal }) {
             {/* Instagram Link */}
             <div className="pt-2">
               <a
-                href="https://www.instagram.com/untamed__trails__?stkn=OTU3MGI0bHR6OWZz"
+                href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-sans text-[#D6A85C] hover:text-[#B87333] transition-colors"
               >
-                <span>Follow our official Instagram: @untamed__trails__</span>
+                <span>Follow our official Instagram: @vm_wild_expeditions</span>
                 <span>↗</span>
               </a>
             </div>

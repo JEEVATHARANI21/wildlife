@@ -571,7 +571,7 @@ export const TOURS_DATA = {
     },
   ],
 
-  // The 2 Founders of Untamed Trails
+  // The 2 Founders of VM Wild Expeditions
   founders: [
     {
       id: 'founder-vijay',
@@ -579,6 +579,8 @@ export const TOURS_DATA = {
       role: 'Co-Founder & Principal Wildlife Photographer',
       image: '/images/hee.png',
       hasCustomImage: true,
+      instagram: 'https://www.instagram.com/vijaymathiew_photography?stkn=MXRxZW55ZDg3Z21pdw==',
+      instagramHandle: '@vijaymathiew_photography',
       bio: 'With over 12 years traversing primeval forests across India and Africa, Vijay Mathiew has dedicated his life to documenting elusive apex predators and fragile ecosystems. Known for his moody, atmospheric low-light aesthetic and deep field ethics, Vijay leads expeditions with an emphasis on animal anticipation, light sculpting, and intimate 1-on-1 mentorship.',
       credentials: [
         '12+ Years Documenting Big Cats & Avifauna',
@@ -589,23 +591,25 @@ export const TOURS_DATA = {
       quote: '“We do not just photograph wildlife; we bear witness to fleeting moments between silence and movement that will never happen the same way again.”',
     },
     {
-      id: 'founder-director',
-      name: 'Co-Founder & Director',
+      id: 'founder-jayavignesh',
+      name: 'Jayavignesh Hariharan',
       role: 'Co-Founder & Head of Expeditions & Conservation',
       image: '/images/founder-blank.svg',
       hasCustomImage: false,
-      bio: 'A passionate naturalist and veteran expedition architect, our Co-Founder directs Untamed Trails’ field logistics, forest department compliance, and sustainable eco-lodge alliances. Ensuring every tour adheres to strict non-invasive tracking protocols, our leadership guarantees that guests enjoy world-class safari access without ever compromising wildlife welfare.',
+      instagram: 'https://www.instagram.com/jayavignesh_hariharan?stkn=Y3k2czVub3cwcDQz',
+      instagramHandle: '@jayavignesh_hariharan',
+      bio: 'A passionate naturalist and veteran expedition architect, Jayavignesh Hariharan directs VM Wild Expeditions’ field logistics, forest department compliance, and sustainable eco-lodge alliances. Ensuring every tour adheres to strict non-invasive tracking protocols, our leadership guarantees that guests enjoy world-class safari access without ever compromising wildlife welfare.',
       credentials: [
         'Expedition Logistics & Safety Strategist',
         'Forest Department Concession & Permit Specialist',
         'Advocate for Tribal Tracker Empowerment',
-        'Co-Architect of The Untamed Trails Field Code',
+        'Co-Architect of The VM Wild Expeditions Field Code',
       ],
       quote: '“True luxury in the jungle is not crystal glassware; it is silence, an unhurried Gypsy, and respect for the sovereign wild.”',
     },
   ],
 
-  // Why Travel With Untamed Trails (The Untamed Edge)
+  // Why Travel With Us (The Expeditions Edge)
   difference: [
     {
       icon: '🚙',
@@ -636,7 +640,7 @@ export const TOURS_DATA = {
       location: 'Mumbai',
       gear: 'Nikon Z9 · 400mm f/2.8',
       tour: 'Tadoba Feline Fortune',
-      quote: 'Traveling with Untamed Trails was a revelation. Having just 3 of us in the Gypsy meant I could track a tigress crossing without anyone blocking my lens. Vijay’s advice on handling backlit dust resulted in the best shots of my life.',
+      quote: 'Traveling with VM Wild Expeditions was a revelation. Having just 3 of us in the Gypsy meant I could track a tigress crossing without anyone blocking my lens. Vijay’s advice on handling backlit dust resulted in the best shots of my life.',
     },
     {
       name: 'Dr. Katherine Wood',
@@ -650,17 +654,17 @@ export const TOURS_DATA = {
       location: 'Bangalore',
       gear: 'Canon R5 · 500mm f/4',
       tour: 'Kabini Viceroy’s Vista',
-      quote: 'I had been to Kabini four times with regular safari operators and never saw the black panther. On Day 2 with Untamed Trails, we waited silently at a teak corridor and Saya walked straight toward our lens. Pure magic.',
+      quote: 'I had been to Kabini four times with regular safari operators and never saw the black panther. On Day 2 with VM Wild Expeditions, we waited silently at a teak corridor and Saya walked straight toward our lens. Pure magic.',
     },
   ],
 
   // Instagram Feed Mock
   instagramPosts: [
-    { id: 1, image: '/images/user/IMG_4761.JPG', caption: 'The Stare Across Granite · Jawai Leopard', tag: '@untamed__trails__' },
-    { id: 2, image: '/images/user/IMG_4639.JPG', caption: 'Canopy Monarch · Malabar Grey Hornbill', tag: '@untamed__trails__' },
-    { id: 3, image: '/images/user/IMG_4634.JPG', caption: 'Jewel in the Rain · Western Ghats Pit Viper', tag: '@untamed__trails__' },
-    { id: 4, image: '/images/user/IMG_4632.JPG', caption: 'Rainforest Macro Study', tag: '@untamed__trails__' },
-    { id: 5, image: '/images/user/IMG_4638.JPG', caption: 'Precision Dive · Kingfisher along Bhavani', tag: '@untamed__trails__' },
-    { id: 6, image: '/images/user/IMG_4633.JPG', caption: 'Nine Colors of Dawn · Indian Pitta', tag: '@untamed__trails__' },
+    { id: 1, image: '/images/user/IMG_4761.JPG', caption: 'The Stare Across Granite · Jawai Leopard', tag: '@vm_wild_expeditions' },
+    { id: 2, image: '/images/user/IMG_4639.JPG', caption: 'Canopy Monarch · Malabar Grey Hornbill', tag: '@vm_wild_expeditions' },
+    { id: 3, image: '/images/user/IMG_4634.JPG', caption: 'Jewel in the Rain · Western Ghats Pit Viper', tag: '@vm_wild_expeditions' },
+    { id: 4, image: '/images/user/IMG_4632.JPG', caption: 'Rainforest Macro Study', tag: '@vm_wild_expeditions' },
+    { id: 5, image: '/images/user/IMG_4638.JPG', caption: 'Precision Dive · Kingfisher along Bhavani', tag: '@vm_wild_expeditions' },
+    { id: 6, image: '/images/user/IMG_4633.JPG', caption: 'Nine Colors of Dawn · Indian Pitta', tag: '@vm_wild_expeditions' },
   ],
 }
