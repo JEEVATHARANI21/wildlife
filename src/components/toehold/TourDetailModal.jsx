@@ -182,7 +182,7 @@ export default function TourDetailModal({ tour, onClose }) {
 
             <div className="flex items-center gap-3 w-full sm:w-auto">
               <a
-                href={`https://wa.me/919087394546?text=Hello%20Untamed%20Trails,%20I'm%20ready%20to%20register%20for%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour%20(INR%20${tour.price}).%20Please%20guide%20the%20booking%20steps.`}
+                href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20ready%20to%20register%20for%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour%20(INR%20${tour.price}).%20Please%20guide%20the%20booking%20steps.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-copper-primary w-full sm:w-auto py-3 px-8 rounded-full font-sans text-xs uppercase tracking-widest shadow-[0_4px_20px_rgba(184,115,51,0.35)] text-center cursor-pointer"

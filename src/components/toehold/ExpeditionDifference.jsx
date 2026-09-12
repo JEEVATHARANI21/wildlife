@@ -1,4 +1,4 @@
-export default function UntamedDifference({ features }) {
+export default function ExpeditionDifference({ features }) {
   return (
     <section id="difference" className="py-24 px-5 sm:px-8 md:px-16 bg-[#242923] border-b border-[#151815]">
       <div className="max-w-7xl mx-auto">
@@ -7,12 +7,12 @@ export default function UntamedDifference({ features }) {
           <div className="inline-flex items-center gap-2 mb-3">
             <span className="w-8 h-[1.5px] bg-[#B87333]" />
             <span className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#D6A85C] font-semibold">
-              The Untamed Edge · Section 04
+              The VM Wild Edge · Section 04
             </span>
             <span className="w-8 h-[1.5px] bg-[#B87333]" />
           </div>
           <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#F2F0E8] font-light leading-tight">
-            Why Travel with <span className="italic text-[#B87333] font-normal">Untamed Trails</span>
+            Why Travel with <span className="italic text-[#B87333] font-normal">VM Wild Expeditions</span>
           </h2>
           <p className="font-sans text-xs sm:text-sm text-[#A7A59B] mt-3 font-light leading-relaxed">
             We don’t run tourist safaris. We design high-intensity photographic masterclasses crafted around animal behavior, optimal lighting conditions, and respectful fieldcraft.

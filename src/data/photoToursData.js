@@ -177,7 +177,7 @@ export const TOURS_DATA = {
         '5 Core Zone Gypsy Safaris with priority allotment',
         '3 Nights Heritage Glamping stay',
         'All gourmet Rajasthani & Continental meals',
-        'Guided by Untamed Trails skipper',
+        'Guided by VM Wild Expeditions skipper',
         'All park permits and naturalist guide charges',
       ],
       exclusions: ['Travel to/from Sawai Madhopur', 'Camera charges'],

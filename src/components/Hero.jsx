@@ -186,7 +186,7 @@ export default function Hero() {
             <div className="flex items-center justify-center p-1.5 sm:p-2 rounded-xl bg-black/45 backdrop-blur-md border border-white/12 shadow-[0_8px_24px_rgba(0,0,0,0.6)] transition-all">
               <img
                 src="/logo-icon.png"
-                alt="UntamedTrails"
+                alt="VM Wild Expeditions"
                 className="logo-icon-img animate-leopard-prowl h-9 sm:h-11 md:h-12 w-auto object-contain"
                 style={{
                   transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease',
@@ -200,7 +200,7 @@ export default function Hero() {
                   transition: 'letter-spacing 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                 }}
               >
-                UNTAMED<span style={{ color: '#B3874B', fontWeight: 300 }}>TRAILS</span>
+                VM WILD <span style={{ color: '#B3874B', fontWeight: 300 }}>EXPEDITIONS</span>
               </span>
               <span className="font-sans text-[7px] sm:text-[9px] tracking-[0.3em] text-[#F1EFE8]/70 uppercase mt-0.5 sm:mt-1 font-normal hidden xs:inline">
                 Wildlife Photography Studio

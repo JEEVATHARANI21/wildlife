@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const WHATSAPP_URL =
-  'https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20contacting%20you%20from%20UntamedTrails%20website%20regarding%20fine%20art%20prints%20/%20photography.'
+  'https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20contacting%20you%20from%20VM%20Wild%20Expeditions%20website%20regarding%20photo%20tours%20/%20photography.'
 
 export default function WhatsAppButton() {
   const [hovered, setHovered] = useState(false)

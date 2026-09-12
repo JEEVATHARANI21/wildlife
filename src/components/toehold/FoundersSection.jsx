@@ -15,7 +15,7 @@ export default function FoundersSection({ founders }) {
             Meet the <span className="italic text-[#B87333] font-normal">Founders</span>
           </h2>
           <p className="font-sans text-xs sm:text-sm text-[#A7A59B] mt-3 font-light leading-relaxed">
-            Untamed Trails was founded on a shared obsession: to take passionate photographers deeper into the wild with uncompromised field ethics, intimate group sizes, and world-class mentorship.
+            VM Wild Expeditions was founded on a shared obsession: to take passionate photographers deeper into the wild with uncompromised field ethics, intimate group sizes, and world-class mentorship.
           </p>
         </div>
 
@@ -44,7 +44,7 @@ export default function FoundersSection({ founders }) {
                   {/* Title & Role */}
                   <div className="text-center sm:text-left flex-1">
                     <span className="font-sans text-[10px] tracking-widest uppercase text-[#D6A85C] font-semibold block mb-1">
-                      Untamed Trails Leadership
+                      VM Wild Expeditions Leadership
                     </span>
                     <h3 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] mb-1">
                       {founder.name}

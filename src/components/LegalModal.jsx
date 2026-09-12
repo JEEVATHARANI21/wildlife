@@ -108,10 +108,10 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                   Terms of Service & Expedition Charter
                 </h3>
                 <p className="text-xs text-[#D6A85C] tracking-wider uppercase mb-4 font-semibold">
-                  Effective Date: September 2026 · Untamed Trails Photography Studio
+                  Effective Date: September 2026 · VM Wild Expeditions Photography Studio
                 </p>
                 <p>
-                  Welcome to <strong>Untamed Trails</strong>. By accessing this website, registering for photography expeditions, or reserving tour seats, you agree to comply with and be bound by the following Terms and Conditions.
+                  Welcome to <strong>VM Wild Expeditions</strong>. By accessing this website, registering for photography expeditions, or reserving tour seats, you agree to comply with and be bound by the following Terms and Conditions.
                 </p>
               </div>
 
@@ -121,7 +121,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                     1. Intellectual Property & Copyright
                   </h4>
                   <p>
-                    All wildlife photographs, video footage, soundscapes, editorial narratives, and brand insignia published on this site are the sole intellectual property of <strong>Untamed Trails</strong> and its founders. All works are protected under the Indian Copyright Act, 1957.
+                    All wildlife photographs, video footage, soundscapes, editorial narratives, and brand insignia published on this site are the sole intellectual property of <strong>VM Wild Expeditions</strong> and its founders. All works are protected under the Indian Copyright Act, 1957.
                   </p>
                 </div>
 
@@ -130,7 +130,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                     2. Photo Tour Booking & Vehicle Policy
                   </h4>
                   <p>
-                    Untamed Trails guarantees a strict maximum of 4 photographers per safari Gypsy to assure unhindered 360-degree shooting angles and individual beanbag placements. Forest department permits are allocated per official sanctuary regulations.
+                    VM Wild Expeditions guarantees a strict maximum of 4 photographers per safari Gypsy to assure unhindered 360-degree shooting angles and individual beanbag placements. Forest department permits are allocated per official sanctuary regulations.
                   </p>
                 </div>
 
@@ -154,7 +154,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                   Effective Date: September 2026 · Client Data Governance
                 </p>
                 <p>
-                  At <strong>Untamed Trails</strong>, we respect your confidentiality and are committed to safeguarding personal information shared with our expedition desk.
+                  At <strong>VM Wild Expeditions</strong>, we respect your confidentiality and are committed to safeguarding personal information shared with our expedition desk.
                 </p>
               </div>
 
@@ -173,7 +173,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                     2. Zero Data Selling
                   </h4>
                   <p>
-                    Untamed Trails does not sell, rent, lease, or monetize client personal data to any third-party marketing brokers or external networks.
+                    VM Wild Expeditions does not sell, rent, lease, or monetize client personal data to any third-party marketing brokers or external networks.
                   </p>
                 </div>
 
@@ -182,7 +182,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                     3. Official Contact
                   </h4>
                   <p>
-                    For inquiries, please contact our desk at <a href="mailto:hello@untamedtrails.in" className="text-[#D6A85C] hover:underline">hello@untamedtrails.in</a> or via our official Instagram <a href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz" target="_blank" rel="noopener noreferrer" className="text-[#D6A85C] hover:underline">@vm_wild_expeditions</a>.
+                    For inquiries, please contact our desk at <a href="mailto:hello@vmwildexpeditions.com" className="text-[#D6A85C] hover:underline">hello@vmwildexpeditions.com</a> or via our official Instagram <a href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz" target="_blank" rel="noopener noreferrer" className="text-[#D6A85C] hover:underline">@vm_wild_expeditions</a>.
                   </p>
                 </div>
               </div>
@@ -193,7 +193,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
         {/* Modal Footer */}
         <div className="flex justify-between items-center px-6 md:px-8 py-4 border-t border-[#242923] bg-[#080908]">
           <span className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest">
-            © 2026 UNTAMED TRAILS
+            © 2026 VM WILD EXPEDITIONS
           </span>
           <button
             onClick={onClose}

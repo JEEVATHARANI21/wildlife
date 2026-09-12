@@ -8,7 +8,7 @@ export default function ContactFooter({ openLegal }) {
     e.preventDefault()
     setSent(true)
     const encodedText = encodeURIComponent(
-      `Hello Untamed Trails,\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nInterested Track: ${form.category === 'animal' ? 'Animal Tracking Tours' : 'Bird Photography Tours'}\nMessage: ${form.message}`
+      `Hello VM Wild Expeditions,\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nInterested Track: ${form.category === 'animal' ? 'Animal Tracking Tours' : 'Bird Photography Tours'}\nMessage: ${form.message}`
     )
     window.open(`https://wa.me/919087394546?text=${encodedText}`, '_blank')
   }
@@ -53,7 +53,7 @@ export default function ContactFooter({ openLegal }) {
               </a>
 
               <a
-                href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20from%20Untamed%20Trails%20website%20for%20a%20Photo%20Tour%20inquiry."
+                href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20from%20VM%20Wild%20Expeditions%20website%20for%20a%20Photo%20Tour%20inquiry."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 rounded-2xl bg-[#151815] border border-[#242923] hover:border-[#25D366]/50 transition-colors flex items-center gap-3.5 group"

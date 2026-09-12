@@ -8,7 +8,7 @@ import ToursHero from './components/toehold/ToursHero'
 import FeaturedTours from './components/toehold/FeaturedTours'
 import TourCatalog from './components/toehold/TourCatalog'
 import FoundersSection from './components/toehold/FoundersSection'
-import UntamedDifference from './components/toehold/UntamedDifference'
+import ExpeditionDifference from './components/toehold/ExpeditionDifference'
 import Testimonials from './components/toehold/Testimonials'
 import InstagramFeed from './components/toehold/InstagramFeed'
 import ContactFooter from './components/toehold/ContactFooter'
@@ -85,16 +85,16 @@ export default function App() {
           onSelectTour={setSelectedTour}
         />
 
-        {/* 5. The 2 Founders of Untamed Trails */}
+        {/* 5. The 2 Founders of VM Wild Expeditions */}
         <FoundersSection founders={TOURS_DATA.founders} />
 
-        {/* 6. The Untamed Edge / Why Travel With Us (Toehold Style) */}
-        <UntamedDifference features={TOURS_DATA.difference} />
+        {/* 6. The VM Wild Edge / Why Travel With Us (Toehold Style) */}
+        <ExpeditionDifference features={TOURS_DATA.difference} />
 
         {/* 7. Guest Testimonials & Reviews */}
         <Testimonials testimonials={TOURS_DATA.testimonials} />
 
-        {/* 8. Instagram Live Feed Grid (@untamed__trails__) */}
+        {/* 8. Instagram Live Feed Grid (@vm_wild_expeditions) */}
         <InstagramFeed posts={TOURS_DATA.instagramPosts} />
 
         {/* 9. Contact, Inquiries & Footer */}

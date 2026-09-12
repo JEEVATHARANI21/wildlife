@@ -65,7 +65,7 @@ export default function Navbar({ openLegal }) {
           <div className="flex items-center justify-center p-1.5 rounded-lg bg-black/40 border border-white/10 group-hover:border-[#B3874B]/50 transition-all duration-300">
             <img
               src="/logo-icon.png"
-              alt="UntamedTrails Logo"
+              alt="VM Wild Expeditions Logo"
               className="h-9 sm:h-10 md:h-11 w-auto object-contain brightness-125 logo-icon-img animate-leopard-prowl"
               style={{ transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease' }}
             />
@@ -75,7 +75,7 @@ export default function Navbar({ openLegal }) {
               className="font-sans text-sm sm:text-base md:text-lg tracking-[0.24em] sm:tracking-[0.26em] uppercase font-bold text-[#F1EFE8] leading-none logo-brand-title shimmer-gold-text"
               style={{ transition: 'letter-spacing 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
             >
-              UNTAMED<span className="text-[#B3874B] font-light">TRAILS</span>
+              VM WILD <span className="text-[#B3874B] font-light">EXPEDITIONS</span>
             </span>
             <span className="font-sans text-[8px] tracking-[0.35em] uppercase text-[#888] mt-1 hidden sm:inline">
               Wildlife Photography Studio
@@ -170,11 +170,11 @@ export default function Navbar({ openLegal }) {
           <div className="flex items-center gap-3">
             <img
               src="/logo-icon.png"
-              alt="UntamedTrails"
+              alt="VM Wild Expeditions"
               className="h-9 w-auto object-contain brightness-125"
             />
             <span className="font-sans text-base tracking-[0.24em] uppercase font-bold text-[#F1EFE8]">
-              UNTAMED<span className="text-[#B3874B] font-light">TRAILS</span>
+              VM WILD <span className="text-[#B3874B] font-light">EXPEDITIONS</span>
             </span>
           </div>
           <button
@@ -222,7 +222,7 @@ export default function Navbar({ openLegal }) {
         <div className="flex flex-col gap-4 pt-6 border-t border-[#2A2B28]/80">
           <div className="grid grid-cols-2 gap-3">
             <a
-              href="https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20reaching%20out%20from%20UntamedTrails%20website%20regarding%20photography%20support%20/%20inquiries."
+              href="https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20reaching%20out%20from%20VM%20Wild%20Expeditions%20website%20regarding%20photography%20support%20/%20inquiries."
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleNavClick}

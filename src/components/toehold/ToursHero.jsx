@@ -5,7 +5,7 @@ export default function ToursHero({ onSelectCategory }) {
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1920&q=85&auto=format&fit=crop"
-          alt="Untamed Trails Wildlife Photo Tours"
+          alt="VM Wild Expeditions Wildlife Photo Tours"
           className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-75"
         />
         {/* Exact Overlay: rgba(8, 9, 8, 0.55) as specified by user */}

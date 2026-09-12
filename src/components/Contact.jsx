@@ -60,7 +60,7 @@ export default function Contact({ openLegal }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    window.location.href = `mailto:hello@untamedtrails.in?subject=Enquiry from ${formData.name}&body=${formData.message}`
+    window.location.href = `mailto:hello@vmwildexpeditions.com?subject=Enquiry from ${formData.name}&body=${formData.message}`
   }
 
   return (
@@ -122,7 +122,7 @@ export default function Contact({ openLegal }) {
         {/* CTA */}
         <div ref={contentRef} className="flex flex-col items-center gap-8 mt-12">
           <a
-            href="mailto:hello@untamedtrails.in"
+            href="mailto:hello@vmwildexpeditions.com"
             className="group flex items-center gap-4"
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
@@ -143,14 +143,14 @@ export default function Contact({ openLegal }) {
 
           <div className="flex flex-col sm:flex-row items-center gap-4 text-sm font-sans">
             <a
-              href="mailto:hello@untamedtrails.in"
+              href="mailto:hello@vmwildexpeditions.com"
               className="text-[#A7A59B] hover:text-[#F1EFE8] border-b border-[#2A2B28] pb-0.5 transition-colors"
             >
-              hello@untamedtrails.in
+              hello@vmwildexpeditions.com
             </a>
             <span className="hidden sm:inline text-[#444]">·</span>
             <a
-              href="https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20reaching%20out%20from%20UntamedTrails%20website%20regarding%20photography%20support%20/%20inquiries."
+              href="https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20reaching%20out%20from%20VM%20Wild%20Expeditions%20website%20regarding%20photography%20support%20/%20inquiries."
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#25D366]/40 hover:border-[#25D366] bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366]/20 transition-all font-medium tracking-wide shadow-sm"
@@ -243,7 +243,7 @@ export default function Contact({ openLegal }) {
             <div className="p-3.5 rounded-2xl bg-black/40 border border-white/10 shadow-2xl group-hover:border-[#B3874B]/50 transition-all duration-300">
               <img
                 src="/logo-icon.png"
-                alt="UntamedTrails"
+                alt="VM Wild Expeditions"
                 className="h-14 md:h-16 w-auto object-contain logo-icon-img animate-leopard-prowl"
                 style={{ transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease' }}
               />
@@ -252,7 +252,7 @@ export default function Contact({ openLegal }) {
               className="font-sans text-xl md:text-2xl tracking-[0.3em] uppercase font-bold text-[#F1EFE8] mt-2 logo-brand-title shimmer-gold-text"
               style={{ transition: 'letter-spacing 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}
             >
-              UNTAMED<span className="text-[#B3874B] font-light">TRAILS</span>
+              VM WILD <span className="text-[#B3874B] font-light">EXPEDITIONS</span>
             </p>
             <span className="font-sans text-[9px] tracking-[0.35em] uppercase text-[#888]">
               Wildlife Photography Studio
@@ -261,7 +261,7 @@ export default function Contact({ openLegal }) {
 
           <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
             <a
-              href="https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20reaching%20out%20from%20UntamedTrails%20website%20regarding%20photography%20support%20/%20inquiries."
+              href="https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20reaching%20out%20from%20VM%20Wild%20Expeditions%20website%20regarding%20photography%20support%20/%20inquiries."
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#25D366]/40 hover:border-[#25D366] bg-[#25D366]/10 text-[#F1EFE8] hover:text-[#25D366] font-sans text-[11px] tracking-[0.18em] uppercase transition-all duration-300 shadow-md group"
@@ -315,7 +315,7 @@ export default function Contact({ openLegal }) {
           </div>
 
           <p className="font-sans text-[10px]" style={{ color: 'var(--border)' }}>
-            © 2026 UNTAMEDTRAILS. All rights reserved.
+            © 2026 VM WILD EXPEDITIONS. All rights reserved.
           </p>
         </footer>
       </div>

@@ -55,7 +55,7 @@ export default function ToeholdNavbar() {
 
           {/* WhatsApp Direct */}
           <a
-            href="https://wa.me/919087394546?text=Hello%20Untamed%20Trails,%20I'm%20interested%20in%20your%20upcoming%20Photo%20Tours."
+            href="https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20interested%20in%20your%20upcoming%20Photo%20Tours."
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 hover:text-[#25D366] transition-colors"
@@ -225,7 +225,7 @@ export default function ToeholdNavbar() {
           </a>
 
           <a
-            href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20to%20inquire%20about%20Untamed%20Trails%20Photo%20Tours."
+            href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20to%20inquire%20about%20VM%20Wild%20Expeditions%20Photo%20Tours."
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}

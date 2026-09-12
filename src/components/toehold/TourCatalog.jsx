@@ -233,7 +233,7 @@ export default function TourCatalog({
                     View Itinerary
                   </button>
                   <a
-                    href={`https://wa.me/919087394546?text=Hello%20Untamed%20Trails,%20I%20am%20interested%20in%20reserving%20a%20seat%20on%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour.`}
+                    href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I%20am%20interested%20in%20reserving%20a%20seat%20on%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour.`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-copper-primary py-2.5 px-3 rounded-xl text-xs font-sans uppercase tracking-wider shadow-md text-center flex items-center justify-center gap-1"
