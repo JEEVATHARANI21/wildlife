@@ -19,15 +19,15 @@ export default function ContactFooter({ openLegal }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-[#242923]">
           {/* Left Column: Brand Story & Direct Info */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="flex items-center gap-3.5">
-              <div className="p-1 rounded-xl bg-[#080908] border border-[#242923] shadow-md overflow-hidden">
-                <img src="/logo.jpeg" alt="VM Wild Expeditions" className="h-12 sm:h-14 w-auto object-contain" />
+            <div className="flex items-center gap-4">
+              <div className="p-1.5 sm:p-2 rounded-2xl bg-[#080908] border border-[#242923] shadow-lg overflow-hidden">
+                <img src="/logo-clean.png" alt="VM Wild Expeditions" className="h-13 sm:h-16 w-auto object-contain" />
               </div>
-              <div className="flex flex-col">
-                <span className="font-serif text-xl sm:text-2xl tracking-[0.16em] uppercase text-[#F2F0E8] font-bold leading-tight">
+              <div className="flex flex-col border-l border-[#242923] pl-3.5">
+                <span className="font-serif text-lg sm:text-xl tracking-[0.16em] uppercase text-[#F2F0E8] font-bold leading-tight">
                   VM <span className="text-[#B87333] font-normal">WILD EXPEDITIONS</span>
                 </span>
-                <span className="font-sans text-[8.5px] sm:text-[9.5px] tracking-[0.2em] uppercase text-[#D6A85C] font-semibold mt-0.5">
+                <span className="font-sans text-[8.5px] sm:text-[9.5px] tracking-[0.22em] uppercase text-[#D6A85C] font-semibold mt-0.5">
                   Beyond the Map. Into the wild
                 </span>
               </div>

@@ -26,12 +26,23 @@ export default function ToursHero({ onSelectCategory }) {
 
       {/* Hero Content Container */}
       <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
-        {/* Eyebrow Pill: text #D6A85C, dot #B87333, border #B87333/40 */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#151815]/90 border border-[#B87333]/40 backdrop-blur-md mb-6 shadow-xl">
-          <span className="w-2 h-2 rounded-full bg-[#B87333] animate-pulse" />
-          <span className="font-sans text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-[#D6A85C] font-semibold">
-            Beyond the Map. Into the wild
-          </span>
+        {/* Grand Official Brand Crest / Logo */}
+        <div className="relative mb-7 group select-none">
+          <div className="absolute -inset-2 bg-gradient-to-r from-[#B87333]/20 via-[#D6A85C]/25 to-[#B87333]/20 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          <div className="relative px-6 sm:px-10 py-4 sm:py-5 rounded-3xl bg-[#080908]/92 border border-[#B87333]/40 shadow-[0_12px_40px_rgba(0,0,0,0.85)] backdrop-blur-md flex flex-col items-center">
+            <img
+              src="/logo-clean.png"
+              alt="VM Wild Expeditions — Beyond the Map. Into the wild"
+              className="h-18 sm:h-22 md:h-26 w-auto object-contain mx-auto drop-shadow-[0_8px_24px_rgba(0,0,0,0.9)] transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="mt-2.5 pt-2 border-t border-[#242923] flex items-center justify-center gap-3 w-full">
+              <span className="h-[1px] w-8 sm:w-14 bg-gradient-to-r from-transparent to-[#B87333]" />
+              <span className="font-sans text-[9px] sm:text-xs tracking-[0.3em] uppercase text-[#D6A85C] font-semibold">
+                Beyond the Map. Into the wild
+              </span>
+              <span className="h-[1px] w-8 sm:w-14 bg-gradient-to-l from-transparent to-[#B87333]" />
+            </div>
+          </div>
         </div>
 
         {/* Main Title: #F2F0E8 with Copper highlight #B87333 */}

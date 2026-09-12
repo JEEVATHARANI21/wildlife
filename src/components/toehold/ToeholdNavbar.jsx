@@ -91,20 +91,20 @@ export default function ToeholdNavbar() {
         }`}
       >
         {/* Brand Logo */}
-        <a href="#" className="flex items-center gap-3 group no-underline">
-          <div className="flex items-center justify-center p-1 rounded-xl bg-[#080908] border border-[#242923] group-hover:border-[#B87333]/70 transition-all duration-300 shadow-md overflow-hidden">
+        <a href="#" className="flex items-center gap-3.5 sm:gap-4 group no-underline">
+          <div className="flex items-center justify-center p-1.5 sm:p-2 rounded-2xl bg-[#080908] border border-[#242923] group-hover:border-[#B87333]/80 transition-all duration-300 shadow-xl overflow-hidden">
             <img
-              src="/logo.jpeg"
-              alt="VM Wild Expeditions"
-              className="h-10 sm:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              src="/logo-clean.png"
+              alt="VM Wild Expeditions Logo"
+              className="h-12 sm:h-14 md:h-16 lg:h-18 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </div>
-          <div className="flex flex-col">
-            <span className="font-serif text-base sm:text-xl tracking-[0.16em] uppercase font-semibold text-[#F2F0E8] leading-tight">
-              VM <span className="text-[#B87333] font-normal">WILD EXPEDITIONS</span>
+          <div className="hidden sm:flex flex-col border-l border-[#242923] pl-3 sm:pl-3.5 py-0.5">
+            <span className="font-serif text-xs md:text-sm tracking-[0.2em] uppercase text-[#D6A85C] font-semibold leading-tight">
+              BEYOND THE MAP
             </span>
-            <span className="font-sans text-[8px] sm:text-[9px] tracking-[0.18em] uppercase text-[#D6A85C] font-semibold mt-0.5">
-              Beyond the Map. Into the wild
+            <span className="font-sans text-[8.5px] md:text-[9.5px] tracking-[0.26em] uppercase text-[#B87333] font-light mt-0.5">
+              INTO THE WILD
             </span>
           </div>
         </a>
@@ -170,12 +170,11 @@ export default function ToeholdNavbar() {
         {/* Drawer Top */}
         <div className="flex items-center justify-between pb-5 border-b border-[#242923]">
           <div className="flex items-center gap-3">
-            <img src="/logo.jpeg" alt="VM Wild Expeditions" className="h-9 w-auto object-contain rounded-md" />
+            <div className="p-1.5 rounded-xl bg-[#080908] border border-[#242923]">
+              <img src="/logo-clean.png" alt="VM Wild Expeditions" className="h-10 w-auto object-contain" />
+            </div>
             <div className="flex flex-col">
-              <span className="font-serif text-base tracking-widest uppercase text-[#F2F0E8] leading-tight">
-                VM <span className="text-[#B87333]">WILD EXPEDITIONS</span>
-              </span>
-              <span className="font-sans text-[8px] tracking-[0.16em] uppercase text-[#D6A85C] font-semibold">
+              <span className="font-sans text-[8.5px] tracking-[0.22em] uppercase text-[#D6A85C] font-semibold">
                 Beyond the Map. Into the wild
               </span>
             </div>
