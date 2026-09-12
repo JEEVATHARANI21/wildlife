@@ -19,20 +19,22 @@ export default function ContactFooter({ openLegal }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-[#242923]">
           {/* Left Column: Brand Story & Direct Info */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="flex items-center gap-3">
-              <img src="/logo-icon.png" alt="Untamed Trails" className="h-10 w-auto object-contain brightness-125" />
+            <div className="flex items-center gap-3.5">
+              <div className="p-1 rounded-xl bg-[#080908] border border-[#242923] shadow-md overflow-hidden">
+                <img src="/logo.jpeg" alt="VM Wild Expeditions" className="h-12 sm:h-14 w-auto object-contain" />
+              </div>
               <div className="flex flex-col">
-                <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#F2F0E8] font-bold">
-                  UNTAMED <span className="text-[#B87333] font-normal">TRAILS</span>
+                <span className="font-serif text-xl sm:text-2xl tracking-[0.16em] uppercase text-[#F2F0E8] font-bold leading-tight">
+                  VM <span className="text-[#B87333] font-normal">WILD EXPEDITIONS</span>
                 </span>
-                <span className="font-sans text-[8px] tracking-[0.3em] uppercase text-[#A7A59B]">
-                  Wildlife & Bird Photography Tours
+                <span className="font-sans text-[8.5px] sm:text-[9.5px] tracking-[0.2em] uppercase text-[#D6A85C] font-semibold mt-0.5">
+                  Beyond the Map. Into the wild
                 </span>
               </div>
             </div>
 
             <p className="font-sans text-xs sm:text-sm text-[#A7A59B] max-w-lg leading-relaxed font-light">
-              Untamed Trails is a bespoke wildlife photography travel studio founded on uncompromised field ethics, intimate vehicular limits (max 4 per Gypsy), and deep animal behavior anticipation across India’s wildest national parks.
+              VM Wild Expeditions is a bespoke wildlife photography travel studio founded on uncompromised field ethics, intimate vehicular limits (max 4 per Gypsy), and deep animal behavior anticipation across India’s wildest national parks.
             </p>
 
             {/* Direct Contact Cards */}
@@ -184,7 +186,7 @@ export default function ContactFooter({ openLegal }) {
 
         {/* Footer Bottom Line */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-[#A7A59B]/70">
-          <p>© {new Date().getFullYear()} Untamed Trails Photography & Expeditions Pvt Ltd. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} VM Wild Expeditions Pvt Ltd. All Rights Reserved.</p>
           <div className="flex items-center gap-5">
             <button
               onClick={() => openLegal && openLegal('terms')}

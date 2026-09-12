@@ -92,19 +92,19 @@ export default function ToeholdNavbar() {
       >
         {/* Brand Logo */}
         <a href="#" className="flex items-center gap-3 group no-underline">
-          <div className="flex items-center justify-center p-1.5 rounded-xl bg-[#151815] border border-[#242923] group-hover:border-[#B87333]/70 transition-all duration-300 shadow-md">
+          <div className="flex items-center justify-center p-1 rounded-xl bg-[#080908] border border-[#242923] group-hover:border-[#B87333]/70 transition-all duration-300 shadow-md overflow-hidden">
             <img
-              src="/logo-icon.png"
-              alt="Untamed Trails Logo"
-              className="h-8 sm:h-9 w-auto object-contain brightness-125 transition-transform duration-300 group-hover:scale-105"
+              src="/logo.jpeg"
+              alt="VM Wild Expeditions"
+              className="h-10 sm:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-serif text-base sm:text-xl tracking-[0.18em] uppercase font-semibold text-[#F2F0E8] leading-tight">
-              UNTAMED <span className="text-[#B87333] font-normal">TRAILS</span>
+            <span className="font-serif text-base sm:text-xl tracking-[0.16em] uppercase font-semibold text-[#F2F0E8] leading-tight">
+              VM <span className="text-[#B87333] font-normal">WILD EXPEDITIONS</span>
             </span>
-            <span className="font-sans text-[8px] tracking-[0.3em] uppercase text-[#A7A59B] font-medium">
-              Photo Tours & Expeditions
+            <span className="font-sans text-[8px] sm:text-[9px] tracking-[0.18em] uppercase text-[#D6A85C] font-semibold mt-0.5">
+              Beyond the Map. Into the wild
             </span>
           </div>
         </a>
@@ -170,10 +170,15 @@ export default function ToeholdNavbar() {
         {/* Drawer Top */}
         <div className="flex items-center justify-between pb-5 border-b border-[#242923]">
           <div className="flex items-center gap-3">
-            <img src="/logo-icon.png" alt="Untamed Trails" className="h-8 w-auto object-contain brightness-125" />
-            <span className="font-serif text-lg tracking-widest uppercase text-[#F2F0E8]">
-              UNTAMED <span className="text-[#B87333]">TRAILS</span>
-            </span>
+            <img src="/logo.jpeg" alt="VM Wild Expeditions" className="h-9 w-auto object-contain rounded-md" />
+            <div className="flex flex-col">
+              <span className="font-serif text-base tracking-widest uppercase text-[#F2F0E8] leading-tight">
+                VM <span className="text-[#B87333]">WILD EXPEDITIONS</span>
+              </span>
+              <span className="font-sans text-[8px] tracking-[0.16em] uppercase text-[#D6A85C] font-semibold">
+                Beyond the Map. Into the wild
+              </span>
+            </div>
           </div>
           <button
             onClick={() => setMobileMenuOpen(false)}

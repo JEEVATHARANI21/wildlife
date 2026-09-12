@@ -30,7 +30,7 @@ export default function ToursHero({ onSelectCategory }) {
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#151815]/90 border border-[#B87333]/40 backdrop-blur-md mb-6 shadow-xl">
           <span className="w-2 h-2 rounded-full bg-[#B87333] animate-pulse" />
           <span className="font-sans text-[10px] sm:text-[11px] tracking-[0.26em] uppercase text-[#D6A85C] font-semibold">
-            Untamed Trails · Photography Expeditions
+            Beyond the Map. Into the wild
           </span>
         </div>
 

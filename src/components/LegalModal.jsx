@@ -45,16 +45,16 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
         <div className="flex items-center justify-between px-6 md:px-8 py-5 border-b border-[#242923] bg-[#080908]">
           <div className="flex items-center gap-3">
             <img
-              src="/logo-icon.png"
-              alt="Untamed Trails"
-              className="h-8 w-auto object-contain"
+              src="/logo.jpeg"
+              alt="VM Wild Expeditions"
+              className="h-9 w-auto object-contain rounded-md border border-[#242923]"
             />
             <div>
               <span className="font-sans text-xs tracking-[0.25em] uppercase font-bold text-[#F2F0E8]">
-                UNTAMED <span className="text-[#B87333] font-normal">TRAILS</span>
+                VM <span className="text-[#B87333] font-normal">WILD EXPEDITIONS</span>
               </span>
-              <span className="block font-sans text-[8px] tracking-[0.25em] uppercase text-[#A7A59B]">
-                Legal & Expedition Governance
+              <span className="block font-sans text-[8px] tracking-[0.2em] uppercase text-[#D6A85C] font-semibold mt-0.5">
+                Beyond the Map. Into the wild
               </span>
             </div>
           </div>
