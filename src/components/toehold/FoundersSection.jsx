@@ -19,75 +19,71 @@ export default function FoundersSection({ founders }) {
           </p>
         </div>
 
-        {/* The Two Founders Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+        {/* The Two Founders Grid - Small & Sleek Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-7 max-w-5xl mx-auto">
           {founders.map((founder, idx) => (
             <div
               key={founder.id}
-              className="group rounded-3xl bg-[#242923]/60 border border-[#242923] hover:border-[#B87333] p-7 sm:p-9 transition-all duration-500 shadow-2xl flex flex-col justify-between"
+              className="group rounded-2xl bg-[#242923]/50 border border-[#242923] hover:border-[#B87333] p-5 sm:p-6 transition-all duration-300 shadow-xl flex flex-col justify-between"
             >
               <div>
-                {/* Portrait Frame */}
-                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-7">
-                  <div className="relative w-40 sm:w-44 aspect-[3/4] rounded-2xl overflow-hidden bg-[#080908] border border-[#242923] group-hover:border-[#D6A85C] transition-colors shadow-2xl flex-shrink-0">
+                {/* Portrait & Info Header */}
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 mb-4">
+                  {/* Compact Portrait Frame */}
+                  <div className="relative w-28 sm:w-32 aspect-[3/4] rounded-xl overflow-hidden bg-[#080908] border border-[#242923] group-hover:border-[#D6A85C] transition-colors shadow-lg flex-shrink-0">
                     <img
                       src={founder.image}
                       alt={founder.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#080908] via-transparent to-transparent pointer-events-none" />
-                    <span className="absolute bottom-2.5 left-2.5 right-2.5 text-center text-[9px] font-sans tracking-widest uppercase text-[#D6A85C] bg-[#080908]/85 backdrop-blur-sm py-1 rounded-md border border-[#242923] font-semibold">
+                    <span className="absolute bottom-1.5 left-1.5 right-1.5 text-center text-[8.5px] font-sans tracking-widest uppercase text-[#D6A85C] bg-[#080908]/90 backdrop-blur-sm py-0.5 rounded border border-[#242923] font-semibold">
                       Founder 0{idx + 1}
                     </span>
                   </div>
 
-                  {/* Title & Role */}
-                  <div className="text-center sm:text-left flex-1">
-                    <span className="font-sans text-[10px] tracking-widest uppercase text-[#D6A85C] font-semibold block mb-1">
-                      VM Wild Expeditions Leadership
+                  {/* Title, Role & Credentials */}
+                  <div className="text-center sm:text-left flex-1 min-w-0">
+                    <span className="font-sans text-[9px] tracking-widest uppercase text-[#D6A85C] font-semibold block mb-0.5">
+                      Leadership
                     </span>
-                    <h3 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] mb-1">
+                    <h3 className="font-serif text-xl sm:text-2xl text-[#F2F0E8] mb-0.5 leading-snug">
                       {founder.name}
                     </h3>
-                    <p className="font-sans text-xs text-[#A7A59B] mb-4">
+                    <p className="font-sans text-[11px] text-[#A7A59B] mb-2.5 leading-tight">
                       {founder.role}
                     </p>
 
-                    {/* Credentials List */}
-                    <div className="space-y-1.5 text-[11px] font-sans text-[#F2F0E8]/80">
+                    {/* Compact Credentials List */}
+                    <div className="space-y-1 text-[10.5px] font-sans text-[#F2F0E8]/85">
                       {founder.credentials.map((cred, i) => (
-                        <div key={i} className="flex items-start gap-2">
-                          <span className="text-[#B87333] mt-0.5">✦</span>
-                          <span>{cred}</span>
+                        <div key={i} className="flex items-start gap-1.5">
+                          <span className="text-[#B87333] shrink-0 text-[10px]">✦</span>
+                          <span className="leading-tight">{cred}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Founder Bio */}
-                <p className="font-sans text-xs sm:text-sm text-[#A7A59B] leading-relaxed font-light mb-6">
-                  {founder.bio}
-                </p>
-
-                {/* Founder Quote */}
-                <blockquote className="p-4 rounded-xl bg-[#151815] border-l-2 border-[#B87333] font-serif italic text-xs sm:text-sm text-[#F2F0E8]/90 leading-relaxed mb-6">
+                {/* Compact Quote Box */}
+                <blockquote className="p-3 rounded-xl bg-[#151815] border-l-2 border-[#B87333] font-serif italic text-[11px] sm:text-xs text-[#F2F0E8]/90 leading-relaxed mb-4">
                   {founder.quote}
                 </blockquote>
               </div>
 
               {/* Action Link */}
-              <div className="pt-4 border-t border-[#242923] flex items-center justify-between">
+              <div className="pt-3 border-t border-[#242923] flex items-center justify-between">
                 <a
                   href={founder.instagram || "https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-sans text-[#B87333] hover:text-[#D6A85C] font-semibold transition-colors"
+                  className="inline-flex items-center gap-1 text-[11px] font-sans text-[#B87333] hover:text-[#D6A85C] font-semibold transition-colors"
                 >
-                  <span>Connect with {founder.name.split(' ')[0]} ({founder.instagramHandle})</span>
+                  <span>Connect ({founder.instagramHandle})</span>
                   <span>↗</span>
                 </a>
-                <span className="text-[10px] font-sans text-[#A7A59B] tracking-wider uppercase">
+                <span className="text-[9px] font-sans text-[#A7A59B] tracking-wider uppercase">
                   VM Wild Expeditions
                 </span>
               </div>
