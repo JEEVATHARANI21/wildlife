@@ -67,7 +67,7 @@ export default function App() {
       <CustomCursor />
 
       {/* 1. Toehold-Style Primary & Secondary Navbar */}
-      <ToeholdNavbar />
+      <ToeholdNavbar onSelectCategory={setActiveCategory} />
 
       <main>
         {/* 2. Photo Tours Hero with Quote & Two-Track Switcher */}

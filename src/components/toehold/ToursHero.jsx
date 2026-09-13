@@ -1,150 +1,87 @@
-export default function ToursHero({ onSelectCategory }) {
+export default function ToursHero() {
   return (
-    <section className="relative w-full min-h-[90vh] md:min-h-screen flex items-center justify-center pt-28 pb-16 px-5 sm:px-8 md:px-16 overflow-hidden bg-[#080908]">
-      {/* Background High-Impact Photography Layer */}
+    <section className="relative w-full min-h-[92vh] sm:min-h-screen flex items-center overflow-hidden bg-[#080908] select-none">
+      {/* Background High-Impact Cinematic Wildlife Photography Layer */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1920&q=85&auto=format&fit=crop"
-          alt="VM Wild Expeditions Wildlife Photo Tours"
-          className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-75"
+          src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=2400&q=90&auto=format&fit=crop"
+          alt="Wild Bengal Tiger — VM Wild Expeditions"
+          className="w-full h-full object-cover object-[72%_center] md:object-[80%_center] lg:object-[84%_center] brightness-[0.88] contrast-[1.05]"
         />
-        {/* Exact Overlay: rgba(8, 9, 8, 0.55) as specified by user */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ backgroundColor: 'rgba(8, 9, 8, 0.55)' }}
-        />
-        {/* Subtle radial vignette blending into #080908 */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse at center, transparent 35%, #080908 90%)',
-          }}
-        />
-        {/* Bottom soft gradient to merge with next section #151815 */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#080908] to-transparent pointer-events-none" />
+
+        {/* Cinematic Left-to-Right Negative Space Gradient for Text Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#080908] via-[#080908]/85 md:via-[#080908]/60 to-transparent pointer-events-none" />
+
+        {/* Subtle Top Gradient to Support Transparent Sticky Header */}
+        <div className="absolute top-0 left-0 right-0 h-28 bg-gradient-to-b from-[#080908]/80 to-transparent pointer-events-none" />
+
+        {/* Subtle Bottom Gradient to Seamlessly Transition into Next Section */}
+        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#080908] to-transparent pointer-events-none" />
       </div>
 
-      {/* Hero Content Container */}
-      <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center">
-        {/* Grand Official Brand Crest / Logo */}
-        <div className="relative mb-7 group select-none">
-          <div className="absolute -inset-2 bg-gradient-to-r from-[#B87333]/20 via-[#D6A85C]/25 to-[#B87333]/20 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-          <div className="relative px-6 sm:px-10 py-4 sm:py-5 rounded-3xl bg-[#080908]/92 border border-[#B87333]/40 shadow-[0_12px_40px_rgba(0,0,0,0.85)] backdrop-blur-md flex flex-col items-center">
-            <img
-              src="/logo-clean.png"
-              alt="VM Wild Expeditions — Beyond the Map. Into the wild"
-              className="h-18 sm:h-22 md:h-26 w-auto object-contain mx-auto drop-shadow-[0_8px_24px_rgba(0,0,0,0.9)] transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="mt-2.5 pt-2 border-t border-[#242923] flex items-center justify-center gap-3 w-full">
-              <span className="h-[1px] w-8 sm:w-14 bg-gradient-to-r from-transparent to-[#B87333]" />
-              <span className="font-sans text-[9px] sm:text-xs tracking-[0.3em] uppercase text-[#D6A85C] font-semibold">
-                Beyond the Map. Into the wild
-              </span>
-              <span className="h-[1px] w-8 sm:w-14 bg-gradient-to-l from-transparent to-[#B87333]" />
-            </div>
+      {/* Hero Content Container (Aligned Left in Negative Space) */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 pt-32 sm:pt-36 md:pt-40 pb-24 flex flex-col justify-center">
+        <div className="max-w-2xl text-left">
+          {/* Small Eyebrow */}
+          <div className="inline-flex items-center gap-2.5 mb-5">
+            <span className="w-7 h-[1.5px] bg-[#B87333]" />
+            <span className="font-sans text-[10.5px] sm:text-xs tracking-[0.28em] uppercase text-[#D6A85C] font-semibold">
+              WILDLIFE PHOTOGRAPHY EXPEDITIONS
+            </span>
+          </div>
+
+          {/* Main Heading */}
+          <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-[5.5rem] font-light text-[#F2F0E8] leading-[1.04] tracking-tight mb-6">
+            <span className="block">Beyond the Map.</span>
+            <span className="block italic text-[#D6A85C] font-normal mt-1">
+              Into the Wild.
+            </span>
+          </h1>
+
+          {/* Supporting Text */}
+          <p className="font-sans text-sm sm:text-base md:text-lg text-[#F2F0E8]/85 max-w-xl font-light leading-relaxed mb-9">
+            Small-group wildlife photography expeditions to extraordinary destinations, led by expert naturalists.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-9 w-full sm:w-auto">
+            {/* Primary CTA */}
+            <a
+              href="#tours"
+              className="py-4 px-8 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-[#D6A85C] text-[#080908] hover:bg-[#B87333] hover:shadow-[0_6px_30px_rgba(214,168,92,0.4)] hover:scale-[1.02] transition-all duration-300 text-center flex items-center justify-center gap-2 cursor-pointer shadow-xl"
+            >
+              <span>EXPLORE EXPEDITIONS</span>
+              <span>→</span>
+            </a>
+
+            {/* Secondary CTA */}
+            <a
+              href="#tours"
+              className="py-4 px-8 rounded-full font-sans text-xs uppercase tracking-widest font-semibold border border-[#D6A85C]/70 text-[#F2F0E8] hover:border-[#D6A85C] hover:bg-[#D6A85C]/10 transition-all duration-300 text-center flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
+            >
+              <span>VIEW 2026–27 SCHEDULES</span>
+              <span>→</span>
+            </a>
+          </div>
+
+          {/* Premium Information Line */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] sm:text-xs font-sans tracking-[0.2em] uppercase text-[#A7A59B]/90 font-medium">
+            <span>MAX 4 PHOTOGRAPHERS</span>
+            <span className="text-[#B87333] font-bold">•</span>
+            <span>FOREST CORE PERMITS</span>
+            <span className="text-[#B87333] font-bold">•</span>
+            <span>FIELD MENTORING</span>
           </div>
         </div>
+      </div>
 
-        {/* Main Title: #F2F0E8 with Copper highlight #B87333 */}
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-[#F2F0E8] leading-[1.02] tracking-tight mb-6">
-          Photography <span className="italic text-[#B87333] font-normal">Tours</span>
-        </h1>
-
-        {/* Toehold Philosophy Quotation */}
-        <p className="font-serif italic text-base sm:text-xl md:text-2xl text-[#F2F0E8]/90 max-w-3xl leading-relaxed mb-4 font-normal">
-          “Don’t taste a bit. Taste it all. Don’t live a little. Live fully. Starting now. And let us plan it. So the pain is not for you, but the joy is all yours.”
-        </p>
-
-        <p className="font-sans text-xs sm:text-sm text-[#A7A59B] max-w-2xl font-light leading-relaxed mb-10">
-          Curated small-group wildlife photography masterclasses led by dedicated skippers. Maximum 4 photographers per vehicle, guaranteed forest core permits, and immersive field mentoring.
-        </p>
-
-        {/* Action Buttons: Primary Copper #B87333 + Secondary Border #D6A85C */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 mb-12 w-full sm:w-auto">
-          {/* Primary Button */}
-          <a
-            href="#featured"
-            className="btn-copper-primary w-full sm:w-auto py-3.5 px-8 rounded-full font-sans text-xs uppercase tracking-widest shadow-[0_4px_25px_rgba(184,115,51,0.35)] cursor-pointer text-center"
-          >
-            Explore Tours →
-          </a>
-
-          {/* Secondary Button */}
-          <a
-            href="#tours"
-            className="btn-copper-secondary w-full sm:w-auto py-3.5 px-8 rounded-full font-sans text-xs uppercase tracking-widest backdrop-blur-md cursor-pointer text-center"
-          >
-            View Schedules
-          </a>
-        </div>
-
-        {/* The Two Distinct Tracking Tracks Switcher Cards: Background #151815, Border #242923 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl">
-          <button
-            type="button"
-            onClick={() => {
-              onSelectCategory && onSelectCategory('animals')
-              const el = document.getElementById('tours')
-              if (el) el.scrollIntoView({ behavior: 'smooth' })
-            }}
-            className="group p-4 rounded-2xl bg-[#151815]/95 border border-[#242923] hover:border-[#B87333] transition-all duration-300 backdrop-blur-md flex items-center justify-between text-left cursor-pointer shadow-lg"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">🐅</span>
-              <div>
-                <span className="font-serif text-base text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors block leading-tight">
-                  Animal Tracking Tours
-                </span>
-                <span className="font-sans text-[10px] text-[#A7A59B] tracking-wider uppercase">
-                  Tigers, Leopards, Elephants & Apex Predators
-                </span>
-              </div>
-            </div>
-            <span className="text-[#B87333] text-sm group-hover:translate-x-1 transition-transform">→</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              onSelectCategory && onSelectCategory('birds')
-              const el = document.getElementById('tours')
-              if (el) el.scrollIntoView({ behavior: 'smooth' })
-            }}
-            className="group p-4 rounded-2xl bg-[#151815]/95 border border-[#242923] hover:border-[#B87333] transition-all duration-300 backdrop-blur-md flex items-center justify-between text-left cursor-pointer shadow-lg"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">🦅</span>
-              <div>
-                <span className="font-serif text-base text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors block leading-tight">
-                  Bird Photography Tours
-                </span>
-                <span className="font-sans text-[10px] text-[#A7A59B] tracking-wider uppercase">
-                  Western Ghats Endemics, Hornbills & Raptors
-                </span>
-              </div>
-            </div>
-            <span className="text-[#B87333] text-sm group-hover:translate-x-1 transition-transform">→</span>
-          </button>
-        </div>
-
-        {/* Trust Stats Ribbon: Border #242923, Numbers in #F2F0E8 & #B87333 */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-14 pt-8 border-t border-[#242923] w-full max-w-4xl text-center">
-          <div>
-            <span className="font-serif text-3xl text-[#F2F0E8] font-light block">12+</span>
-            <span className="font-sans text-[10px] tracking-widest uppercase text-[#A7A59B]">Years in the Field</span>
-          </div>
-          <div>
-            <span className="font-serif text-3xl text-[#B87333] font-light block">40+</span>
-            <span className="font-sans text-[10px] tracking-widest uppercase text-[#A7A59B]">National Parks</span>
-          </div>
-          <div>
-            <span className="font-serif text-3xl text-[#F2F0E8] font-light block">250+</span>
-            <span className="font-sans text-[10px] tracking-widest uppercase text-[#A7A59B]">Photo Tours Led</span>
-          </div>
-          <div>
-            <span className="font-serif text-3xl text-[#D6A85C] font-light block">Max 4</span>
-            <span className="font-sans text-[10px] tracking-widest uppercase text-[#A7A59B]">Photographers / Gypsy</span>
-          </div>
+      {/* Bottom Center Minimal Scroll Indicator */}
+      <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none select-none opacity-75 hover:opacity-100 transition-opacity">
+        <span className="font-sans text-[9px] tracking-[0.28em] uppercase text-[#A7A59B] font-medium">
+          SCROLL TO EXPLORE
+        </span>
+        <div className="w-5 h-8 rounded-full border border-[#D6A85C]/40 flex items-start justify-center p-1">
+          <div className="w-1 h-2 rounded-full bg-[#D6A85C] animate-bounce" />
         </div>
       </div>
     </section>

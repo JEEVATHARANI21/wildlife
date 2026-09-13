@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-export default function ToeholdNavbar() {
+export default function ToeholdNavbar({ onSelectCategory }) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState(null)
+  const timeoutRef = useRef(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,139 +14,248 @@ export default function ToeholdNavbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
-    { label: 'Photo Tours', href: '#tours' },
-    { label: '🐅 Animal Expeditions', href: '#animal-tracking' },
-    { label: '🦅 Birding Tours', href: '#bird-photography' },
-    { label: 'Founders', href: '#founders' },
-    { label: 'The Difference', href: '#difference' },
-    { label: 'Testimonials', href: '#testimonials' },
-    { label: 'Contact', href: '#contact' },
+  const handleMouseEnter = (menu) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    setActiveDropdown(menu)
+  }
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null)
+    }, 180)
+  }
+
+  const handleCategoryNav = (cat) => {
+    if (onSelectCategory) onSelectCategory(cat)
+    setActiveDropdown(null)
+    setMobileMenuOpen(false)
+    const el = document.getElementById('tours')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const scrollTo = (id) => {
+    setActiveDropdown(null)
+    setMobileMenuOpen(false)
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const photoToursMenu = [
+    { label: 'All Photography Expeditions', action: () => scrollTo('tours') },
+    { label: 'Featured Flagship Tours', action: () => scrollTo('featured') },
+    { label: '2026–2027 Season Schedules', action: () => scrollTo('tours') },
+  ]
+
+  const animalToursMenu = [
+    { label: '🐅 Bandhavgarh Tigers Masterclass', action: () => handleCategoryNav('animals') },
+    { label: '🐆 Kabini Black Panther & Leopard Quest', action: () => handleCategoryNav('animals') },
+    { label: '🐅 Tadoba Apex Predators', action: () => handleCategoryNav('animals') },
+    { label: '🐅 Ranthambore Royal Bengal', action: () => handleCategoryNav('animals') },
+    { label: '🦁 Gir Asiatic Lions Habitat', action: () => handleCategoryNav('animals') },
+  ]
+
+  const birdToursMenu = [
+    { label: '🦜 Valparai Western Ghats Endemics', action: () => handleCategoryNav('birds') },
+    { label: '🦆 Bharatpur Keoladeo Avian Paradise', action: () => handleCategoryNav('birds') },
+    { label: '🦅 Sattal & Pangot Himalayan Birding', action: () => handleCategoryNav('birds') },
+    { label: '🦏 Kaziranga & Brahmaputra Avifauna', action: () => handleCategoryNav('birds') },
+    { label: '🦉 Thattekad Rainforest Jewels', action: () => handleCategoryNav('birds') },
   ]
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-400 select-none">
-      {/* 1. Top Secondary Bar (Toehold Style Utility Bar: #080908 background, #242923 border) */}
-      <div
-        className={`hidden md:flex justify-between items-center px-6 lg:px-16 py-1.5 text-[11px] font-sans transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#080908]/98 border-b border-[#242923] py-1'
-            : 'bg-[#080908]/85 backdrop-blur-md border-b border-[#242923]/60'
-        }`}
-      >
-        <div className="flex items-center gap-5 text-[#A7A59B]">
-          <span className="flex items-center gap-1.5 text-[#D6A85C]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B87333] animate-pulse" />
-            <span className="font-semibold tracking-wider uppercase text-[10px]">Photo Tour Schedules 2026–2027</span>
-          </span>
-          <span className="text-[#242923]">|</span>
-          <span className="hover:text-[#F2F0E8] transition-colors">
-            Max 4 Photographers per Gypsy
-          </span>
-        </div>
-
-        <div className="flex items-center gap-6 text-[#A7A59B]">
-          {/* Direct Phone Call */}
-          <a
-            href="tel:+919087394546"
-            className="flex items-center gap-1.5 hover:text-[#D6A85C] transition-colors"
-          >
-            <span className="text-[#B87333]">📞</span>
-            <span className="text-[#F2F0E8] hover:text-[#D6A85C]">+91 90873 94546</span>
-          </a>
-
-          {/* WhatsApp Direct */}
-          <a
-            href="https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20interested%20in%20your%20upcoming%20Photo%20Tours."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 hover:text-[#25D366] transition-colors"
-          >
-            <span className="text-[#25D366]">💬</span>
-            <span>WhatsApp Us</span>
-          </a>
-
-          {/* Instagram Link explicitly to vm_wild_expeditions */}
-          <a
-            href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-[#D6A85C] hover:text-[#B87333] transition-colors"
-            title="Follow @vm_wild_expeditions on Instagram"
-          >
-            <svg className="w-3.5 h-3.5 text-[#B87333]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-            </svg>
-            <span className="font-medium">@vm_wild_expeditions</span>
-          </a>
-        </div>
-      </div>
-
-      {/* 2. Main Primary Navbar */}
-      <nav
-        className={`flex items-center justify-between px-5 sm:px-8 lg:px-16 py-3.5 sm:py-4 transition-all duration-400 ${
-          scrolled
-            ? 'bg-[#080908]/98 backdrop-blur-xl border-b border-[#242923] shadow-[0_12px_32px_rgba(0,0,0,0.9)]'
-            : 'bg-gradient-to-b from-[#080908] via-[#080908]/75 to-transparent'
-        }`}
-      >
-        {/* Brand Logo */}
-        <a href="#" className="flex items-center gap-3.5 sm:gap-4 group no-underline">
-          <div className="flex items-center justify-center p-1.5 sm:p-2 rounded-2xl bg-[#080908] border border-[#242923] group-hover:border-[#B87333]/80 transition-all duration-300 shadow-xl overflow-hidden">
-            <img
-              src="/logo-clean.png"
-              alt="VM Wild Expeditions Logo"
-              className="h-12 sm:h-14 md:h-16 lg:h-18 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-            />
-          </div>
-          <div className="hidden sm:flex flex-col border-l border-[#242923] pl-3 sm:pl-3.5 py-0.5">
-            <span className="font-serif text-xs md:text-sm tracking-[0.2em] uppercase text-[#D6A85C] font-semibold leading-tight">
-              BEYOND THE MAP
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 select-none ${
+        scrolled
+          ? 'bg-[#080908]/96 backdrop-blur-xl border-b border-[#242923] shadow-[0_12px_32px_rgba(0,0,0,0.85)] py-3 sm:py-3.5'
+          : 'bg-gradient-to-b from-[#080908]/90 via-[#080908]/40 to-transparent py-4 sm:py-5'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12 flex items-center justify-between">
+        {/* Left: Compact & Elegant VM Wild Expeditions Logo */}
+        <a
+          href="#"
+          className="flex items-center gap-3 group no-underline"
+          title="VM Wild Expeditions — Beyond the Map. Into the Wild."
+        >
+          <img
+            src="/logo-clean.png"
+            alt="VM Wild Expeditions Logo"
+            className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md"
+          />
+          <div className="hidden lg:flex flex-col border-l border-[#242923] pl-3 py-0.5">
+            <span className="font-serif text-[13px] tracking-[0.18em] uppercase text-[#D6A85C] font-semibold leading-tight">
+              VM Wild Expeditions
             </span>
-            <span className="font-sans text-[8.5px] md:text-[9.5px] tracking-[0.26em] uppercase text-[#B87333] font-light mt-0.5">
-              INTO THE WILD
+            <span className="font-sans text-[8.5px] tracking-[0.24em] uppercase text-[#B87333] font-light mt-0.5">
+              Beyond the Map. Into the Wild.
             </span>
           </div>
         </a>
 
-        {/* Desktop Nav Links */}
-        <ul className="hidden xl:flex items-center gap-7">
-          {navLinks.map((link) => (
-            <li key={link.label}>
-              <a
-                href={link.href}
-                className="font-sans text-xs tracking-[0.14em] uppercase text-[#A7A59B] hover:text-[#F2F0E8] hover:border-b-2 hover:border-[#D6A85C] pb-1 transition-all duration-200"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        {/* Action Button & Social */}
-        <div className="hidden sm:flex items-center gap-3">
-          <a
-            href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="xl:hidden p-2 rounded-lg border border-[#242923] bg-[#151815] text-[#D6A85C] hover:text-[#B87333] hover:border-[#B87333] transition-all"
-            title="Instagram @vm_wild_expeditions"
+        {/* Center Navigation with Subtle Dropdowns */}
+        <nav className="hidden xl:flex items-center gap-8 text-[11.5px] font-sans tracking-[0.14em] uppercase font-medium">
+          {/* PHOTO TOURS ▾ */}
+          <div
+            className="relative"
+            onMouseEnter={() => handleMouseEnter('photo')}
+            onMouseLeave={handleMouseLeave}
           >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-            </svg>
+            <button
+              type="button"
+              onClick={() => scrollTo('tours')}
+              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors cursor-pointer"
+            >
+              <span>PHOTO TOURS</span>
+              <svg
+                className={`w-3 h-3 text-[#B87333] transition-transform duration-200 ${
+                  activeDropdown === 'photo' ? 'rotate-180 text-[#D6A85C]' : ''
+                }`}
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            {activeDropdown === 'photo' && (
+              <div className="absolute top-full left-0 pt-2 min-w-[240px] animate-fadeIn z-50">
+                <div className="p-2 rounded-2xl bg-[#151815]/98 backdrop-blur-xl border border-[#242923] shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-1">
+                  {photoToursMenu.map((item, idx) => (
+                    <button
+                      key={idx}
+                      onClick={item.action}
+                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* ANIMAL EXPEDITIONS ▾ */}
+          <div
+            className="relative"
+            onMouseEnter={() => handleMouseEnter('animals')}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button
+              type="button"
+              onClick={() => handleCategoryNav('animals')}
+              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors cursor-pointer"
+            >
+              <span>ANIMAL EXPEDITIONS</span>
+              <svg
+                className={`w-3 h-3 text-[#B87333] transition-transform duration-200 ${
+                  activeDropdown === 'animals' ? 'rotate-180 text-[#D6A85C]' : ''
+                }`}
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            {activeDropdown === 'animals' && (
+              <div className="absolute top-full left-0 pt-2 min-w-[280px] animate-fadeIn z-50">
+                <div className="p-2 rounded-2xl bg-[#151815]/98 backdrop-blur-xl border border-[#242923] shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-1">
+                  {animalToursMenu.map((item, idx) => (
+                    <button
+                      key={idx}
+                      onClick={item.action}
+                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* BIRDING TOURS ▾ */}
+          <div
+            className="relative"
+            onMouseEnter={() => handleMouseEnter('birds')}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button
+              type="button"
+              onClick={() => handleCategoryNav('birds')}
+              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors cursor-pointer"
+            >
+              <span>BIRDING TOURS</span>
+              <svg
+                className={`w-3 h-3 text-[#B87333] transition-transform duration-200 ${
+                  activeDropdown === 'birds' ? 'rotate-180 text-[#D6A85C]' : ''
+                }`}
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            {activeDropdown === 'birds' && (
+              <div className="absolute top-full left-0 pt-2 min-w-[290px] animate-fadeIn z-50">
+                <div className="p-2 rounded-2xl bg-[#151815]/98 backdrop-blur-xl border border-[#242923] shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-1">
+                  {birdToursMenu.map((item, idx) => (
+                    <button
+                      key={idx}
+                      onClick={item.action}
+                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* THE DIFFERENCE */}
+          <a
+            href="#difference"
+            className="py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors"
+          >
+            THE DIFFERENCE
           </a>
 
-          {/* Primary Copper Button */}
+          {/* TESTIMONIALS */}
+          <a
+            href="#testimonials"
+            className="py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors"
+          >
+            TESTIMONIALS
+          </a>
+
+          {/* CONTACT */}
+          <a
+            href="#contact"
+            className="py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors"
+          >
+            CONTACT
+          </a>
+        </nav>
+
+        {/* Right: Premium Rounded Gold Button */}
+        <div className="hidden sm:flex items-center gap-4">
           <a
             href="#tours"
-            className="btn-copper-primary py-2.5 px-6 rounded-full font-sans text-xs uppercase tracking-wider shadow-[0_4px_20px_rgba(184,115,51,0.3)] cursor-pointer"
+            className="py-2.5 px-6 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-[#D6A85C] text-[#080908] hover:bg-[#B87333] hover:shadow-[0_4px_25px_rgba(214,168,92,0.4)] hover:scale-[1.03] transition-all duration-300 cursor-pointer flex items-center gap-2"
           >
-            Book Expedition
+            <span>BOOK AN EXPEDITION</span>
+            <span>→</span>
           </a>
         </div>
 
@@ -153,84 +264,110 @@ export default function ToeholdNavbar() {
           type="button"
           onClick={() => setMobileMenuOpen((prev) => !prev)}
           aria-label="Toggle navigation menu"
-          className="xl:hidden flex flex-col items-center justify-center w-10 h-10 rounded-lg bg-[#151815] border border-[#242923] text-[#F2F0E8] focus:outline-none cursor-pointer"
+          className="xl:hidden flex flex-col items-center justify-center w-10 h-10 rounded-xl bg-[#151815] border border-[#242923] text-[#F2F0E8] focus:outline-none cursor-pointer"
         >
-          <span className={`block w-5 h-0.5 bg-[#F2F0E8] transition-transform duration-300 ${mobileMenuOpen ? 'rotate-45 translate-y-1.5 bg-[#B87333]' : ''}`} />
-          <span className={`block w-5 h-0.5 bg-[#F2F0E8] my-1 transition-opacity duration-300 ${mobileMenuOpen ? 'opacity-0' : ''}`} />
-          <span className={`block w-5 h-0.5 bg-[#F2F0E8] transition-transform duration-300 ${mobileMenuOpen ? '-rotate-45 -translate-y-1.5 bg-[#B87333]' : ''}`} />
+          <span
+            className={`block w-5 h-0.5 bg-[#F2F0E8] transition-transform duration-300 ${
+              mobileMenuOpen ? 'rotate-45 translate-y-1.5 bg-[#B87333]' : ''
+            }`}
+          />
+          <span
+            className={`block w-5 h-0.5 bg-[#F2F0E8] my-1 transition-opacity duration-300 ${
+              mobileMenuOpen ? 'opacity-0' : ''
+            }`}
+          />
+          <span
+            className={`block w-5 h-0.5 bg-[#F2F0E8] transition-transform duration-300 ${
+              mobileMenuOpen ? '-rotate-45 -translate-y-1.5 bg-[#B87333]' : ''
+            }`}
+          />
         </button>
-      </nav>
+      </div>
 
-      {/* Mobile Fullscreen Drawer Menu */}
+      {/* Mobile Drawer Menu */}
       <div
-        className={`fixed inset-0 z-50 xl:hidden flex flex-col justify-between p-6 sm:p-8 bg-[#080908]/98 backdrop-blur-2xl border-b border-[#242923] transition-all duration-300 ease-out overflow-y-auto ${
-          mobileMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-4'
+        className={`fixed inset-0 z-50 xl:hidden flex flex-col justify-between p-6 bg-[#080908]/98 backdrop-blur-2xl border-b border-[#242923] transition-all duration-300 ease-out overflow-y-auto ${
+          mobileMenuOpen
+            ? 'opacity-100 pointer-events-auto translate-y-0'
+            : 'opacity-0 pointer-events-none -translate-y-4'
         }`}
       >
-        {/* Drawer Top */}
-        <div className="flex items-center justify-between pb-5 border-b border-[#242923]">
+        <div className="flex items-center justify-between pb-4 border-b border-[#242923]">
           <div className="flex items-center gap-3">
-            <div className="p-1.5 rounded-xl bg-[#080908] border border-[#242923]">
-              <img src="/logo-clean.png" alt="VM Wild Expeditions" className="h-10 w-auto object-contain" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-sans text-[8.5px] tracking-[0.22em] uppercase text-[#D6A85C] font-semibold">
-                Beyond the Map. Into the wild
-              </span>
-            </div>
+            <img src="/logo-clean.png" alt="VM Wild Expeditions" className="h-9 w-auto object-contain" />
+            <span className="font-serif text-xs tracking-widest uppercase text-[#D6A85C] font-semibold">
+              VM Wild Expeditions
+            </span>
           </div>
           <button
             onClick={() => setMobileMenuOpen(false)}
-            className="w-9 h-9 rounded-lg bg-[#151815] border border-[#242923] flex items-center justify-center text-[#F2F0E8] text-lg hover:text-[#B87333]"
+            className="w-9 h-9 rounded-xl bg-[#151815] border border-[#242923] flex items-center justify-center text-[#F2F0E8] text-base hover:text-[#B87333]"
           >
             ✕
           </button>
         </div>
 
-        {/* Drawer Links */}
-        <div className="flex flex-col gap-4 my-auto py-6">
-          {navLinks.map((link, idx) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="group flex items-center justify-between py-2 border-b border-[#242923]/60 text-left"
-            >
-              <span className="font-serif text-2xl text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors">
-                {link.label}
-              </span>
-              <span className="text-xs font-sans text-[#B87333] opacity-80 group-hover:opacity-100">
-                0{idx + 1} →
-              </span>
-            </a>
-          ))}
+        <div className="flex flex-col gap-3 py-6 my-auto text-left">
+          <button
+            onClick={() => scrollTo('tours')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>Photo Tours</span>
+            <span className="text-xs font-sans text-[#B87333]">01 →</span>
+          </button>
+          <button
+            onClick={() => handleCategoryNav('animals')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>🐅 Animal Expeditions</span>
+            <span className="text-xs font-sans text-[#B87333]">02 →</span>
+          </button>
+          <button
+            onClick={() => handleCategoryNav('birds')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>🦅 Birding Tours</span>
+            <span className="text-xs font-sans text-[#B87333]">03 →</span>
+          </button>
+          <button
+            onClick={() => scrollTo('difference')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>The Difference</span>
+            <span className="text-xs font-sans text-[#B87333]">04 →</span>
+          </button>
+          <button
+            onClick={() => scrollTo('testimonials')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>Testimonials</span>
+            <span className="text-xs font-sans text-[#B87333]">05 →</span>
+          </button>
+          <button
+            onClick={() => scrollTo('contact')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>Contact</span>
+            <span className="text-xs font-sans text-[#B87333]">06 →</span>
+          </button>
         </div>
 
-        {/* Drawer Bottom Actions */}
-        <div className="flex flex-col gap-3 pt-5 border-t border-[#242923]">
+        <div className="pt-4 border-t border-[#242923] flex flex-col gap-3">
           <a
-            href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#tours"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center justify-center gap-2 py-3 rounded-xl border border-[#242923] bg-[#151815] text-xs font-sans uppercase tracking-widest text-[#F2F0E8] hover:text-[#D6A85C] transition-all"
+            className="py-3 px-6 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-[#D6A85C] text-[#080908] text-center"
           >
-            <svg className="w-4 h-4 text-[#B87333]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-            </svg>
-            <span>Follow @vm_wild_expeditions</span>
+            BOOK AN EXPEDITION →
           </a>
-
           <a
             href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20to%20inquire%20about%20VM%20Wild%20Expeditions%20Photo%20Tours."
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex items-center justify-center gap-2 py-3 rounded-xl bg-[#25D366]/20 border border-[#25D366]/40 text-xs font-sans uppercase tracking-widest text-[#25D366] font-semibold"
+            className="py-3 rounded-xl bg-[#242923] text-[#F2F0E8] text-xs font-sans uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
-            <span>WhatsApp Support (+91 90873 94546)</span>
+            <span>💬 WhatsApp Concierge (+91 90873 94546)</span>
           </a>
         </div>
       </div>
