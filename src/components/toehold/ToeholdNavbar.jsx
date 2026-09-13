@@ -240,6 +240,22 @@ export default function ToeholdNavbar({ onSelectCategory, onOpenCalendar }) {
             )}
           </div>
 
+          {/* DESTINATIONS */}
+          <a
+            href="#destinations"
+            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
+          >
+            DESTINATIONS
+          </a>
+
+          {/* SPECIES */}
+          <a
+            href="#species"
+            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
+          >
+            SPECIES
+          </a>
+
           {/* WHY US */}
           <a
             href="#difference"
@@ -248,12 +264,28 @@ export default function ToeholdNavbar({ onSelectCategory, onOpenCalendar }) {
             WHY US
           </a>
 
+          {/* JOURNAL */}
+          <a
+            href="#journal"
+            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
+          >
+            JOURNAL
+          </a>
+
           {/* REVIEWS */}
           <a
             href="#testimonials"
             className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
           >
             REVIEWS
+          </a>
+
+          {/* FAQ */}
+          <a
+            href="#faq"
+            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
+          >
+            FAQ
           </a>
 
           {/* CONTACT */}
@@ -365,25 +397,53 @@ export default function ToeholdNavbar({ onSelectCategory, onOpenCalendar }) {
             <span className="text-xs font-sans text-[#B87333]">03 →</span>
           </button>
           <button
+            onClick={() => scrollTo('destinations')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>📍 Destinations</span>
+            <span className="text-xs font-sans text-[#B87333]">04 →</span>
+          </button>
+          <button
+            onClick={() => scrollTo('species')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>🐾 Species</span>
+            <span className="text-xs font-sans text-[#B87333]">05 →</span>
+          </button>
+          <button
             onClick={() => scrollTo('difference')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
             <span>Why Us</span>
-            <span className="text-xs font-sans text-[#B87333]">04 →</span>
+            <span className="text-xs font-sans text-[#B87333]">06 →</span>
+          </button>
+          <button
+            onClick={() => scrollTo('journal')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>📖 Journal</span>
+            <span className="text-xs font-sans text-[#B87333]">07 →</span>
           </button>
           <button
             onClick={() => scrollTo('testimonials')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
             <span>Reviews</span>
-            <span className="text-xs font-sans text-[#B87333]">05 →</span>
+            <span className="text-xs font-sans text-[#B87333]">08 →</span>
+          </button>
+          <button
+            onClick={() => scrollTo('faq')}
+            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+          >
+            <span>FAQ Guide</span>
+            <span className="text-xs font-sans text-[#B87333]">09 →</span>
           </button>
           <button
             onClick={() => scrollTo('contact')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
             <span>Contact</span>
-            <span className="text-xs font-sans text-[#B87333]">06 →</span>
+            <span className="text-xs font-sans text-[#B87333]">10 →</span>
           </button>
         </div>
 

@@ -214,14 +214,13 @@ export default function TourDetailModal({ tour, onClose }) {
           <div className="pt-6 border-t border-[#242923] flex flex-col sm:flex-row items-center justify-between gap-5">
             <div>
               <span className="text-[10px] font-sans text-[#A7A59B] uppercase tracking-wider block">
-                All-Inclusive Expedition Investment
+                Expedition Package Rate
               </span>
               <div className="flex items-baseline gap-1 text-[#F2F0E8]">
-                <span className="text-sm font-sans text-[#B87333] font-bold">INR</span>
-                <span className="text-3xl font-serif font-light text-[#F2F0E8]">
-                  ₹{tour.price.toLocaleString('en-IN')}/-
+                <span className="text-3xl font-serif font-light text-[#D6A85C]">
+                  From ₹XX,XXX
                 </span>
-                <span className="text-xs font-sans text-[#A7A59B] ml-1">/ person</span>
+                <span className="text-xs font-sans text-[#A7A59B] ml-2">(Contact for Quote)</span>
                 <span className="text-xs font-sans text-[#D6A85C] ml-2 font-medium bg-[#242923] px-2 py-0.5 rounded">
                   {tour.status}
                 </span>
@@ -230,12 +229,12 @@ export default function TourDetailModal({ tour, onClose }) {
 
             <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
               <a
-                href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20ready%20to%20photograph%20on%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour%20(INR%20${tour.price}).%20Please%20guide%20the%20booking%20steps.`}
+                href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20interested%20in%20joining%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour.%20Please%20share%20the%20detailed%20itinerary,%20seasonal%20pricing,%20and%20booking%20steps.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-copper-primary w-full sm:w-auto py-3.5 px-8 rounded-full font-sans text-xs uppercase tracking-widest shadow-[0_4px_25px_rgba(184,115,51,0.45)] text-center cursor-pointer flex items-center justify-center gap-2 hover:scale-105 transition-transform"
               >
-                <span>📸 I Want to Photograph This — Reserve on WhatsApp</span>
+                <span>📸 Inquire & Reserve on WhatsApp</span>
                 <span>↗</span>
               </a>
             </div>

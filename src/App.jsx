@@ -15,6 +15,10 @@ import TourDetailModal from './components/toehold/TourDetailModal'
 import SeasonCalendarModal from './components/toehold/SeasonCalendarModal'
 import ChooseYourWild from './components/toehold/ChooseYourWild'
 import PlanExpeditionModal from './components/toehold/PlanExpeditionModal'
+import DestinationsAtlas from './components/toehold/DestinationsAtlas'
+import SpeciesExplorer from './components/toehold/SpeciesExplorer'
+import FieldJournal from './components/toehold/FieldJournal'
+import EssentialGuideFAQ from './components/toehold/EssentialGuideFAQ'
 
 import CustomCursor from './components/CustomCursor'
 import LegalModal from './components/LegalModal'
@@ -88,19 +92,31 @@ export default function App() {
           onOpenCalendar={() => setCalendarOpen(true)}
         />
 
-        {/* 5. The 2 Founders of VM Wild Expeditions */}
+        {/* 5. Destinations & Sanctuaries Atlas */}
+        <DestinationsAtlas onSelectTour={setSelectedTour} />
+
+        {/* 6. Target Species Showcase */}
+        <SpeciesExplorer onSelectTour={setSelectedTour} />
+
+        {/* 7. The 2 Founders of VM Wild Expeditions */}
         <FoundersSection founders={TOURS_DATA.founders} />
 
-        {/* 6. The VM Wild Edge / Why Travel With Us (Toehold Style) */}
+        {/* 8. The VM Wild Edge / Why Travel With Us (Toehold Style) */}
         <ExpeditionDifference features={TOURS_DATA.difference} />
 
-        {/* 7. Guest Testimonials & Reviews */}
+        {/* 9. The Field Journal (Stories from the Wild) */}
+        <FieldJournal />
+
+        {/* 10. Guest Testimonials & Reviews */}
         <Testimonials testimonials={TOURS_DATA.testimonials} />
 
-        {/* 8. Instagram Live Feed Grid (@vm_wild_expeditions) */}
+        {/* 11. Essential Expedition Guide FAQ (The 7 Core Questions) */}
+        <EssentialGuideFAQ onPlanTrip={() => setPlanTripModalOpen(true)} />
+
+        {/* 12. Instagram Live Feed Grid (@vm_wild_expeditions) */}
         <InstagramFeed posts={TOURS_DATA.instagramPosts} />
 
-        {/* 9. Contact, Inquiries & Footer */}
+        {/* 13. Contact, Inquiries & Footer */}
         <ContactFooter openLegal={openLegal} />
       </main>
 

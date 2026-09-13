@@ -298,10 +298,10 @@ export default function SeasonCalendarModal({ isOpen, onClose, onSelectTour, ani
                           Per Photographer
                         </span>
                         <div className="font-serif text-2xl sm:text-3xl text-[#D6A85C] font-semibold">
-                          ₹{tour.price?.toLocaleString('en-IN')}
+                          From ₹XX,XXX
                         </div>
                         <span className="text-[10.5px] font-sans text-[#A7A59B]">
-                          All-inclusive on twin sharing
+                          Contact for seasonal quote & inclusions
                         </span>
                       </div>
 

@@ -145,10 +145,10 @@ export default function FeaturedTours({
                     Starts From
                   </span>
                   <div className="flex items-baseline gap-1 text-[#F2F0E8]">
-                    <span className="font-serif text-2xl sm:text-3xl font-light text-[#F2F0E8]">
-                      ₹{tour.price.toLocaleString('en-IN')}/-
+                    <span className="font-serif text-2xl sm:text-3xl font-light text-[#D6A85C]">
+                      From ₹XX,XXX
                     </span>
-                    <span className="text-[10px] font-sans text-[#A7A59B] ml-1">/ person</span>
+                    <span className="text-[10px] font-sans text-[#A7A59B] ml-1.5">(Contact for Quote)</span>
                   </div>
                 </div>
 
