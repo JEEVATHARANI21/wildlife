@@ -153,6 +153,11 @@ export default function App() {
           <FoundersSection
             founders={TOURS_DATA.founders}
             onViewFullAbout={() => navigateTo('about')}
+            onPlanTrip={() => setPlanTripModalOpen(true)}
+            onExploreTrips={() => {
+              const el = document.getElementById('packages')
+              if (el) el.scrollIntoView({ behavior: 'smooth' })
+            }}
           />
 
           {/* 3. Gallery (4 to 5 images + "View Full Gallery" button that redirects to full gallery page) */}
