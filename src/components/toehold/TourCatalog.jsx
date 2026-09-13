@@ -134,7 +134,7 @@ export default function TourCatalog({
             <div className="flex items-center justify-between mb-2">
               <span className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal flex items-center gap-3">
                 <span>🐅</span>
-                <span>Animal Expeditions</span>
+                <span>Wild Photography</span>
               </span>
               {activeCategory === 'animals' && (
                 <span className="w-2.5 h-2.5 rounded-full bg-[#D6A85C] shadow-[0_0_10px_#D6A85C]" />
@@ -161,7 +161,7 @@ export default function TourCatalog({
             <div className="flex items-center justify-between mb-2">
               <span className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal flex items-center gap-3">
                 <span>🦅</span>
-                <span>Bird Photography</span>
+                <span>Birds Photography</span>
               </span>
               {activeCategory === 'birds' && (
                 <span className="w-2.5 h-2.5 rounded-full bg-[#D6A85C] shadow-[0_0_10px_#D6A85C]" />

@@ -99,8 +99,8 @@ export default function PlanExpeditionModal({ isOpen, onClose }) {
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {[
-                'Wildlife Photography (Big Cats)',
-                'Bird Photography & Endemics',
+                'Wild Photography',
+                'Birds Photography',
                 'Western Ghats Rainforest Trek',
                 'Custom Private Gypsy Charter',
               ].map((opt) => (

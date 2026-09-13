@@ -8,7 +8,7 @@ export default function ContactFooter({ openLegal }) {
     e.preventDefault()
     setSent(true)
     const encodedText = encodeURIComponent(
-      `Hello VM Wild Expeditions,\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nInterested Track: ${form.category === 'animal' ? 'Animal Tracking Tours' : 'Bird Photography Tours'}\nMessage: ${form.message}`
+      `Hello VM Wild Expeditions,\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nInterested Track: ${form.category === 'animal' ? 'Wild Photography' : form.category === 'bird' ? 'Birds Photography' : 'Custom Expedition'}\nMessage: ${form.message}`
     )
     window.open(`https://wa.me/919087394546?text=${encodedText}`, '_blank')
   }
@@ -145,8 +145,8 @@ export default function ContactFooter({ openLegal }) {
                       onChange={(e) => setForm({ ...form, category: e.target.value })}
                       className="w-full py-2.5 px-3 rounded-xl bg-[#080908] border border-[#242923] text-xs text-[#F2F0E8] font-sans focus:outline-none focus:border-[#B87333]"
                     >
-                      <option value="animal" className="bg-[#151815]">🐅 1. Animal & Big Cat Tracking</option>
-                      <option value="bird" className="bg-[#151815]">🦅 2. Bird Photography Tours</option>
+                      <option value="animal" className="bg-[#151815]">🐅 1. Wild Photography</option>
+                      <option value="bird" className="bg-[#151815]">🦅 2. Birds Photography</option>
                       <option value="both" className="bg-[#151815]">Both / Custom Expedition</option>
                     </select>
                   </div>
