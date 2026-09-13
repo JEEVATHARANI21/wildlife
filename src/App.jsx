@@ -21,6 +21,7 @@ import HomeGalleryPreview from './components/toehold/HomeGalleryPreview'
 import FullGalleryView from './components/views/FullGalleryView'
 import ItineraryView from './components/views/ItineraryView'
 import AboutView from './components/views/AboutView'
+import FAQView from './components/views/FAQView'
 
 import CustomCursor from './components/CustomCursor'
 import LegalModal from './components/LegalModal'
@@ -133,6 +134,13 @@ export default function App() {
         />
       )}
 
+      {currentView === 'faq' && (
+        <FAQView
+          onBackToHome={() => navigateTo('home')}
+          onPlanTrip={() => setPlanTripModalOpen(true)}
+        />
+      )}
+
       {currentView === 'itinerary' && selectedTour && (
         <ItineraryView
           tour={selectedTour}
@@ -183,13 +191,10 @@ export default function App() {
           {/* 9. Customer Reviews / Guest Testimonials (Page 5) */}
           <Testimonials testimonials={TOURS_DATA.testimonials} />
 
-          {/* 10. Essential Expedition Guide FAQ */}
-          <EssentialGuideFAQ onPlanTrip={() => setPlanTripModalOpen(true)} />
-
-          {/* 11. Instagram Live Feed Grid */}
+          {/* 10. Instagram Live Feed Grid */}
           <InstagramFeed posts={TOURS_DATA.instagramPosts} />
 
-          {/* 12. Ready to Plan / Contact Page (Page 6) */}
+          {/* 11. Ready to Plan / Contact Page (Page 6) */}
           <ContactFooter
             openLegal={openLegal}
             onPlanTrip={() => setPlanTripModalOpen(true)}

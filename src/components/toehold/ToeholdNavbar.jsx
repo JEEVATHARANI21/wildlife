@@ -26,8 +26,12 @@ export default function ToeholdNavbar({
       if (onNavigate) onNavigate('about')
       return
     }
+    if (target === 'faq') {
+      if (onNavigate) onNavigate('faq')
+      return
+    }
 
-    // Anchor navigation on home view (destinations, faq, contact)
+    // Anchor navigation on home view (destinations, contact)
     if (currentView !== 'home') {
       if (onNavigate) onNavigate('home', target)
     } else {
@@ -35,7 +39,7 @@ export default function ToeholdNavbar({
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' })
       } else if (target === 'destinations') {
-        const toursEl = document.getElementById('tours')
+        const toursEl = document.getElementById('tours') || document.getElementById('destinations')
         if (toursEl) toursEl.scrollIntoView({ behavior: 'smooth' })
       }
     }
@@ -128,9 +132,16 @@ export default function ToeholdNavbar({
           <button
             type="button"
             onClick={() => handleNav('faq')}
-            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors cursor-pointer whitespace-nowrap"
+            className={`py-2 transition-colors cursor-pointer whitespace-nowrap relative ${
+              currentView === 'faq'
+                ? 'text-[#D6A85C] font-semibold'
+                : 'text-[#F2F0E8]/90 hover:text-[#D6A85C]'
+            }`}
           >
-            FAQ
+            <span>FAQ</span>
+            {currentView === 'faq' && (
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D6A85C] rounded-full" />
+            )}
           </button>
 
           <button
@@ -235,7 +246,9 @@ export default function ToeholdNavbar({
           </button>
           <button
             onClick={() => handleNav('faq')}
-            className="py-3 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left cursor-pointer"
+            className={`py-3 border-b border-[#242923]/60 font-serif text-2xl flex items-center justify-between text-left cursor-pointer ${
+              currentView === 'faq' ? 'text-[#D6A85C]' : 'text-[#F2F0E8] hover:text-[#D6A85C]'
+            }`}
           >
             <span>FAQ</span>
             <span className="text-xs font-sans text-[#B87333]">04 →</span>
