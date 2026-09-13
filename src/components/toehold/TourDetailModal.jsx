@@ -38,60 +38,107 @@ export default function TourDetailModal({ tour, onClose }) {
             <span className="px-3 py-1 rounded-full bg-[#B87333] text-[#080908] font-sans text-[10px] font-bold tracking-widest uppercase mb-2 inline-block">
               {tour.badge} · {tour.duration}
             </span>
-            <h2 className="font-serif text-2xl sm:text-4xl text-[#F2F0E8] leading-tight">
+            <h2 className="font-serif text-2xl sm:text-4xl text-[#F2F0E8] leading-tight mb-1">
               {tour.title}
             </h2>
             <span className="text-xs font-sans text-[#D6A85C]">
-              📍 {tour.destination} ({tour.state}) · 📅 {tour.dateRange}
+              📍 {tour.destination} ({tour.state}) · 📅 Scheduled: {tour.dateRange}
             </span>
           </div>
         </div>
 
         {/* Modal Body Container */}
         <div className="p-6 sm:p-8 space-y-8">
-          {/* 2. Key Specs Ribbon */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-2xl bg-[#242923]/40 border border-[#242923] text-xs font-sans">
+          {/* Photography Experience Intro Quote */}
+          <div className="p-4 rounded-2xl bg-[#080908]/70 border-l-2 border-[#B87333] border-y border-r border-[#242923]">
+            <p className="font-serif italic text-sm sm:text-base text-[#F2F0E8]/90 leading-relaxed font-normal">
+              “A photography-focused wildlife experience crafted to maximize opportunities to photograph{' '}
+              <strong className="text-[#D6A85C] not-italic font-medium">
+                {tour.targetSpecies[0]}
+              </strong>{' '}
+              and prime wildlife in raw, untamed natural habitats with dedicated field skippers.”
+            </p>
+          </div>
+
+          {/* 2. Key Photography Specs Table Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 p-4 rounded-2xl bg-[#242923]/40 border border-[#242923] text-xs font-sans">
             <div>
-              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block">Duration</span>
+              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
+                📍 Location
+              </span>
+              <span className="text-[#F2F0E8] font-medium truncate block">{tour.state}</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
+                ⏱ Duration
+              </span>
               <span className="text-[#F2F0E8] font-semibold">{tour.duration}</span>
             </div>
             <div>
-              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block">Field Drives</span>
-              <span className="text-[#D6A85C] font-semibold">{tour.safariCount}</span>
+              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
+                📅 Best Season
+              </span>
+              <span className="text-[#D6A85C] font-medium">{tour.bestSeason || 'Oct – May'}</span>
             </div>
             <div>
-              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block">Vehicle Setup</span>
-              <span className="text-[#F2F0E8] font-semibold">{tour.groupSize}</span>
+              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
+                👥 Group Size
+              </span>
+              <span className="text-[#F2F0E8] font-medium">Strict Max 4/Gypsy</span>
             </div>
             <div>
-              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block">Tour Skipper</span>
-              <span className="text-[#D6A85C] font-semibold">{tour.skipper}</span>
+              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
+                📸 Skill Level
+              </span>
+              <span className="text-[#D6A85C] font-medium">{tour.skillLevel || 'Beginner → Pro'}</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
+                🦁 Field Skipper
+              </span>
+              <span className="text-[#F2F0E8] font-medium">{tour.skipper}</span>
             </div>
           </div>
 
-          {/* 3. Expedition Overview */}
+          {/* 3. Target Species Strip & Photography Highlight */}
+          <div>
+            <h3 className="font-serif text-xl text-[#F2F0E8] mb-3 font-normal flex items-center gap-2">
+              <span>🎯</span>
+              <span>What You'll Photograph (Target Species)</span>
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-3">
+              {tour.targetSpecies.map((sp, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-2.5 p-3 rounded-xl bg-[#242923]/40 border border-[#242923] text-xs font-sans text-[#F2F0E8]"
+                >
+                  <span className="text-[#B87333] font-bold">✦</span>
+                  <span className="font-medium">{sp}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Field Photographic Opportunity Note */}
+            <div className="p-3.5 rounded-xl bg-[#080908]/80 border border-[#B87333]/30 flex items-start gap-2.5 text-xs font-sans text-[#D6A85C] leading-relaxed">
+              <span className="text-base text-[#B87333]">📷</span>
+              <div>
+                <strong className="block text-[#F2F0E8] text-[11px] uppercase tracking-wider mb-0.5">
+                  Photographic Field Opportunities:
+                </strong>
+                <span>{tour.photoHighlight}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* 4. Expedition Overview */}
           <div>
             <h3 className="font-serif text-xl text-[#F2F0E8] mb-2 font-normal">
-              Expedition Overview
+              Expedition Overview & Masterclass Philosophy
             </h3>
             <p className="font-sans text-xs sm:text-sm text-[#A7A59B] leading-relaxed font-light">
               {tour.overview}
             </p>
-          </div>
-
-          {/* 4. Target Species Checklist */}
-          <div>
-            <h3 className="font-serif text-xl text-[#F2F0E8] mb-3 font-normal">
-              Key Wildlife & Sightings Target
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {tour.targetSpecies.map((sp, idx) => (
-                <div key={idx} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#242923]/40 border border-[#242923] text-xs font-sans text-[#F2F0E8]">
-                  <span className="text-[#B87333]">✦</span>
-                  <span>{sp}</span>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* 5. Day-by-Day Field Itinerary */}
@@ -118,15 +165,15 @@ export default function TourDetailModal({ tour, onClose }) {
             </div>
           </div>
 
-          {/* 6. Recommended Photography Gear */}
+          {/* 6. Recommended Photography Gear Checklist */}
           <div className="p-5 rounded-2xl bg-[#242923]/40 border border-[#B87333]/30">
             <h4 className="font-sans text-xs uppercase tracking-widest text-[#D6A85C] font-semibold mb-3 flex items-center gap-2">
-              <span className="text-[#B87333]">📷</span> Recommended Camera Gear Checklist
+              <span className="text-[#B87333]">📷</span> Recommended Camera Gear Checklist & Focal Lengths
             </h4>
             <ul className="space-y-2 text-xs font-sans text-[#A7A59B]">
               {tour.recommendedGear.map((gear, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <span className="text-[#B87333]">•</span>
+                  <span className="text-[#B87333] font-bold">•</span>
                   <span>{gear}</span>
                 </li>
               ))}
@@ -137,7 +184,7 @@ export default function TourDetailModal({ tour, onClose }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-5 rounded-2xl bg-[#242923]/20 border border-[#242923]">
             <div>
               <h4 className="font-sans text-xs uppercase tracking-widest text-[#D6A85C] font-semibold mb-3 flex items-center gap-1.5">
-                <span className="text-[#B87333]">✓</span> Inclusions
+                <span className="text-[#B87333]">✓</span> What's Included
               </h4>
               <ul className="space-y-1.5 text-xs font-sans text-[#A7A59B]">
                 {tour.inclusions.map((inc, i) => (
@@ -150,7 +197,7 @@ export default function TourDetailModal({ tour, onClose }) {
             </div>
             <div>
               <h4 className="font-sans text-xs uppercase tracking-widest text-[#A7A59B] font-semibold mb-3 flex items-center gap-1.5">
-                <span>✕</span> Exclusions
+                <span>✕</span> What's Excluded
               </h4>
               <ul className="space-y-1.5 text-xs font-sans text-[#A7A59B]/70">
                 {tour.exclusions.map((exc, i) => (
@@ -163,31 +210,33 @@ export default function TourDetailModal({ tour, onClose }) {
             </div>
           </div>
 
-          {/* 8. Action Footer */}
-          <div className="pt-6 border-t border-[#242923] flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* 8. Action Footer with Strong CTA */}
+          <div className="pt-6 border-t border-[#242923] flex flex-col sm:flex-row items-center justify-between gap-5">
             <div>
               <span className="text-[10px] font-sans text-[#A7A59B] uppercase tracking-wider block">
-                All-Inclusive Expedition Cost / Person
+                All-Inclusive Expedition Investment
               </span>
               <div className="flex items-baseline gap-1 text-[#F2F0E8]">
                 <span className="text-sm font-sans text-[#B87333] font-bold">INR</span>
                 <span className="text-3xl font-serif font-light text-[#F2F0E8]">
                   ₹{tour.price.toLocaleString('en-IN')}/-
                 </span>
-                <span className="text-xs font-sans text-[#D6A85C] ml-2 font-medium">
+                <span className="text-xs font-sans text-[#A7A59B] ml-1">/ person</span>
+                <span className="text-xs font-sans text-[#D6A85C] ml-2 font-medium bg-[#242923] px-2 py-0.5 rounded">
                   {tour.status}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
               <a
-                href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20ready%20to%20register%20for%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour%20(INR%20${tour.price}).%20Please%20guide%20the%20booking%20steps.`}
+                href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20ready%20to%20photograph%20on%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour%20(INR%20${tour.price}).%20Please%20guide%20the%20booking%20steps.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-copper-primary w-full sm:w-auto py-3 px-8 rounded-full font-sans text-xs uppercase tracking-widest shadow-[0_4px_20px_rgba(184,115,51,0.35)] text-center cursor-pointer"
+                className="btn-copper-primary w-full sm:w-auto py-3.5 px-8 rounded-full font-sans text-xs uppercase tracking-widest shadow-[0_4px_25px_rgba(184,115,51,0.45)] text-center cursor-pointer flex items-center justify-center gap-2 hover:scale-105 transition-transform"
               >
-                Register on WhatsApp (+91 90873 94546)
+                <span>📸 I Want to Photograph This — Reserve on WhatsApp</span>
+                <span>↗</span>
               </a>
             </div>
           </div>

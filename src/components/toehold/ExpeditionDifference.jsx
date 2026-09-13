@@ -19,8 +19,8 @@ export default function ExpeditionDifference({ features }) {
           </p>
         </div>
 
-        {/* 4 Pillars Grid: Dark Grey #151815 cards inside Forest Grey #242923 section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* 5 Pillars Grid: Dark Grey #151815 cards inside Forest Grey #242923 section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
           {features.map((item, idx) => (
             <div
               key={idx}
