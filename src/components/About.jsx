@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger)
 
 // Genuine wildlife photographer portrait
-const PORTRAIT = '/images/hee.png'
+const PORTRAIT = '/images/vijay.jpeg'
 
 const STATS = [
   { value: 12, suffix: '+', label: 'Years in the Wild' },

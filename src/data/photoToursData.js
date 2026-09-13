@@ -637,7 +637,7 @@ export const TOURS_DATA = {
       id: 'founder-vijay',
       name: 'Vijay Mathiew',
       role: 'Co-Founder & Principal Wildlife Photographer',
-      image: '/images/hee.png',
+      image: '/images/vijay.jpeg',
       hasCustomImage: true,
       instagram: 'https://www.instagram.com/vijaymathiew_photography?stkn=MXRxZW55ZDg3Z21pdw==',
       instagramHandle: '@vijaymathiew_photography',
