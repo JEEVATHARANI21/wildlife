@@ -53,6 +53,31 @@
   ::-webkit-scrollbar-thumb:hover {
     background: var(--color-soft-gold);
   }
+
+  /* Modal Scroll Container */
+  .modal-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #B87333 #151815;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modal-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .modal-scroll::-webkit-scrollbar-track {
+    background: #151815;
+    border-radius: 9999px;
+  }
+
+  .modal-scroll::-webkit-scrollbar-thumb {
+    background: #B87333;
+    border-radius: 9999px;
+  }
+
+  .modal-scroll::-webkit-scrollbar-thumb:hover {
+    background: #D6A85C;
+  }
 }
 
 /* ─── GRAIN TEXTURE OVERLAY (OPTIMIZED) ──────────────────── */

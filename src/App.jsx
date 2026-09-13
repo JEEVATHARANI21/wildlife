@@ -61,6 +61,21 @@ export default function App() {
     }
   }, [])
 
+  const isAnyModalOpen = Boolean(
+    selectedTour || calendarOpen || planTripModalOpen || legalModalOpen
+  )
+
+  useEffect(() => {
+    if (!lenisRef.current) return
+    if (isAnyModalOpen) {
+      lenisRef.current.stop()
+      document.body.style.overflow = 'hidden'
+    } else {
+      lenisRef.current.start()
+      document.body.style.overflow = ''
+    }
+  }, [isAnyModalOpen])
+
   return (
     <div className="grain" style={{ background: '#080908', color: '#F2F0E8' }}>
       <CustomCursor />

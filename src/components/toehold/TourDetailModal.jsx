@@ -16,8 +16,17 @@ export default function TourDetailModal({ tour, onClose }) {
   if (!tour) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 bg-[#080908]/90 backdrop-blur-md overflow-y-auto animate-fadeIn">
-      <div className="relative w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl bg-[#151815] border border-[#242923] shadow-[0_25px_80px_rgba(0,0,0,0.95)] text-left">
+    <div
+      data-lenis-prevent="true"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 md:p-10 bg-[#080908]/90 backdrop-blur-md overflow-y-auto overscroll-contain animate-fadeIn"
+      onClick={onClose}
+    >
+      <div
+        data-lenis-prevent="true"
+        className="relative w-full max-w-4xl max-h-[88vh] overflow-y-auto rounded-3xl bg-[#151815] border border-[#242923] shadow-[0_25px_80px_rgba(0,0,0,0.95)] text-left my-auto modal-scroll overscroll-contain"
+        onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
+      >
         {/* Close Button */}
         <button
           onClick={onClose}

@@ -100,7 +100,11 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-6 text-sm font-sans font-light leading-relaxed text-[#A7A59B]">
+        <div
+          data-lenis-prevent="true"
+          className="flex-1 min-h-0 overflow-y-auto p-6 md:p-8 space-y-6 text-sm font-sans font-light leading-relaxed text-[#A7A59B] modal-scroll overscroll-contain"
+          onWheel={(e) => e.stopPropagation()}
+        >
           {activeTab === 'terms' ? (
             <>
               <div>

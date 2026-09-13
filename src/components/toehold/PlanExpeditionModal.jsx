@@ -49,15 +49,18 @@ export default function PlanExpeditionModal({ isOpen, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-[#080908]/92 backdrop-blur-xl animate-fadeIn"
+      data-lenis-prevent="true"
+      className="fixed inset-0 z-[70] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-[#080908]/92 backdrop-blur-xl animate-fadeIn overflow-y-auto overscroll-contain"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-2xl max-h-[92vh] flex flex-col rounded-3xl bg-[#0f110f] border border-[#242923] shadow-[0_30px_90px_rgba(0,0,0,0.95)] overflow-hidden"
+        data-lenis-prevent="true"
+        className="relative w-full max-w-2xl max-h-[88vh] flex flex-col rounded-3xl bg-[#0f110f] border border-[#242923] shadow-[0_30px_90px_rgba(0,0,0,0.95)] overflow-hidden my-auto overscroll-contain"
         onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="p-6 sm:p-8 border-b border-[#242923] bg-[#151815]/90 flex items-start justify-between gap-4">
+        <div className="p-6 sm:p-8 border-b border-[#242923] bg-[#151815]/95 shrink-0 flex items-start justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 mb-2">
               <span className="w-6 h-[1.5px] bg-[#B87333]" />
@@ -83,7 +86,12 @@ export default function PlanExpeditionModal({ isOpen, onClose }) {
         </div>
 
         {/* Scrollable Form Body */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-6">
+        <form
+          data-lenis-prevent="true"
+          onSubmit={handleSubmit}
+          className="flex-1 min-h-0 overflow-y-auto p-6 sm:p-8 space-y-6 modal-scroll overscroll-contain"
+          onWheel={(e) => e.stopPropagation()}
+        >
           {/* 1. Primary Interest */}
           <div className="space-y-2">
             <label className="text-[11px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block">

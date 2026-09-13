@@ -134,15 +134,18 @@ export default function SeasonCalendarModal({ isOpen, onClose, onSelectTour, ani
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-[#080908]/92 backdrop-blur-xl animate-fadeIn"
+      data-lenis-prevent="true"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-3 sm:p-6 md:p-8 bg-[#080908]/92 backdrop-blur-xl animate-fadeIn overflow-y-auto overscroll-contain"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-5xl max-h-[92vh] flex flex-col rounded-3xl bg-[#0e100e] border border-[#242923] shadow-[0_30px_90px_rgba(0,0,0,0.95)] overflow-hidden"
+        data-lenis-prevent="true"
+        className="relative w-full max-w-5xl max-h-[88vh] flex flex-col rounded-3xl bg-[#0e100e] border border-[#242923] shadow-[0_30px_90px_rgba(0,0,0,0.95)] overflow-hidden my-auto overscroll-contain"
         onClick={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
-        <div className="p-6 sm:p-8 border-b border-[#242923] bg-[#151815]/90 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-6 sm:p-8 border-b border-[#242923] bg-[#151815]/95 shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 mb-2">
               <span className="w-6 h-[1.5px] bg-[#B87333]" />
@@ -168,7 +171,7 @@ export default function SeasonCalendarModal({ isOpen, onClose, onSelectTour, ani
         </div>
 
         {/* Filter Tabs */}
-        <div className="px-6 sm:px-8 py-3.5 bg-[#080908]/80 border-b border-[#242923] flex flex-wrap items-center justify-between gap-3">
+        <div className="px-6 sm:px-8 py-3.5 bg-[#080908]/80 border-b border-[#242923] shrink-0 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveFilter('all')}
@@ -211,7 +214,11 @@ export default function SeasonCalendarModal({ isOpen, onClose, onSelectTour, ani
         </div>
 
         {/* Calendar Departure List (Scrollable) */}
-        <div className="flex-1 overflow-y-auto p-6 sm:p-8 space-y-8">
+        <div
+          data-lenis-prevent="true"
+          className="flex-1 min-h-0 overflow-y-auto p-6 sm:p-8 space-y-8 modal-scroll overscroll-contain"
+          onWheel={(e) => e.stopPropagation()}
+        >
           {filteredTimeline.map((monthBlock) => (
             <div key={monthBlock.monthKey} className="space-y-4">
               {/* Month Header Banner */}
