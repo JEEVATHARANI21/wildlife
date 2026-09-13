@@ -155,7 +155,7 @@ export default function SpeciesExplorer({ onSelectTour }) {
             <div className="inline-flex items-center gap-2.5 mb-3">
               <span className="w-7 h-[1.5px] bg-[#B87333]" />
               <span className="font-sans text-[10.5px] tracking-[0.28em] uppercase text-[#D6A85C] font-semibold">
-                WILDLIFE & AVIAN ENCOUNTERS · SECTION 06
+                WILDLIFE & AVIAN ENCOUNTERS · SECTION 05
               </span>
               <span className="w-7 h-[1.5px] bg-[#B87333]" />
             </div>

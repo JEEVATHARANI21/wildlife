@@ -15,7 +15,6 @@ import TourDetailModal from './components/toehold/TourDetailModal'
 import SeasonCalendarModal from './components/toehold/SeasonCalendarModal'
 import ChooseYourWild from './components/toehold/ChooseYourWild'
 import PlanExpeditionModal from './components/toehold/PlanExpeditionModal'
-import DestinationsAtlas from './components/toehold/DestinationsAtlas'
 import SpeciesExplorer from './components/toehold/SpeciesExplorer'
 import FieldJournal from './components/toehold/FieldJournal'
 import EssentialGuideFAQ from './components/toehold/EssentialGuideFAQ'
@@ -92,10 +91,7 @@ export default function App() {
           onOpenCalendar={() => setCalendarOpen(true)}
         />
 
-        {/* 5. Destinations & Sanctuaries Atlas */}
-        <DestinationsAtlas onSelectTour={setSelectedTour} />
-
-        {/* 6. Target Species Showcase */}
+        {/* 5. Target Species Showcase */}
         <SpeciesExplorer onSelectTour={setSelectedTour} />
 
         {/* 7. The 2 Founders of VM Wild Expeditions */}
