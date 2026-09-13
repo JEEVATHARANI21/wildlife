@@ -289,7 +289,7 @@ export default function TourCatalog({
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-9 mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-20 max-w-6xl mx-auto">
             {filteredTours.map((tour) => {
               const shortDesc =
                 SHORT_DESCRIPTIONS[tour.id] ||
@@ -300,52 +300,52 @@ export default function TourCatalog({
                 <article
                   key={tour.id}
                   onClick={() => onSelectTour && onSelectTour(tour)}
-                  className="group relative rounded-2xl overflow-hidden bg-[#151815] border border-[#242923] hover:border-[#D6A85C] transition-all duration-500 shadow-2xl cursor-pointer flex flex-col justify-between"
+                  className="group relative rounded-2xl overflow-hidden bg-[#151815] border border-[#242923] hover:border-[#D6A85C] transition-all duration-300 shadow-xl cursor-pointer flex flex-col justify-between"
                 >
                   <div>
-                    {/* 1. Large High-Quality Wildlife Photograph (45-50% of card) */}
-                    <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#080908]">
+                    {/* 1. Sleek Wildlife Photograph */}
+                    <div className="relative w-full aspect-[16/9] overflow-hidden bg-[#080908]">
                       <img
                         src={tour.heroImage}
                         alt={tour.packageName || tour.title}
-                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out brightness-[0.92] group-hover:brightness-100"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out brightness-[0.92] group-hover:brightness-100"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#151815] via-transparent to-transparent pointer-events-none" />
 
                       {/* Single Subtle Availability Badge */}
-                      <div className="absolute top-3.5 right-3.5 pointer-events-none">
-                        <span className="px-3 py-1 rounded-full bg-[#080908]/85 backdrop-blur-md text-[9.5px] font-sans tracking-wider uppercase font-semibold text-[#D6A85C] border border-[#D6A85C]/35 shadow-md flex items-center gap-1.5">
+                      <div className="absolute top-2.5 right-2.5 pointer-events-none">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#080908]/85 backdrop-blur-md text-[8.5px] font-sans tracking-wider uppercase font-semibold text-[#D6A85C] border border-[#D6A85C]/35 shadow-md flex items-center gap-1.5">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#D6A85C] animate-pulse" />
                           <span>{tour.status || 'OPEN FOR BOOKING'}</span>
                         </span>
                       </div>
                     </div>
 
-                    {/* Card Body */}
-                    <div className="p-6 sm:p-7 space-y-3.5 text-left">
+                    {/* Card Body - Compact & Sleek */}
+                    <div className="p-4 sm:p-5 space-y-2.5 text-left">
                       {/* Location */}
-                      <div className="text-[10px] sm:text-[11px] font-sans tracking-[0.2em] uppercase text-[#D6A85C] font-semibold flex items-center gap-1.5">
+                      <div className="text-[9.5px] font-sans tracking-[0.18em] uppercase text-[#D6A85C] font-semibold flex items-center gap-1.5">
                         <span>📍</span>
-                        <span>{tour.destination}</span>
+                        <span className="truncate">{tour.destination}</span>
                       </div>
 
                       {/* Package Name */}
-                      <h3 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors leading-tight font-normal">
+                      <h3 className="font-serif text-xl sm:text-[22px] text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors leading-snug font-normal">
                         {tour.packageName || tour.title}
                       </h3>
 
                       {/* Short Description (1-2 lines) */}
-                      <p className="font-sans text-xs text-[#A7A59B] font-light leading-relaxed line-clamp-2">
+                      <p className="font-sans text-[11.5px] text-[#A7A59B] font-light leading-relaxed line-clamp-2">
                         {shortDesc}
                       </p>
 
                       {/* Target Species */}
                       <div className="pt-2 border-t border-[#242923]/70">
-                        <span className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C]/80 font-semibold block mb-0.5">
+                        <span className="text-[9px] font-sans uppercase tracking-widest text-[#D6A85C]/80 font-semibold block mb-0.5">
                           TARGET SPECIES
                         </span>
-                        <span className="font-sans text-xs text-[#F2F0E8] font-medium block">
+                        <span className="font-sans text-[11px] text-[#F2F0E8] font-medium block truncate">
                           {tour.targetSpeciesLine ||
                             (tour.targetSpecies && tour.targetSpecies.slice(0, 3).join(' · ')) ||
                             'Apex Predators & Rare Endemics'}
@@ -353,7 +353,7 @@ export default function TourCatalog({
                       </div>
 
                       {/* Trip Information */}
-                      <div className="flex items-center gap-2 text-xs font-sans text-[#A7A59B] pt-1">
+                      <div className="flex items-center gap-2 text-[11px] font-sans text-[#A7A59B] pt-0.5">
                         <span>📅</span>
                         <span>{tour.dateRange}</span>
                         <span className="text-[#242923]">•</span>
@@ -362,35 +362,35 @@ export default function TourCatalog({
                     </div>
                   </div>
 
-                  {/* Pricing & Actions Footer */}
-                  <div className="p-6 sm:p-7 pt-4 border-t border-[#242923] bg-[#151815] space-y-4">
+                  {/* Pricing & Actions Footer - Compact */}
+                  <div className="p-4 sm:p-5 pt-3 border-t border-[#242923] bg-[#121412] space-y-3">
                     <div className="flex items-baseline justify-between">
                       <div>
-                        <span className="text-[10px] font-sans uppercase tracking-wider text-[#A7A59B] block">
+                        <span className="text-[9px] font-sans uppercase tracking-wider text-[#A7A59B] block">
                           ALL-INCLUSIVE FROM
                         </span>
                         <div className="flex items-baseline gap-1 text-[#F2F0E8]">
-                          <span className="font-serif text-2xl sm:text-3xl font-light text-[#D6A85C]">
+                          <span className="font-serif text-xl sm:text-2xl font-light text-[#D6A85C]">
                             ₹XX,XXX
                           </span>
-                          <span className="text-[10px] font-sans text-[#A7A59B] ml-1.5">(Contact for Quote)</span>
+                          <span className="text-[9.5px] font-sans text-[#A7A59B] ml-1">(Contact for Quote)</span>
                         </div>
                       </div>
 
-                      <span className="text-[10px] font-sans text-[#D6A85C] bg-[#242923] px-2.5 py-1 rounded-full border border-[#B87333]/30 font-medium">
+                      <span className="text-[9px] font-sans text-[#D6A85C] bg-[#1e221d] px-2 py-0.5 rounded-full border border-[#B87333]/30 font-medium">
                         Core Permits Incl.
                       </span>
                     </div>
 
                     {/* Dual Action Buttons */}
-                    <div className="grid grid-cols-2 gap-3 pt-1">
+                    <div className="grid grid-cols-2 gap-2.5 pt-0.5">
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation()
                           onSelectTour && onSelectTour(tour)
                         }}
-                        className="py-3 px-3 rounded-xl border border-[#242923] text-xs font-sans uppercase tracking-wider text-[#F2F0E8] hover:border-[#D6A85C] hover:text-[#D6A85C] transition-all cursor-pointer text-center font-medium bg-[#080908]"
+                        className="py-2.5 px-2 rounded-xl border border-[#242923] text-[11px] font-sans uppercase tracking-wider text-[#F2F0E8] hover:border-[#D6A85C] hover:text-[#D6A85C] transition-all cursor-pointer text-center font-medium bg-[#080908]"
                       >
                         VIEW ITINERARY
                       </button>
@@ -400,10 +400,10 @@ export default function TourCatalog({
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="py-3 px-3 rounded-xl bg-[#D6A85C] text-[#080908] text-xs font-sans uppercase tracking-wider font-bold text-center flex items-center justify-center gap-1.5 hover:bg-[#B87333] hover:shadow-[0_4px_20px_rgba(214,168,92,0.4)] transition-all cursor-pointer"
+                        className="py-2.5 px-2 rounded-xl bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] text-[11px] font-sans uppercase tracking-wider font-bold text-center flex items-center justify-center gap-1 hover:brightness-110 hover:shadow-[0_4px_16px_rgba(214,168,92,0.35)] transition-all cursor-pointer"
                       >
                         <span>ENQUIRE</span>
-                        <span className="group-hover:translate-x-1 transition-transform">→</span>
+                        <span className="group-hover:translate-x-0.5 transition-transform">→</span>
                       </a>
                     </div>
                   </div>
