@@ -16,7 +16,6 @@ import SeasonCalendarModal from './components/toehold/SeasonCalendarModal'
 import ChooseYourWild from './components/toehold/ChooseYourWild'
 import PlanExpeditionModal from './components/toehold/PlanExpeditionModal'
 import SpeciesExplorer from './components/toehold/SpeciesExplorer'
-import FieldJournal from './components/toehold/FieldJournal'
 import EssentialGuideFAQ from './components/toehold/EssentialGuideFAQ'
 
 import CustomCursor from './components/CustomCursor'
@@ -115,10 +114,7 @@ export default function App() {
         {/* 8. The VM Wild Edge / Why Travel With Us (Toehold Style) */}
         <ExpeditionDifference features={TOURS_DATA.difference} />
 
-        {/* 9. The Field Journal (Stories from the Wild) */}
-        <FieldJournal />
-
-        {/* 10. Guest Testimonials & Reviews */}
+        {/* 9. Guest Testimonials & Reviews */}
         <Testimonials testimonials={TOURS_DATA.testimonials} />
 
         {/* 11. Essential Expedition Guide FAQ (The 7 Core Questions) */}

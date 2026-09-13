@@ -256,14 +256,6 @@ export default function ToeholdNavbar({ onSelectCategory, onOpenCalendar }) {
             WHY US
           </a>
 
-          {/* JOURNAL */}
-          <a
-            href="#journal"
-            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
-          >
-            JOURNAL
-          </a>
-
           {/* REVIEWS */}
           <a
             href="#testimonials"
@@ -403,32 +395,25 @@ export default function ToeholdNavbar({ onSelectCategory, onOpenCalendar }) {
             <span className="text-xs font-sans text-[#B87333]">05 →</span>
           </button>
           <button
-            onClick={() => scrollTo('journal')}
-            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
-          >
-            <span>📖 Journal</span>
-            <span className="text-xs font-sans text-[#B87333]">06 →</span>
-          </button>
-          <button
             onClick={() => scrollTo('testimonials')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
             <span>Reviews</span>
-            <span className="text-xs font-sans text-[#B87333]">07 →</span>
+            <span className="text-xs font-sans text-[#B87333]">06 →</span>
           </button>
           <button
             onClick={() => scrollTo('faq')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
             <span>FAQ Guide</span>
-            <span className="text-xs font-sans text-[#B87333]">08 →</span>
+            <span className="text-xs font-sans text-[#B87333]">07 →</span>
           </button>
           <button
             onClick={() => scrollTo('contact')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
             <span>Contact</span>
-            <span className="text-xs font-sans text-[#B87333]">09 →</span>
+            <span className="text-xs font-sans text-[#B87333]">08 →</span>
           </button>
         </div>
 
