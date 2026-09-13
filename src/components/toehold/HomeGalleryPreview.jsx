@@ -1,75 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { GALLERY_IMAGES } from '../../data/galleryData'
 
-// Curated 5 featured images with custom animal-keyed Spectra hues and ambient palettes
-const SPECTRA_PROFILES = [
-  {
-    // 1. Jawai Leopard
-    name: 'Amber Sun Gold',
-    hue: '#F59E0B',
-    glow: 'rgba(245, 158, 11, 0.55)',
-    ambientGradient:
-      'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(245, 158, 11, 0.32) 0%, rgba(184, 115, 51, 0.14) 45%, transparent 75%)',
-    badgeBorder: 'rgba(245, 158, 11, 0.45)',
-    badgeBg: 'rgba(245, 158, 11, 0.12)',
-    accentText: '#FBBF24',
-  },
-  {
-    // 2. Kabini Elephant Tusker
-    name: 'Canopy Forest Emerald',
-    hue: '#10B981',
-    glow: 'rgba(16, 185, 129, 0.55)',
-    ambientGradient:
-      'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(16, 185, 129, 0.30) 0%, rgba(5, 150, 105, 0.14) 45%, transparent 75%)',
-    badgeBorder: 'rgba(16, 185, 129, 0.45)',
-    badgeBg: 'rgba(16, 185, 129, 0.12)',
-    accentText: '#34D399',
-  },
-  {
-    // 3. Great Hornbill
-    name: 'Western Ghats Azure',
-    hue: '#06B6D4',
-    glow: 'rgba(6, 182, 212, 0.55)',
-    ambientGradient:
-      'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(6, 182, 212, 0.30) 0%, rgba(14, 116, 144, 0.14) 45%, transparent 75%)',
-    badgeBorder: 'rgba(6, 182, 212, 0.45)',
-    badgeBg: 'rgba(6, 182, 212, 0.12)',
-    accentText: '#22D3EE',
-  },
-  {
-    // 4. Malabar Gliding Frog
-    name: 'Bioluminescent Lime',
-    hue: '#84CC16',
-    glow: 'rgba(132, 204, 22, 0.55)',
-    ambientGradient:
-      'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(132, 204, 22, 0.30) 0%, rgba(101, 163, 13, 0.14) 45%, transparent 75%)',
-    badgeBorder: 'rgba(132, 204, 22, 0.45)',
-    badgeBg: 'rgba(132, 204, 22, 0.12)',
-    accentText: '#A3E635',
-  },
-  {
-    // 5. Royal Bengal Tiger
-    name: 'Fiery Tiger Ochre',
-    hue: '#F97316',
-    glow: 'rgba(249, 115, 22, 0.55)',
-    ambientGradient:
-      'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(249, 115, 22, 0.32) 0%, rgba(194, 65, 12, 0.14) 45%, transparent 75%)',
-    badgeBorder: 'rgba(249, 115, 22, 0.45)',
-    badgeBg: 'rgba(249, 115, 22, 0.12)',
-    accentText: '#FB923C',
-  },
-]
-
 export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGallery }) {
   const handleViewGallery = onViewFullGallery || onNavigateToGallery
 
   // Filter 5 curated featured images for the home preview
-  const previewImages = (GALLERY_IMAGES.filter((img) => img.featuredOnHome).slice(0, 5)).map(
-    (img, index) => ({
-      ...img,
-      spectra: SPECTRA_PROFILES[index % SPECTRA_PROFILES.length],
-    })
-  )
+  const previewImages = GALLERY_IMAGES.filter((img) => img.featuredOnHome).slice(0, 5)
 
   const [activeIndex, setActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -179,15 +115,15 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
 
     // Offset mapping: -2, -1, 0, 1, 2
     if (offset === 0) {
-      // CENTER CARD: Lifted forward in 3D, cast keyed halo
+      // CENTER CARD: Lifted forward in 3D, elegant gold accent border and deep stage shadow
       return {
         transform: `translate3d(-50%, -50%, 0) translate3d(0px, -18px, 120px) rotateY(0deg) scale(1.08)`,
         zIndex: 30,
         opacity: 1,
-        filter: 'brightness(1.03)',
+        filter: 'brightness(1.02)',
         pointerEvents: 'auto',
-        boxShadow: `0 32px 75px -15px ${activeItem.spectra.glow}, 0 0 50px 0 ${activeItem.spectra.hue}35`,
-        borderColor: activeItem.spectra.hue,
+        boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 35px 0 rgba(214, 168, 92, 0.22)',
+        borderColor: '#D6A85C',
       }
     } else if (offset === -1) {
       // IMMEDIATE LEFT WING
@@ -197,7 +133,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
         opacity: 0.85,
         filter: 'brightness(0.68)',
         pointerEvents: 'auto',
-        boxShadow: '0 20px 40px -10px rgba(0,0,0,0.85)',
+        boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.85)',
         borderColor: '#242923',
       }
     } else if (offset === 1) {
@@ -208,7 +144,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
         opacity: 0.85,
         filter: 'brightness(0.68)',
         pointerEvents: 'auto',
-        boxShadow: '0 20px 40px -10px rgba(0,0,0,0.85)',
+        boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.85)',
         borderColor: '#242923',
       }
     } else if (offset === -2) {
@@ -219,7 +155,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
         opacity: 0.45,
         filter: 'brightness(0.45)',
         pointerEvents: 'auto',
-        boxShadow: '0 15px 30px -10px rgba(0,0,0,0.9)',
+        boxShadow: '0 15px 30px -10px rgba(0, 0, 0, 0.9)',
         borderColor: '#181c18',
       }
     } else {
@@ -230,7 +166,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
         opacity: 0.45,
         filter: 'brightness(0.45)',
         pointerEvents: 'auto',
-        boxShadow: '0 15px 30px -10px rgba(0,0,0,0.9)',
+        boxShadow: '0 15px 30px -10px rgba(0, 0, 0, 0.9)',
         borderColor: '#181c18',
       }
     }
@@ -245,38 +181,10 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
         setIsPaused(false)
         handleMouseUp()
       }}
-      className="py-24 sm:py-32 bg-[#060807] border-b border-[#20251f] select-none relative overflow-hidden transition-colors duration-700"
+      className="py-24 sm:py-32 bg-[#0a0c0a] border-b border-[#20251f] select-none relative overflow-hidden"
     >
-      {/* ============================================================ */}
-      {/* 1. DYNAMIC AMBIENT SPECTRA HALO (Keyed to Active Image Hue) */}
-      {/* ============================================================ */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[1000px] h-[450px] sm:h-[620px] rounded-full pointer-events-none transition-all duration-700 ease-out"
-        style={{
-          background: activeItem.spectra.ambientGradient,
-          filter: 'blur(100px)',
-          opacity: 0.85,
-        }}
-      />
-
-      {/* Stage Floor Reflection Bloom */}
-      <div
-        className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 w-[550px] sm:w-[800px] h-[90px] rounded-full pointer-events-none transition-all duration-700 ease-out"
-        style={{
-          background: `radial-gradient(ellipse at center, ${activeItem.spectra.hue}45 0%, transparent 70%)`,
-          filter: 'blur(35px)',
-        }}
-      />
-
-      {/* Subtle Studio Grid Overlay on Dark Stage */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none"
-        style={{
-          backgroundImage:
-            'linear-gradient(#F2F0E8 1px, transparent 1px), linear-gradient(90deg, #F2F0E8 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-        }}
-      />
+      {/* Subtle warm bronze ambient depth (matching luxury dark brand, NO blue/green colors) */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[350px] sm:h-[450px] bg-[#B87333]/[0.04] blur-[140px] pointer-events-none" />
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12 relative z-10">
         {/* ============================================================ */}
@@ -285,45 +193,30 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16">
           <div>
             <div className="inline-flex items-center gap-2.5 mb-3">
-              <span
-                className="w-7 h-[1.5px] transition-colors duration-500"
-                style={{ backgroundColor: activeItem.spectra.hue }}
-              />
-              <span
-                className="font-sans text-[10.5px] tracking-[0.28em] uppercase font-semibold transition-colors duration-500"
-                style={{ color: activeItem.spectra.accentText }}
-              >
-                SLIDER SPECTRA · 3D COVERFLOW GALLERY
+              <span className="w-7 h-[1.5px] bg-[#B87333]" />
+              <span className="font-sans text-[10.5px] tracking-[0.28em] uppercase text-[#D6A85C] font-semibold">
+                CURATED 3D COVERFLOW GALLERY
               </span>
-              <span
-                className="w-7 h-[1.5px] transition-colors duration-500"
-                style={{ backgroundColor: activeItem.spectra.hue }}
-              />
+              <span className="w-7 h-[1.5px] bg-[#B87333]" />
             </div>
 
             <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#F2F0E8] font-light leading-tight">
-              Wilderness{' '}
-              <span
-                className="italic font-normal transition-colors duration-700"
-                style={{ color: activeItem.spectra.accentText }}
-              >
-                Spectra
-              </span>
+              Wilderness <span className="italic text-[#D6A85C] font-normal">Moments</span>
             </h2>
 
             <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light leading-relaxed mt-2 max-w-xl">
-              An immersive 3D coverflow stage where each wildlife portrait elevates and radiates an ambient halo
-              keyed to its natural habitat hue. Drag, swipe, or use keyboard arrows (← / →).
+              An immersive 3D coverflow showcase highlighting raw wildlife encounters across Indian reserves.
+              Drag, swipe, or use keyboard arrows (← / →) to spin the fan.
             </p>
           </div>
 
           <div className="flex items-center gap-3 self-start sm:self-end">
-            {/* Autoplay status indicator badge */}
+            {/* Autoplay status indicator */}
             <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111411] border border-[#242923] text-[10px] font-sans text-[#A7A59B]">
               <span
-                className={`w-2 h-2 rounded-full ${isPaused ? 'bg-amber-400' : 'bg-emerald-400 animate-pulse'}`}
+                className={`w-2 h-2 rounded-full ${isPaused ? 'bg-[#D6A85C]' : 'bg-[#D6A85C] animate-pulse'}`}
               />
-              <span>{isPaused ? 'Paused (Hovered)' : 'Autoplaying (4.2s)'}</span>
+              <span>{isPaused ? 'Paused (Hovered)' : 'Autoplaying'}</span>
             </div>
 
             <button
@@ -386,24 +279,14 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                 />
 
                 {/* Shading gradients */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050706]/95 via-[#050706]/25 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#080908]/95 via-[#080908]/25 to-transparent pointer-events-none" />
 
-                {/* Center Card Top Spectra Badge */}
+                {/* Center Card Top Badge */}
                 {isCenter && (
                   <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">
-                    <span
-                      className="px-3 py-1 rounded-full text-[9px] font-sans tracking-widest uppercase font-bold shadow-lg backdrop-blur-md flex items-center gap-1.5 transition-colors duration-500"
-                      style={{
-                        backgroundColor: item.spectra.badgeBg,
-                        border: `1px solid ${item.spectra.badgeBorder}`,
-                        color: item.spectra.accentText,
-                      }}
-                    >
-                      <span
-                        className="w-1.5 h-1.5 rounded-full animate-ping"
-                        style={{ backgroundColor: item.spectra.hue }}
-                      />
-                      <span>{item.spectra.name}</span>
+                    <span className="px-3 py-1 rounded-full text-[9px] font-sans tracking-widest uppercase font-bold shadow-lg backdrop-blur-md flex items-center gap-1.5 bg-[#080a08]/90 border border-[#D6A85C]/50 text-[#D6A85C]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D6A85C] animate-pulse" />
+                      <span>{item.category}</span>
                     </span>
 
                     <span className="px-2.5 py-0.5 rounded-full bg-[#080a08]/85 text-[#A7A59B] border border-[#242923] text-[8.5px] font-mono tracking-wider">
@@ -412,17 +295,14 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                   </div>
                 )}
 
-                {/* Center Card Lifted Metadata */}
+                {/* Center Card Metadata */}
                 <div
                   className={`absolute bottom-0 inset-x-0 p-5 sm:p-6 transition-all duration-500 ${
                     isCenter ? 'opacity-100 translate-y-0' : 'opacity-80 translate-y-1'
                   }`}
                 >
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span
-                      className="text-[9px] font-sans tracking-widest uppercase font-semibold transition-colors duration-500"
-                      style={{ color: item.spectra.accentText }}
-                    >
+                    <span className="text-[9px] font-sans tracking-widest uppercase font-semibold text-[#D6A85C]">
                       {item.location}
                     </span>
                     <span className="text-[#A7A59B]/50 text-[10px]">•</span>
@@ -431,7 +311,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-lg sm:text-2xl md:text-[26px] text-[#F2F0E8] font-medium leading-tight group-hover:text-white transition-colors">
+                  <h3 className="font-serif text-lg sm:text-2xl md:text-[26px] text-[#F2F0E8] font-medium leading-tight group-hover:text-[#D6A85C] transition-colors">
                     {item.title}
                   </h3>
 
@@ -445,10 +325,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                       <span className="text-[10px] font-mono text-[#D6A85C]/90 bg-[#0c0f0d]/80 px-2.5 py-1 rounded-lg border border-[#242923]">
                         {item.gear}
                       </span>
-                      <span
-                        className="text-[10.5px] font-sans font-bold uppercase tracking-wider flex items-center gap-1.5 transition-transform group-hover:translate-x-1"
-                        style={{ color: item.spectra.accentText }}
-                      >
+                      <span className="text-[10.5px] font-sans font-bold uppercase tracking-wider text-[#D6A85C] flex items-center gap-1.5 transition-transform group-hover:translate-x-1">
                         <span>Inspect Frame</span>
                         <span>→</span>
                       </span>
@@ -488,10 +365,10 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
         </div>
 
         {/* ============================================================ */}
-        {/* 4. SPECTRA HUE PILLS & PAGINATION                            */}
+        {/* 4. PAGINATION INDICATORS                                     */}
         {/* ============================================================ */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-[#1a1f1a]">
-          {/* Spectra Color Indicators */}
+          {/* Pill Indicators in brand gold */}
           <div className="flex items-center gap-2.5">
             {previewImages.map((img, i) => {
               const isActive = i === activeIndex
@@ -500,27 +377,22 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                   key={img.id}
                   onClick={() => goToIndex(i)}
                   className={`h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
-                    isActive ? 'w-10 sm:w-12 shadow-md' : 'w-2.5 bg-[#242923] hover:bg-[#3a4239]'
+                    isActive
+                      ? 'w-10 sm:w-12 bg-[#D6A85C] shadow-[0_0_12px_rgba(214,168,92,0.5)]'
+                      : 'w-2.5 bg-[#242923] hover:bg-[#3a4239]'
                   }`}
-                  style={{
-                    backgroundColor: isActive ? img.spectra.hue : undefined,
-                    boxShadow: isActive ? `0 0 14px ${img.spectra.glow}` : undefined,
-                  }}
-                  title={`${img.title} (${img.spectra.name})`}
+                  title={img.title}
                   aria-label={`Go to slide ${i + 1}`}
                 />
               )
             })}
           </div>
 
-          {/* Active Animal & Spectrum Name */}
-          <div className="flex items-center gap-3 text-center sm:text-right">
-            <span className="text-[11px] font-sans text-[#A7A59B]">Active Spectra:</span>
-            <span
-              className="text-xs font-sans font-semibold tracking-wide transition-colors duration-500"
-              style={{ color: activeItem.spectra.accentText }}
-            >
-              {activeItem.spectra.name} · {activeItem.title}
+          {/* Active Frame Info */}
+          <div className="flex items-center gap-2 text-center sm:text-right">
+            <span className="text-[11px] font-sans text-[#A7A59B]">Featured Frame:</span>
+            <span className="text-xs font-sans font-semibold tracking-wide text-[#D6A85C]">
+              {activeItem.title} · {activeItem.location}
             </span>
           </div>
         </div>
