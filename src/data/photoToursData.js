@@ -643,10 +643,10 @@ export const TOURS_DATA = {
       hasCustomImage: true,
       instagram: 'https://www.instagram.com/vijaymathiew_photography?stkn=MXRxZW55ZDg3Z21pdw==',
       instagramHandle: '@vijaymathiew_photography',
-      bio: 'With over 12 years traversing primeval forests across India and Africa, Vijay Mathiew has dedicated his life to documenting elusive apex predators and fragile ecosystems. Known for his moody, atmospheric low-light aesthetic and deep field ethics, Vijay leads expeditions with an emphasis on animal anticipation, light sculpting, and intimate 1-on-1 mentorship.',
-      tags: ['12+ Years', 'Principal Mentor', 'Big Cats Specialist'],
+      bio: 'With over 5 years traversing primeval forests across India and Africa, Vijay Mathiew has dedicated his life to documenting elusive apex predators and fragile ecosystems. Known for his moody, atmospheric low-light aesthetic and deep field ethics, Vijay leads expeditions with an emphasis on animal anticipation, light sculpting, and intimate 1-on-1 mentorship.',
+      tags: ['5+ Years', 'Principal Mentor', 'Wild Specialist'],
       credentials: [
-        '12+ Years Documenting Big Cats & Avifauna',
+        '5+ Years Documenting Big Cats & Avifauna',
         '38+ National Parks & Wildlife Sanctuaries Explored',
         'Published in Renowned Natural History Features',
         'Specialist in Low-Light Western Ghats Canopies',

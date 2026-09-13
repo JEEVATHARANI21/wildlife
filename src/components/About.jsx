@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger)
 const PORTRAIT = '/images/vijay.jpeg'
 
 const STATS = [
-  { value: 12, suffix: '+', label: 'Years in the Wild' },
+  { value: 5, suffix: '+', label: 'Years in the Wild' },
   { value: 38, suffix: '', label: 'National Parks' },
   { value: 240, suffix: '+', label: 'Species Documented' },
   { value: 18, suffix: '', label: 'Countries' },
