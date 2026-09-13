@@ -1,330 +1,479 @@
 import { useState } from 'react'
 
+const SHORT_DESCRIPTIONS = {
+  'tour-tadoba-feline':
+    "Immersive tiger photography opportunities across Tadoba's prime waterholes and bamboo corridors.",
+  'tour-kabini-viceroy':
+    "Track and photograph the legendary Black Panther, leopards, and temple elephants in Nagarhole's mist.",
+  'tour-ranthambhore-solstice':
+    'Photograph majestic royal tigers against ancient Rajput fort ruins, banyan trees, and lake vistas.',
+  'tour-bandipur-primeval':
+    'Untamed tracking of elephant herds and apex predators through ancient Western Ghats teak forests.',
+  'tour-jawai-granite':
+    'Cave-dwelling Indian leopards perched atop prehistoric monolithic granite boulders at golden hour.',
+  'tour-western-ghats-shola':
+    'High-altitude rainforest birding for rare Western Ghats endemics, Great Hornbills, and canopy jewels.',
+  'tour-bharatpur-odyssey':
+    'Millions of winter migratory waterfowl, Sarus Cranes, and soaring raptors in UNESCO wetland hides.',
+  'tour-thattekad-munnar':
+    'Intensive eye-level hide photography for Ceylon Frogmouth, Malabar Trogon, and mountain avifauna.',
+  'tour-sattal-pangot':
+    'High-altitude oak and rhododendron forest hides for Cheer Pheasants, laughingthrushes, and kingfishers.',
+  'tour-kutch-flamingos':
+    'Thousands of Greater Flamingos, Desert Foxes, and hunting harriers across the surreal white salt desert.',
+}
+
 export default function TourCatalog({
-  animalTours,
-  birdTours,
-  activeCategory,
+  animalTours = [],
+  birdTours = [],
+  activeCategory = 'animals',
   setActiveCategory,
   onSelectTour,
 }) {
+  const [destinationFilter, setDestinationFilter] = useState('all')
+  const [monthFilter, setMonthFilter] = useState('all')
   const [durationFilter, setDurationFilter] = useState('all')
+  const [availabilityFilter, setAvailabilityFilter] = useState('all')
 
   const currentList = activeCategory === 'animals' ? animalTours : birdTours
 
   const filteredTours = currentList.filter((tour) => {
-    if (durationFilter === 'all') return true
-    return tour.duration.toLowerCase().includes(durationFilter.toLowerCase())
+    if (destinationFilter !== 'all') {
+      if (!tour.destination.toLowerCase().includes(destinationFilter.toLowerCase())) return false
+    }
+    if (monthFilter !== 'all') {
+      if (!tour.dateRange.toLowerCase().includes(monthFilter.toLowerCase())) return false
+    }
+    if (durationFilter !== 'all') {
+      if (!tour.duration.toLowerCase().includes(durationFilter.toLowerCase())) return false
+    }
+    if (availabilityFilter !== 'all') {
+      if (!tour.status.toLowerCase().includes(availabilityFilter.toLowerCase())) return false
+    }
+    return true
   })
 
-  // Render a single photography-first tour card
-  const renderTourCard = (tour) => (
-    <article
-      key={tour.id}
-      className="group rounded-3xl overflow-hidden bg-[#151815] border border-[#242923] hover:border-[#B87333] transition-all duration-500 shadow-2xl flex flex-col justify-between"
-    >
-      <div>
-        {/* 1. Large Wildlife Photograph (55-60% height visual hero) */}
-        <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#080908]">
-          <img
-            src={tour.heroImage}
-            alt={tour.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#151815] via-transparent to-transparent pointer-events-none" />
+  const hasActiveFilters =
+    destinationFilter !== 'all' ||
+    monthFilter !== 'all' ||
+    durationFilter !== 'all' ||
+    availabilityFilter !== 'all'
 
-          {/* Single Punchy Badge (Top Left) */}
-          <div className="absolute top-3.5 left-3.5 pointer-events-none">
-            <span className="px-3 py-1 rounded-full bg-[#080908]/92 backdrop-blur-md text-[9.5px] font-sans tracking-widest text-[#D6A85C] uppercase border border-[#B87333]/60 font-semibold shadow-lg flex items-center gap-1.5">
-              <span className="text-[#B87333]">★</span>
-              <span>{tour.badge}</span>
-            </span>
-          </div>
+  const resetFilters = () => {
+    setDestinationFilter('all')
+    setMonthFilter('all')
+    setDurationFilter('all')
+    setAvailabilityFilter('all')
+  }
 
-          {/* Status Pill (Top Right) */}
-          <div className="absolute top-3.5 right-3.5 pointer-events-none">
-            <span className="px-2.5 py-1 rounded-full bg-[#080908]/90 backdrop-blur-md text-[9px] font-sans tracking-wider text-[#F2F0E8] border border-[#242923]">
-              {tour.status}
-            </span>
-          </div>
-
-          {/* Photo Baseline: Location & Duration */}
-          <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs font-sans text-[#F2F0E8] pointer-events-none">
-            <span className="text-[#D6A85C] font-medium flex items-center gap-1 drop-shadow-md">
-              <span>📍</span>
-              <span>{tour.destination}</span>
-            </span>
-            <span className="text-[#F2F0E8]/80 text-[11px] bg-[#080908]/75 px-2 py-0.5 rounded-md border border-[#242923]">
-              ⏱ {tour.duration}
-            </span>
-          </div>
-        </div>
-
-        {/* 2. Card Content Body */}
-        <div className="p-6 sm:p-7">
-          {/* Package Title */}
-          <h3 className="font-serif text-2xl text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors leading-snug mb-2 font-medium">
-            {tour.title}
-          </h3>
-
-          {/* Best Season & Field Setup Meta */}
-          <div className="flex items-center gap-3 text-xs font-sans text-[#A7A59B] mb-4 pb-3 border-b border-[#242923]">
-            <span>
-              📅 Best Season:{' '}
-              <strong className="text-[#F2F0E8] font-medium">
-                {tour.bestSeason || 'Oct – May'}
-              </strong>
-            </span>
-            <span>·</span>
-            <span>
-              👥 <strong className="text-[#D6A85C] font-medium">Max 4 / Gypsy</strong>
-            </span>
-          </div>
-
-          {/* Short Overview */}
-          <p className="font-sans text-xs text-[#A7A59B] leading-relaxed font-light mb-4 line-clamp-2">
-            {tour.overview}
-          </p>
-
-          {/* 🔥 3. Target Species Strip (The Photography Differentiator) */}
-          <div className="mb-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[9.5px] font-sans uppercase tracking-[0.22em] text-[#B87333] font-bold flex items-center gap-1.5">
-                <span>🎯</span>
-                <span>Target Species</span>
-              </span>
-              <span className="text-[10px] font-sans text-[#A7A59B]">
-                {tour.skillLevel || 'Beginner → Pro'}
-              </span>
-            </div>
-
-            {/* Species Pills */}
-            <div className="flex flex-wrap gap-1.5 mb-2.5">
-              {tour.targetSpeciesStrip && tour.targetSpeciesStrip.length > 0 ? (
-                tour.targetSpeciesStrip.map((item, idx) => (
-                  <span
-                    key={idx}
-                    className="px-2.5 py-1 rounded-lg bg-[#242923]/80 border border-[#242923] text-xs font-sans text-[#F2F0E8] flex items-center gap-1.5"
-                  >
-                    <span>{item.icon}</span>
-                    <span className="text-[#F2F0E8]/90 font-medium">{item.name}</span>
-                  </span>
-                ))
-              ) : (
-                tour.targetSpecies.slice(0, 4).map((sp, idx) => (
-                  <span
-                    key={idx}
-                    className="px-2 py-0.5 rounded bg-[#242923]/60 border border-[#242923] text-[11px] font-sans text-[#F2F0E8]"
-                  >
-                    ✦ {sp.split('(')[0]}
-                  </span>
-                ))
-              )}
-            </div>
-
-            {/* Field Photographic Opportunity Note */}
-            <div className="p-2.5 rounded-xl bg-[#080908]/70 border border-[#242923] flex items-start gap-2 text-[11px] font-sans text-[#D6A85C]/95 leading-relaxed">
-              <span className="text-[#B87333] not-italic text-sm leading-none mt-0.5">📸</span>
-              <span className="italic">
-                {tour.photoHighlight ||
-                  'High probability of golden-hour action and eye-level portraits.'}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 4. Card Pricing & Powerful CTAs */}
-      <div className="p-6 sm:p-7 pt-0 border-t border-[#242923]">
-        <div className="flex items-end justify-between mb-4 pt-4">
-          <div>
-            <span className="text-[9px] font-sans uppercase tracking-wider text-[#A7A59B] block">
-              All-Inclusive Expedition
-            </span>
-            <div className="flex items-baseline gap-1 text-[#F2F0E8]">
-              <span className="text-xs font-sans text-[#B87333] font-bold">INR</span>
-              <span className="font-serif text-2xl font-light text-[#F2F0E8]">
-                ₹{tour.price.toLocaleString('en-IN')}/-
-              </span>
-              <span className="text-[10px] font-sans text-[#A7A59B] ml-1">/ person</span>
-            </div>
-          </div>
-          <span className="text-[10px] font-sans text-[#D6A85C] bg-[#242923] px-2.5 py-1 rounded-full border border-[#B87333]/30 font-medium">
-            Core Permits Incl.
-          </span>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <button
-            type="button"
-            onClick={() => onSelectTour(tour)}
-            className="btn-copper-secondary py-3 px-3 rounded-xl text-xs font-sans uppercase tracking-wider cursor-pointer text-center"
-          >
-            View Package
-          </button>
-          <a
-            href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I%20want%20to%20photograph%20on%20the%20${encodeURIComponent(tour.title)}%20(${tour.destination})%20Photo%20Tour.%20Please%20guide%20the%20booking%20steps.`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-copper-primary py-3 px-3.5 rounded-xl text-xs font-sans uppercase tracking-wider shadow-md text-center flex items-center justify-center gap-1.5"
-          >
-            <span>📸 I Want to Photograph This</span>
-            <span>→</span>
-          </a>
-        </div>
-      </div>
-    </article>
-  )
+  // Unique destinations for active category
+  const destinations = [
+    ...new Set(currentList.map((t) => t.destination.split('(')[0].split('&')[0].trim())),
+  ]
 
   return (
-    <section id="tours" className="py-24 px-5 sm:px-8 md:px-16 bg-[#080908] border-b border-[#242923]">
-      <div className="max-w-7xl mx-auto">
-        {/* Dynamic Category Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 mb-3">
-            <span className="w-8 h-[1.5px] bg-[#B87333]" />
-            <span className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#D6A85C] font-semibold">
-              Curated Expedition Tracks · Section 02
+    <section id="tours" className="py-24 sm:py-28 bg-[#080908] border-b border-[#242923] select-none">
+      <div className="max-w-[1380px] mx-auto px-5 sm:px-8 md:px-12 lg:px-16">
+        {/* 1. Spacious Editorial Hero / Intro */}
+        <div className="relative text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2.5 mb-3.5 select-none">
+            <span className="w-7 h-[1.5px] bg-[#B87333]" />
+            <span className="font-sans text-[10.5px] tracking-[0.28em] uppercase text-[#D6A85C] font-semibold">
+              2026–27 EXPEDITION CALENDAR
             </span>
-            <span className="w-8 h-[1.5px] bg-[#B87333]" />
+            <span className="w-7 h-[1.5px] bg-[#B87333]" />
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#F2F0E8] font-light leading-tight mb-3">
-            {activeCategory === 'animals' ? (
-              <>
-                Wildlife Photography{' '}
-                <span className="italic text-[#B87333] font-normal">Adventures</span>
-              </>
-            ) : (
-              <>
-                Bird Photography{' '}
-                <span className="italic text-[#B87333] font-normal">Escapes</span>
-              </>
-            )}
+          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#F2F0E8] font-light leading-tight mb-4">
+            Photo Tour <span className="italic text-[#D6A85C] font-normal">Schedules</span>
           </h2>
 
-          <p className="font-serif italic text-base sm:text-lg text-[#D6A85C]/90 font-normal mb-2">
-            {activeCategory === 'animals'
-              ? '“Get closer to the wild. Capture moments that last forever.”'
-              : '“From tiny rainforest jewels to powerful raptors — discover India’s incredible avifauna.”'}
-          </p>
-
-          <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light leading-relaxed">
-            {activeCategory === 'animals'
-              ? 'High-intensity predator tracking masterclasses designed around animal behavior, optimal lighting, and guaranteed core forest Gypsy permits.'
-              : 'Specialized canopy walks, silent wetland boats, and private studio hides crafted for eye-level perches and razor-sharp flight captures.'}
+          <p className="font-sans text-xs sm:text-sm md:text-base text-[#A7A59B] font-light leading-relaxed max-w-2xl mx-auto">
+            Choose your subject, select your season, and join a small-group expedition designed around exceptional wildlife encounters and photography opportunities.
           </p>
         </div>
 
-        {/* 🌟 TWO DISTINCT TRACKING CATEGORIES SWITCHER ("2 Trucking Plans") */}
-        <div className="flex justify-center mb-12">
-          <div className="p-1.5 rounded-2xl bg-[#151815] border border-[#242923] shadow-2xl flex flex-col sm:flex-row gap-2 max-w-xl w-full">
-            {/* Category 1: Animal & Big Cat Tracking */}
-            <button
-              type="button"
-              id="animal-tracking"
-              onClick={() => {
-                setActiveCategory('animals')
-                setDurationFilter('all')
-              }}
-              className={`flex-1 py-3.5 px-6 rounded-xl font-sans text-xs tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer ${
-                activeCategory === 'animals'
-                  ? 'btn-copper-primary shadow-[0_4px_20px_rgba(184,115,51,0.35)]'
-                  : 'text-[#A7A59B] hover:text-[#F2F0E8] hover:bg-[#242923]/50'
-              }`}
-            >
-              <span className="text-base">🐅</span>
-              <span>1. Animals (5 Packages)</span>
-            </button>
+        {/* 2. Large Category Selector: Two Prominent Luxury Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 mb-12">
+          {/* Animal Expeditions Tab */}
+          <button
+            type="button"
+            onClick={() => {
+              setActiveCategory && setActiveCategory('animals')
+              resetFilters()
+            }}
+            className={`p-6 sm:p-8 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between border ${
+              activeCategory === 'animals'
+                ? 'bg-gradient-to-br from-[#151815] to-[#242923] border-[#D6A85C] shadow-[0_10px_35px_rgba(214,168,92,0.2)] scale-[1.01]'
+                : 'bg-[#151815]/70 border-[#242923] hover:border-[#D6A85C]/50 opacity-80 hover:opacity-100'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal flex items-center gap-3">
+                <span>🐅</span>
+                <span>Animal Expeditions</span>
+              </span>
+              {activeCategory === 'animals' && (
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D6A85C] shadow-[0_0_10px_#D6A85C]" />
+              )}
+            </div>
+            <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light">
+              Wildlife tracking & predator photography across India's premier tiger reserves and big cat habitats.
+            </p>
+          </button>
 
-            {/* Category 2: Avian & Bird Photography */}
-            <button
-              type="button"
-              id="bird-photography"
-              onClick={() => {
-                setActiveCategory('birds')
-                setDurationFilter('all')
-              }}
-              className={`flex-1 py-3.5 px-6 rounded-xl font-sans text-xs tracking-wider uppercase transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer ${
-                activeCategory === 'birds'
-                  ? 'btn-copper-primary shadow-[0_4px_20px_rgba(184,115,51,0.35)]'
-                  : 'text-[#A7A59B] hover:text-[#F2F0E8] hover:bg-[#242923]/50'
-              }`}
-            >
-              <span className="text-base">🦜</span>
-              <span>2. Birds (5 Packages)</span>
-            </button>
-          </div>
+          {/* Bird Photography Tab */}
+          <button
+            type="button"
+            onClick={() => {
+              setActiveCategory && setActiveCategory('birds')
+              resetFilters()
+            }}
+            className={`p-6 sm:p-8 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between border ${
+              activeCategory === 'birds'
+                ? 'bg-gradient-to-br from-[#151815] to-[#242923] border-[#D6A85C] shadow-[0_10px_35px_rgba(214,168,92,0.2)] scale-[1.01]'
+                : 'bg-[#151815]/70 border-[#242923] hover:border-[#D6A85C]/50 opacity-80 hover:opacity-100'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal flex items-center gap-3">
+                <span>🦅</span>
+                <span>Bird Photography</span>
+              </span>
+              {activeCategory === 'birds' && (
+                <span className="w-2.5 h-2.5 rounded-full bg-[#D6A85C] shadow-[0_0_10px_#D6A85C]" />
+              )}
+            </div>
+            <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light">
+              Birding & avian photography across Western Ghats canopies, UNESCO wetlands, and Himalayan hides.
+            </p>
+          </button>
         </div>
 
-        {/* Sub-filter by Duration */}
-        <div className="flex items-center justify-between flex-wrap gap-4 mb-10 pb-4 border-b border-[#242923]">
-          <div className="text-xs font-sans text-[#A7A59B]">
-            Showing{' '}
-            <strong className="text-[#F2F0E8] font-semibold">{filteredTours.length}</strong>{' '}
-            curated photography expeditions
-          </div>
-
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] font-sans uppercase tracking-wider text-[#A7A59B]">
-              Filter Duration:
-            </span>
-            {['all', '2N/3D', '3N/4D', '4N/5D'].map((dur) => (
-              <button
-                key={dur}
-                onClick={() => setDurationFilter(dur)}
-                className={`px-3 py-1 rounded-lg text-xs font-sans transition-all cursor-pointer ${
-                  durationFilter === dur
-                    ? 'bg-[#B87333]/20 text-[#D6A85C] border border-[#B87333] font-semibold'
-                    : 'bg-[#151815] text-[#A7A59B] border border-[#242923] hover:text-[#F2F0E8] hover:border-[#D6A85C]/50'
-                }`}
+        {/* 3. Clean Horizontal Filter Bar */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#151815] border border-[#242923] mb-14 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 flex-1">
+            {/* Destination */}
+            <div>
+              <label className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
+                Destination
+              </label>
+              <select
+                value={destinationFilter}
+                onChange={(e) => setDestinationFilter(e.target.value)}
+                className="w-full bg-[#080908] border border-[#242923] hover:border-[#D6A85C]/60 rounded-xl px-3 py-2 text-xs font-sans text-[#F2F0E8] focus:outline-none focus:border-[#D6A85C] cursor-pointer"
               >
-                {dur === 'all' ? 'All Durations' : dur}
-              </button>
+                <option value="all">All Destinations</option>
+                {destinations.map((d) => (
+                  <option key={d} value={d}>
+                    {d}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Month */}
+            <div>
+              <label className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
+                Month
+              </label>
+              <select
+                value={monthFilter}
+                onChange={(e) => setMonthFilter(e.target.value)}
+                className="w-full bg-[#080908] border border-[#242923] hover:border-[#D6A85C]/60 rounded-xl px-3 py-2 text-xs font-sans text-[#F2F0E8] focus:outline-none focus:border-[#D6A85C] cursor-pointer"
+              >
+                <option value="all">All Months</option>
+                <option value="nov">November 2026</option>
+                <option value="dec">December 2026</option>
+                <option value="jan">January 2027</option>
+                <option value="feb">February 2027</option>
+                <option value="mar">March 2027</option>
+              </select>
+            </div>
+
+            {/* Duration */}
+            <div>
+              <label className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
+                Duration
+              </label>
+              <select
+                value={durationFilter}
+                onChange={(e) => setDurationFilter(e.target.value)}
+                className="w-full bg-[#080908] border border-[#242923] hover:border-[#D6A85C]/60 rounded-xl px-3 py-2 text-xs font-sans text-[#F2F0E8] focus:outline-none focus:border-[#D6A85C] cursor-pointer"
+              >
+                <option value="all">All Durations</option>
+                <option value="2n">2N / 3D</option>
+                <option value="3n">3N / 4D</option>
+                <option value="4n">4N / 5D</option>
+              </select>
+            </div>
+
+            {/* Availability */}
+            <div>
+              <label className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
+                Availability
+              </label>
+              <select
+                value={availabilityFilter}
+                onChange={(e) => setAvailabilityFilter(e.target.value)}
+                className="w-full bg-[#080908] border border-[#242923] hover:border-[#D6A85C]/60 rounded-xl px-3 py-2 text-xs font-sans text-[#F2F0E8] focus:outline-none focus:border-[#D6A85C] cursor-pointer"
+              >
+                <option value="all">All Availability</option>
+                <option value="open">Open for Booking</option>
+                <option value="few">Few Seats Left</option>
+                <option value="filling">Filling Fast</option>
+              </select>
+            </div>
+          </div>
+
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={resetFilters}
+              className="py-2.5 px-4 rounded-xl border border-[#D6A85C]/60 text-xs font-sans uppercase tracking-wider text-[#D6A85C] hover:bg-[#D6A85C] hover:text-[#080908] transition-all cursor-pointer whitespace-nowrap self-end md:self-center"
+            >
+              Reset Filters ✕
+            </button>
+          )}
+        </div>
+
+        {/* 4. Section Intro: Clean Contextual Heading */}
+        <div className="mb-10 text-left border-l-2 border-[#D6A85C] pl-4">
+          <h3 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal">
+            {activeCategory === 'animals' ? (
+              <>Animal Photography Expeditions</>
+            ) : (
+              <>Bird Photography Expeditions</>
+            )}
+          </h3>
+          <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light mt-1 max-w-2xl">
+            {activeCategory === 'animals'
+              ? "Follow India's iconic predators and wildlife through carefully selected landscapes, seasons and photographic conditions."
+              : "Explore forests, wetlands and mountain habitats in search of India's remarkable resident and migratory birds."}
+          </p>
+        </div>
+
+        {/* 5. Expedition Cards: 3-Column Grid on Desktop, 2 on Tablet, 1 on Mobile */}
+        {filteredTours.length === 0 ? (
+          <div className="py-20 text-center rounded-3xl bg-[#151815] border border-[#242923]">
+            <p className="font-serif text-2xl text-[#F2F0E8] mb-2">No expeditions match your filters.</p>
+            <p className="font-sans text-xs text-[#A7A59B] mb-5">Try adjusting your filters or reset them to view all scheduled departures.</p>
+            <button
+              onClick={resetFilters}
+              className="py-2.5 px-6 rounded-full bg-[#D6A85C] text-[#080908] text-xs font-sans uppercase tracking-wider font-bold"
+            >
+              Reset Filters
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-9 mb-24">
+            {filteredTours.map((tour) => {
+              const shortDesc =
+                SHORT_DESCRIPTIONS[tour.id] ||
+                tour.overview?.split('.')[0] + '.' ||
+                'Exclusive wildlife photography masterclass led by experienced field naturalists.'
+
+              return (
+                <article
+                  key={tour.id}
+                  onClick={() => onSelectTour && onSelectTour(tour)}
+                  className="group relative rounded-2xl overflow-hidden bg-[#151815] border border-[#242923] hover:border-[#D6A85C] transition-all duration-500 shadow-2xl cursor-pointer flex flex-col justify-between"
+                >
+                  <div>
+                    {/* 1. Large High-Quality Wildlife Photograph (45-50% of card) */}
+                    <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#080908]">
+                      <img
+                        src={tour.heroImage}
+                        alt={tour.packageName || tour.title}
+                        className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out brightness-[0.92] group-hover:brightness-100"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#151815] via-transparent to-transparent pointer-events-none" />
+
+                      {/* Single Subtle Availability Badge */}
+                      <div className="absolute top-3.5 right-3.5 pointer-events-none">
+                        <span className="px-3 py-1 rounded-full bg-[#080908]/85 backdrop-blur-md text-[9.5px] font-sans tracking-wider uppercase font-semibold text-[#D6A85C] border border-[#D6A85C]/35 shadow-md flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#D6A85C] animate-pulse" />
+                          <span>{tour.status || 'OPEN FOR BOOKING'}</span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Card Body */}
+                    <div className="p-6 sm:p-7 space-y-3.5 text-left">
+                      {/* Location */}
+                      <div className="text-[10px] sm:text-[11px] font-sans tracking-[0.2em] uppercase text-[#D6A85C] font-semibold flex items-center gap-1.5">
+                        <span>📍</span>
+                        <span>{tour.destination}</span>
+                      </div>
+
+                      {/* Package Name */}
+                      <h3 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors leading-tight font-normal">
+                        {tour.packageName || tour.title}
+                      </h3>
+
+                      {/* Short Description (1-2 lines) */}
+                      <p className="font-sans text-xs text-[#A7A59B] font-light leading-relaxed line-clamp-2">
+                        {shortDesc}
+                      </p>
+
+                      {/* Target Species */}
+                      <div className="pt-2 border-t border-[#242923]/70">
+                        <span className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C]/80 font-semibold block mb-0.5">
+                          TARGET SPECIES
+                        </span>
+                        <span className="font-sans text-xs text-[#F2F0E8] font-medium block">
+                          {tour.targetSpeciesLine ||
+                            (tour.targetSpecies && tour.targetSpecies.slice(0, 3).join(' · ')) ||
+                            'Apex Predators & Rare Endemics'}
+                        </span>
+                      </div>
+
+                      {/* Trip Information */}
+                      <div className="flex items-center gap-2 text-xs font-sans text-[#A7A59B] pt-1">
+                        <span>📅</span>
+                        <span>{tour.dateRange}</span>
+                        <span className="text-[#242923]">•</span>
+                        <span>{tour.duration}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Pricing & Actions Footer */}
+                  <div className="p-6 sm:p-7 pt-4 border-t border-[#242923] bg-[#151815] space-y-4">
+                    <div className="flex items-baseline justify-between">
+                      <div>
+                        <span className="text-[10px] font-sans uppercase tracking-wider text-[#A7A59B] block">
+                          FROM
+                        </span>
+                        <div className="flex items-baseline gap-1 text-[#F2F0E8]">
+                          <span className="font-serif text-2xl sm:text-3xl font-light text-[#F2F0E8]">
+                            ₹{tour.price.toLocaleString('en-IN')}/-
+                          </span>
+                          <span className="text-[10px] font-sans text-[#A7A59B] ml-1">/ person</span>
+                        </div>
+                      </div>
+
+                      <span className="text-[10px] font-sans text-[#D6A85C] bg-[#242923] px-2.5 py-1 rounded-full border border-[#B87333]/30 font-medium">
+                        Core Permits Incl.
+                      </span>
+                    </div>
+
+                    {/* Dual Action Buttons */}
+                    <div className="grid grid-cols-2 gap-3 pt-1">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onSelectTour && onSelectTour(tour)
+                        }}
+                        className="py-3 px-3 rounded-xl border border-[#242923] text-xs font-sans uppercase tracking-wider text-[#F2F0E8] hover:border-[#D6A85C] hover:text-[#D6A85C] transition-all cursor-pointer text-center font-medium bg-[#080908]"
+                      >
+                        VIEW ITINERARY
+                      </button>
+
+                      <a
+                        href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20inquiring%20about%20the%20${encodeURIComponent(tour.packageName || tour.title)}%20(${tour.destination})%20Expedition%20scheduled%20for%20${encodeURIComponent(tour.dateRange)}.`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="py-3 px-3 rounded-xl bg-[#D6A85C] text-[#080908] text-xs font-sans uppercase tracking-wider font-bold text-center flex items-center justify-center gap-1.5 hover:bg-[#B87333] hover:shadow-[0_4px_20px_rgba(214,168,92,0.4)] transition-all cursor-pointer"
+                      >
+                        <span>ENQUIRE</span>
+                        <span className="group-hover:translate-x-1 transition-transform">→</span>
+                      </a>
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
+          </div>
+        )}
+
+        {/* 6. Why Our Expeditions Are Different */}
+        <div className="mb-24 pt-16 border-t border-[#242923]">
+          <div className="text-center max-w-xl mx-auto mb-12 select-none">
+            <span className="font-sans text-[10px] tracking-[0.28em] uppercase text-[#D6A85C] font-semibold block mb-2">
+              THE VM WILD DIFFERENCE
+            </span>
+            <h3 className="font-serif text-3xl sm:text-4xl text-[#F2F0E8] font-light">
+              Why Our Expeditions Are Different
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: 'MAX 4 PHOTOGRAPHERS',
+                desc: 'More space, less crowding, guaranteed window seats and 360° lens freedom in every vehicle.',
+              },
+              {
+                title: 'PHOTOGRAPHY-FOCUSED',
+                desc: 'Built around photographic opportunities, optimal angles, animal behavior and prime golden light.',
+              },
+              {
+                title: 'FIELD MENTORING',
+                desc: 'Guidance and personalized camera craft from experienced photographers and seasoned naturalists.',
+              },
+              {
+                title: 'CURATED SEASONS',
+                desc: 'Destinations carefully selected around peak wildlife activity, waterhole tracking and lighting conditions.',
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="p-7 rounded-2xl bg-[#151815] border border-[#242923] hover:border-[#D6A85C]/60 transition-all text-left"
+              >
+                <span className="text-[11px] font-sans tracking-widest text-[#D6A85C] font-bold block mb-2.5">
+                  {item.title}
+                </span>
+                <p className="text-xs font-sans text-[#A7A59B] font-light leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* 🌟 3 + 2 GRID LAYOUT FOR THE 5 PACKAGES */}
-        {filteredTours.length <= 3 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredTours.map((tour) => renderTourCard(tour))}
-          </div>
-        ) : (
-          <div className="space-y-8">
-            {/* Top Row: 3 Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredTours.slice(0, 3).map((tour) => renderTourCard(tour))}
-            </div>
+        {/* 7. Final Cinematic Call to Action Banner */}
+        <div className="relative rounded-3xl overflow-hidden min-h-[360px] sm:min-h-[400px] flex flex-col items-center justify-center p-8 sm:p-14 text-center border border-[#242923] group">
+          <img
+            src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1920&q=85&auto=format&fit=crop"
+            alt="VM Wild Expeditions"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 brightness-[0.4]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#080908] via-[#080908]/75 to-transparent pointer-events-none" />
 
-            {/* Bottom Row: 2 Cards Centered */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {filteredTours.slice(3).map((tour) => renderTourCard(tour))}
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <span className="font-sans text-[10px] sm:text-xs tracking-[0.28em] uppercase text-[#D6A85C] font-semibold block mb-3">
+              YOUR EXPEDITION AWAITS
+            </span>
+            <h3 className="font-serif text-3xl sm:text-5xl text-[#F2F0E8] font-light mb-4 leading-tight">
+              Which story will you photograph next?
+            </h3>
+            <p className="font-sans text-xs sm:text-sm text-[#F2F0E8]/85 font-light mb-8 max-w-xl mx-auto leading-relaxed">
+              Tell us what you want to photograph. We'll help you choose the right expedition, destination and season.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href="https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20ready%20to%20plan%20my%20photography%20expedition.%20Please%20help%20me%20choose%20the%20right%20destination."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto py-4 px-9 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-[#D6A85C] text-[#080908] hover:bg-[#B87333] hover:shadow-[0_6px_30px_rgba(214,168,92,0.45)] hover:scale-105 transition-all inline-flex items-center justify-center gap-2 shadow-xl"
+              >
+                <span>PLAN MY EXPEDITION</span>
+                <span>→</span>
+              </a>
+
+              <a
+                href="#contact"
+                className="w-full sm:w-auto py-4 px-9 rounded-full font-sans text-xs uppercase tracking-widest font-semibold border border-[#D6A85C]/70 text-[#F2F0E8] hover:bg-[#D6A85C]/15 transition-all text-center"
+              >
+                CONTACT US
+              </a>
             </div>
           </div>
-        )}
-
-        {/* 💬 MINI ENQUIRY TRIGGER */}
-        <div className="mt-16 p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#151815] via-[#242923]/80 to-[#151815] border border-[#B87333]/40 shadow-2xl text-center flex flex-col items-center">
-          <div className="w-14 h-14 rounded-2xl bg-[#080908] border border-[#B87333]/50 flex items-center justify-center text-3xl mb-4 shadow-inner">
-            🧭
-          </div>
-          <h3 className="font-serif text-2xl sm:text-4xl text-[#F2F0E8] font-normal mb-3">
-            Not sure which wildlife experience is right for you?
-          </h3>
-          <p className="font-sans text-xs sm:text-sm text-[#A7A59B] max-w-xl font-light mb-8 leading-relaxed">
-            Tell us what species you dream of photographing and our principal expedition skippers
-            will personally recommend the ideal sanctuary, season, and lens focal lengths.
-          </p>
-          <a
-            href="https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20not%20sure%20which%20photography%20tour%20is%20right%20for%20me.%20I%20have%20specific%20target%20species%20in%20mind.%20Please%20guide%20me."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-copper-primary py-4 px-8 rounded-full font-sans text-xs uppercase tracking-widest shadow-[0_4px_25px_rgba(184,115,51,0.45)] flex items-center gap-2.5 cursor-pointer hover:scale-105 transition-transform"
-          >
-            <span>🧭 Help Me Choose My Photography Safari →</span>
-          </a>
         </div>
       </div>
     </section>
