@@ -70,11 +70,16 @@ export default function App() {
       <ToeholdNavbar onSelectCategory={setActiveCategory} />
 
       <main>
-        {/* 2. Photo Tours Hero with Quote & Two-Track Switcher */}
-        <ToursHero onSelectCategory={setActiveCategory} />
+        {/* 2. Photo Tours Hero */}
+        <ToursHero />
 
-        {/* 3. Featured Flagship Expeditions */}
-        <FeaturedTours tours={featuredTours} onSelectTour={setSelectedTour} />
+        {/* 3. Featured Flagship Expeditions (Redesigned Editorial Listing) */}
+        <FeaturedTours
+          animalTours={TOURS_DATA.animalTours}
+          birdTours={TOURS_DATA.birdTours}
+          onSelectTour={setSelectedTour}
+          onSelectCategory={setActiveCategory}
+        />
 
         {/* 4. Filterable Tour Schedules (2 Distinct Categories: Animal Tracking & Bird Photography) */}
         <TourCatalog

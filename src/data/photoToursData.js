@@ -3,6 +3,8 @@ export const TOURS_DATA = {
   animalTours: [
     {
       id: 'tour-tadoba-feline',
+      packageName: "Feline Fortune",
+      targetSpeciesLine: "Tiger · Leopard · Sloth Bear",
       bestSeason: 'Oct – Jun (Peak: Mar – May)',
       photoHighlight: 'High probability of morning & evening waterhole vigils in golden dust light',
       skillLevel: 'Beginner → Professional',
@@ -72,6 +74,8 @@ export const TOURS_DATA = {
     },
     {
       id: 'tour-kabini-viceroy',
+      packageName: "Viceroy’s Vista",
+      targetSpeciesLine: "Tiger · Leopard · Elephant",
       bestSeason: 'Oct – May (Peak: Dec – Apr)',
       photoHighlight: 'Dramatic riverboat sunset herds & canopy tracking in dense teak forests',
       skillLevel: 'Intermediate → Professional',
@@ -134,6 +138,8 @@ export const TOURS_DATA = {
     },
     {
       id: 'tour-ranthambhore-solstice',
+      packageName: "Royal Bengal Solstice",
+      targetSpeciesLine: "Bengal Tiger · Leopard · Sloth Bear",
       bestSeason: 'Oct – May (Peak: Nov – Apr)',
       photoHighlight: 'Tigers stalking through historic stone watchtowers & lily-covered lakes',
       skillLevel: 'Beginner → Professional',
@@ -196,6 +202,8 @@ export const TOURS_DATA = {
     },
     {
       id: 'tour-bandipur-primeval',
+      packageName: "Primeval Shadows",
+      targetSpeciesLine: "Wild Elephant · Bengal Tiger · Dhole",
       bestSeason: 'Oct – May',
       photoHighlight: 'Misty morning fire-lines & elephant herds framed against Nilgiri mountain foothills',
       skillLevel: 'Beginner → Professional',
@@ -237,6 +245,8 @@ export const TOURS_DATA = {
     },
     {
       id: 'tour-jawai-granite',
+      packageName: "Granite Realm",
+      targetSpeciesLine: "Indian Leopard · Striped Hyena · Marsh Crocodile",
       bestSeason: 'Oct – Apr',
       photoHighlight: 'Spectacular rim-lit sunset leopard silhouettes atop ancient pink granite boulders',
       skillLevel: 'Beginner → Professional',
@@ -304,6 +314,8 @@ export const TOURS_DATA = {
   birdTours: [
     {
       id: 'tour-western-ghats-shola',
+      packageName: "The Shola Symphony",
+      targetSpeciesLine: "Endemic Birds · Wildlife · Western Ghats Species",
       bestSeason: 'Oct – Apr (Peak: Nov – Feb)',
       photoHighlight: 'Best for eye-level tropical canopy perches, flight action & macro forest ecology',
       skillLevel: 'Beginner → Professional',
@@ -375,6 +387,8 @@ export const TOURS_DATA = {
     },
     {
       id: 'tour-bharatpur-odyssey',
+      packageName: "The Grand Avian Odyssey",
+      targetSpeciesLine: "Migratory Birds · Raptors · Waterbirds",
       bestSeason: 'Nov – Feb (Peak Winter Migrants)',
       photoHighlight: 'Low-angle water reflections, synchronized crane dances & misty dawn flight shots',
       skillLevel: 'Beginner → Professional',
@@ -437,6 +451,8 @@ export const TOURS_DATA = {
     },
     {
       id: 'tour-thattekad-munnar',
+      packageName: "Emerald Canopy Jewels",
+      targetSpeciesLine: "Frogmouth · Malabar Trogon · Hornbills",
       bestSeason: 'Oct – Mar',
       photoHighlight: 'Specialized tribal hide tracking for rare nocturnal roosts and shola endemics',
       skillLevel: 'Beginner → Professional',
@@ -480,6 +496,8 @@ export const TOURS_DATA = {
     },
     {
       id: 'tour-sattal-pangot',
+      packageName: "Himalayan Avian Hide",
+      targetSpeciesLine: "Cheer Pheasant · Crested Kingfisher · Minivet",
       bestSeason: 'Oct – Apr (Peak: Mar – Apr)',
       photoHighlight: 'Dedicated studio hide perches with natural moss backgrounds & eye-level water-baths',
       skillLevel: 'Beginner → Professional',
@@ -548,6 +566,8 @@ export const TOURS_DATA = {
     },
     {
       id: 'tour-kutch-flamingos',
+      packageName: "White Desert Wings",
+      targetSpeciesLine: "Greater Flamingo · Desert Fox · Pallid Harrier",
       bestSeason: 'Nov – Mar',
       photoHighlight: 'Vast mirage salt pan horizons, raptors on perches & thousands of feeding flamingos',
       skillLevel: 'Beginner → Professional',
