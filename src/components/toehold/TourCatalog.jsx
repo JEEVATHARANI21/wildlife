@@ -389,53 +389,7 @@ export default function TourCatalog({
             })}
           </div>
         )}
-
-        {/* 6. Why Our Expeditions Are Different */}
-        <div className="mb-24 pt-16 border-t border-[#242923]">
-          <div className="text-center max-w-xl mx-auto mb-12 select-none">
-            <span className="font-sans text-[10px] tracking-[0.28em] uppercase text-[#D6A85C] font-semibold block mb-2">
-              THE VM WILD DIFFERENCE
-            </span>
-            <h3 className="font-serif text-3xl sm:text-4xl text-[#F2F0E8] font-light">
-              Why Our Expeditions Are Different
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                title: 'MAX 4 PHOTOGRAPHERS',
-                desc: 'More space, less crowding, guaranteed window seats and 360° lens freedom in every vehicle.',
-              },
-              {
-                title: 'PHOTOGRAPHY-FOCUSED',
-                desc: 'Built around photographic opportunities, optimal angles, animal behavior and prime golden light.',
-              },
-              {
-                title: 'FIELD MENTORING',
-                desc: 'Guidance and personalized camera craft from experienced photographers and seasoned naturalists.',
-              },
-              {
-                title: 'CURATED SEASONS',
-                desc: 'Destinations carefully selected around peak wildlife activity, waterhole tracking and lighting conditions.',
-              },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="p-7 rounded-2xl bg-[#151815] border border-[#242923] hover:border-[#D6A85C]/60 transition-all text-left"
-              >
-                <span className="text-[11px] font-sans tracking-widest text-[#D6A85C] font-bold block mb-2.5">
-                  {item.title}
-                </span>
-                <p className="text-xs font-sans text-[#A7A59B] font-light leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 7. Final Cinematic Call to Action Banner */}
+        {/* 6. Final Cinematic Call to Action Banner */}
         <div className="relative rounded-3xl overflow-hidden min-h-[360px] sm:min-h-[400px] flex flex-col items-center justify-center p-8 sm:p-14 text-center border border-[#242923] group">
           <img
             src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1920&q=85&auto=format&fit=crop"

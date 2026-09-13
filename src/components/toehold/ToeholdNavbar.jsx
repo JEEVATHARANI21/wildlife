@@ -42,8 +42,8 @@ export default function ToeholdNavbar({ onSelectCategory }) {
 
   const photoToursMenu = [
     { label: 'All Photography Expeditions', action: () => scrollTo('tours') },
-    { label: 'Featured Flagship Tours', action: () => scrollTo('featured') },
-    { label: '2026–2027 Season Schedules', action: () => scrollTo('tours') },
+    { label: 'Upcoming Expedition Schedules', action: () => scrollTo('tours') },
+    { label: '2026–2027 Season Calendar', action: () => scrollTo('tours') },
   ]
 
   const animalToursMenu = [

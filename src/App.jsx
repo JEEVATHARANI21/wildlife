@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import ToeholdNavbar from './components/toehold/ToeholdNavbar'
 import ToursHero from './components/toehold/ToursHero'
-import FeaturedTours from './components/toehold/FeaturedTours'
 import TourCatalog from './components/toehold/TourCatalog'
 import FoundersSection from './components/toehold/FoundersSection'
 import ExpeditionDifference from './components/toehold/ExpeditionDifference'
@@ -54,14 +53,6 @@ export default function App() {
     }
   }, [])
 
-  // Featured flagship tours: mix of animal & bird tracks
-  const featuredTours = [
-    TOURS_DATA.animalTours[0], // Tadoba Feline Fortune
-    TOURS_DATA.animalTours[1], // Kabini Viceroy's Vista
-    TOURS_DATA.birdTours[0],   // Shola Endemics Valparai
-    TOURS_DATA.birdTours[1],   // Bharatpur Keoladeo
-  ]
-
   return (
     <div className="grain" style={{ background: '#080908', color: '#F2F0E8' }}>
       <CustomCursor />
@@ -73,13 +64,7 @@ export default function App() {
         {/* 2. Photo Tours Hero */}
         <ToursHero />
 
-        {/* 3. Featured Flagship Expeditions (Redesigned Editorial Listing) */}
-        <FeaturedTours
-          animalTours={TOURS_DATA.animalTours}
-          birdTours={TOURS_DATA.birdTours}
-          onSelectTour={setSelectedTour}
-          onSelectCategory={setActiveCategory}
-        />
+        {/* 3. Filterable Tour Schedules (2 Distinct Categories: Animal Tracking & Bird Photography) */}
 
         {/* 4. Filterable Tour Schedules (2 Distinct Categories: Animal Tracking & Bird Photography) */}
         <TourCatalog
