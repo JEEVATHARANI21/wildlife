@@ -125,19 +125,33 @@ export default function TourCatalog({
               setActiveCategory && setActiveCategory('animals')
               resetFilters()
             }}
-            className={`p-6 sm:p-8 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between border ${
+            className={`p-6 sm:p-8 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between border group ${
               activeCategory === 'animals'
                 ? 'bg-gradient-to-br from-[#151815] to-[#242923] border-[#D6A85C] shadow-[0_10px_35px_rgba(214,168,92,0.2)] scale-[1.01]'
                 : 'bg-[#151815]/70 border-[#242923] hover:border-[#D6A85C]/50 opacity-80 hover:opacity-100'
             }`}
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal flex items-center gap-3">
-                <span>🐅</span>
-                <span>Wild Photography</span>
-              </span>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden border-2 border-[#D6A85C] shadow-[0_4px_16px_rgba(214,168,92,0.3)] flex-shrink-0 relative group-hover:scale-105 transition-transform bg-[#080908]">
+                  <img
+                    src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=400&q=90&auto=format&fit=crop"
+                    alt="Wild Photography"
+                    className="w-full h-full object-cover object-[70%_center]"
+                  />
+                  <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-black/30" />
+                </div>
+                <div>
+                  <span className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal block leading-tight">
+                    Wild Photography
+                  </span>
+                  <span className="text-[10px] font-sans tracking-widest uppercase text-[#D6A85C] font-semibold">
+                    Big Cats & Mammals
+                  </span>
+                </div>
+              </div>
               {activeCategory === 'animals' && (
-                <span className="w-2.5 h-2.5 rounded-full bg-[#D6A85C] shadow-[0_0_10px_#D6A85C]" />
+                <span className="w-3 h-3 rounded-full bg-[#D6A85C] shadow-[0_0_12px_#D6A85C] border border-[#F2F0E8]/40 flex-shrink-0" />
               )}
             </div>
             <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light">
@@ -152,19 +166,33 @@ export default function TourCatalog({
               setActiveCategory && setActiveCategory('birds')
               resetFilters()
             }}
-            className={`p-6 sm:p-8 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between border ${
+            className={`p-6 sm:p-8 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between border group ${
               activeCategory === 'birds'
                 ? 'bg-gradient-to-br from-[#151815] to-[#242923] border-[#D6A85C] shadow-[0_10px_35px_rgba(214,168,92,0.2)] scale-[1.01]'
                 : 'bg-[#151815]/70 border-[#242923] hover:border-[#D6A85C]/50 opacity-80 hover:opacity-100'
             }`}
           >
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal flex items-center gap-3">
-                <span>🦅</span>
-                <span>Birds Photography</span>
-              </span>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full overflow-hidden border-2 border-[#D6A85C] shadow-[0_4px_16px_rgba(214,168,92,0.3)] flex-shrink-0 relative group-hover:scale-105 transition-transform bg-[#080908]">
+                  <img
+                    src="https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=400&q=90&auto=format&fit=crop"
+                    alt="Birds Photography"
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-black/30" />
+                </div>
+                <div>
+                  <span className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] font-normal block leading-tight">
+                    Birds Photography
+                  </span>
+                  <span className="text-[10px] font-sans tracking-widest uppercase text-[#D6A85C] font-semibold">
+                    Avian & Canopy Hides
+                  </span>
+                </div>
+              </div>
               {activeCategory === 'birds' && (
-                <span className="w-2.5 h-2.5 rounded-full bg-[#D6A85C] shadow-[0_0_10px_#D6A85C]" />
+                <span className="w-3 h-3 rounded-full bg-[#D6A85C] shadow-[0_0_12px_#D6A85C] border border-[#F2F0E8]/40 flex-shrink-0" />
               )}
             </div>
             <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light">

@@ -185,25 +185,37 @@ export default function SeasonCalendarModal({ isOpen, onClose, onSelectTour, ani
             </button>
             <button
               onClick={() => setActiveFilter('animals')}
-              className={`px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
                 activeFilter === 'animals'
                   ? 'bg-[#D6A85C] text-[#080908] font-bold shadow-[0_2px_12px_rgba(214,168,92,0.3)]'
                   : 'bg-[#151815] text-[#A7A59B] hover:text-[#F2F0E8] border border-[#242923]'
               }`}
             >
-              <span>🐅</span>
-              <span>Animal Safaris (5)</span>
+              <span className="w-4 h-4 rounded-full overflow-hidden border border-[#D6A85C]/60 flex-shrink-0 inline-flex">
+                <img
+                  src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=100&q=80&auto=format&fit=crop"
+                  alt="Wild"
+                  className="w-full h-full object-cover"
+                />
+              </span>
+              <span>Wild Safaris (5)</span>
             </button>
             <button
               onClick={() => setActiveFilter('birds')}
-              className={`px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 ${
+              className={`px-4 py-1.5 rounded-full text-xs font-sans uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
                 activeFilter === 'birds'
                   ? 'bg-[#D6A85C] text-[#080908] font-bold shadow-[0_2px_12px_rgba(214,168,92,0.3)]'
                   : 'bg-[#151815] text-[#A7A59B] hover:text-[#F2F0E8] border border-[#242923]'
               }`}
             >
-              <span>🦜</span>
-              <span>Birding Tours (5)</span>
+              <span className="w-4 h-4 rounded-full overflow-hidden border border-[#D6A85C]/60 flex-shrink-0 inline-flex">
+                <img
+                  src="https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=100&q=80&auto=format&fit=crop"
+                  alt="Birds"
+                  className="w-full h-full object-cover"
+                />
+              </span>
+              <span>Birds Tours (5)</span>
             </button>
           </div>
 

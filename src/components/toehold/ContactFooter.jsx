@@ -152,8 +152,8 @@ export default function ContactFooter({ openLegal }) {
                       onChange={(e) => setForm({ ...form, category: e.target.value })}
                       className="w-full py-2.5 px-3 rounded-xl bg-[#080908] border border-[#242923] text-xs text-[#F2F0E8] font-sans focus:outline-none focus:border-[#B87333]"
                     >
-                      <option value="animal" className="bg-[#151815]">🐅 1. Wild Photography</option>
-                      <option value="bird" className="bg-[#151815]">🦅 2. Birds Photography</option>
+                      <option value="animal" className="bg-[#151815]">Wild Photography</option>
+                      <option value="bird" className="bg-[#151815]">Birds Photography</option>
                       <option value="both" className="bg-[#151815]">Both / Custom Expedition</option>
                     </select>
                   </div>

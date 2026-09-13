@@ -136,7 +136,7 @@ export default function AboutView({ onBackToHome, onPlanTrip }) {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             <div className="p-5 rounded-2xl bg-[#080908] border border-[#242923]">
-              <span className="text-2xl mb-3 block">🐅</span>
+              <span className="text-2xl mb-3 block">🐾</span>
               <h3 className="font-serif text-lg text-[#F2F0E8] mb-1.5">Zero Disturbance Tracking</h3>
               <p className="font-sans text-xs text-[#A7A59B] leading-relaxed font-light">
                 We maintain strictly mandated distances and silent engines, letting predators approach our vehicles voluntarily on their natural trajectories.
