@@ -1,4 +1,4 @@
-export default function ToursHero() {
+export default function ToursHero({ onPlanTrip }) {
   return (
     <section className="relative w-full min-h-[92vh] sm:min-h-screen flex items-center overflow-hidden bg-[#080908] select-none">
       {/* Background High-Impact Cinematic Wildlife Photography Layer */}
@@ -26,21 +26,21 @@ export default function ToursHero() {
           <div className="inline-flex items-center gap-2.5 mb-5">
             <span className="w-7 h-[1.5px] bg-[#B87333]" />
             <span className="font-sans text-[10.5px] sm:text-xs tracking-[0.28em] uppercase text-[#D6A85C] font-semibold">
-              WILDLIFE PHOTOGRAPHY EXPEDITIONS
+              WILDLIFE & BIRD PHOTOGRAPHY EXPEDITIONS
             </span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-[5.5rem] font-light text-[#F2F0E8] leading-[1.04] tracking-tight mb-6">
-            <span className="block">Beyond the Map.</span>
+          <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-[5.4rem] font-light text-[#F2F0E8] leading-[1.04] tracking-tight mb-6">
+            <span className="block">Go Where the Wild</span>
             <span className="block italic text-[#D6A85C] font-normal mt-1">
-              Into the Wild.
+              Still Roams.
             </span>
           </h1>
 
           {/* Supporting Text */}
-          <p className="font-sans text-sm sm:text-base md:text-lg text-[#F2F0E8]/85 max-w-xl font-light leading-relaxed mb-9">
-            Small-group wildlife photography expeditions to extraordinary destinations, led by expert naturalists.
+          <p className="font-sans text-sm sm:text-base md:text-lg text-[#F2F0E8]/90 max-w-xl font-light leading-relaxed mb-9">
+            Expert-led wildlife and bird photography tours across India's most extraordinary wildernesses — designed for photographers, birders, and nature lovers who want more than a typical safari.
           </p>
 
           {/* CTA Buttons */}
@@ -48,29 +48,41 @@ export default function ToursHero() {
             {/* Primary CTA */}
             <a
               href="#tours"
-              className="py-4 px-8 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-[#D6A85C] text-[#080908] hover:bg-[#B87333] hover:shadow-[0_6px_30px_rgba(214,168,92,0.4)] hover:scale-[1.02] transition-all duration-300 text-center flex items-center justify-center gap-2 cursor-pointer shadow-xl"
+              className="py-4 px-8 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-[#D6A85C] text-[#080908] hover:bg-[#B87333] hover:shadow-[0_6px_30px_rgba(214,168,92,0.4)] hover:scale-[1.02] transition-all duration-300 text-center flex items-center justify-center gap-2 cursor-pointer shadow-xl whitespace-nowrap"
             >
               <span>EXPLORE EXPEDITIONS</span>
               <span>→</span>
             </a>
 
-            {/* Secondary CTA */}
-            <a
-              href="#tours"
-              className="py-4 px-8 rounded-full font-sans text-xs uppercase tracking-widest font-semibold border border-[#D6A85C]/70 text-[#F2F0E8] hover:border-[#D6A85C] hover:bg-[#D6A85C]/10 transition-all duration-300 text-center flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm"
+            {/* Secondary CTA: Plan My Wild Trip */}
+            <button
+              type="button"
+              onClick={onPlanTrip}
+              className="py-4 px-8 rounded-full font-sans text-xs uppercase tracking-widest font-semibold border border-[#D6A85C]/70 text-[#F2F0E8] hover:border-[#D6A85C] hover:bg-[#D6A85C]/15 transition-all duration-300 text-center flex items-center justify-center gap-2 cursor-pointer backdrop-blur-sm whitespace-nowrap"
             >
-              <span>VIEW 2026–27 SCHEDULES</span>
+              <span>✨ PLAN MY WILD TRIP</span>
               <span>→</span>
-            </a>
+            </button>
           </div>
 
-          {/* Premium Information Line */}
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] sm:text-xs font-sans tracking-[0.2em] uppercase text-[#A7A59B]/90 font-medium">
-            <span>MAX 4 PHOTOGRAPHERS</span>
-            <span className="text-[#B87333] font-bold">•</span>
-            <span>FOREST CORE PERMITS</span>
-            <span className="text-[#B87333] font-bold">•</span>
-            <span>FIELD MENTORING</span>
+          {/* Core Trust & Value Pillars */}
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-x-6 gap-y-3 pt-4 text-[11px] sm:text-xs font-sans tracking-[0.16em] uppercase text-[#F2F0E8]/80 font-medium border-t border-[#242923]/80">
+            <div className="flex items-center gap-2">
+              <span className="text-base">📍</span>
+              <span>India's Premier Wilds</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-base">📷</span>
+              <span>Field Masterclasses</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-base">👥</span>
+              <span>Max 4 / Gypsy</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-base">🌿</span>
+              <span>Ethical Tracking</span>
+            </div>
           </div>
         </div>
       </div>
