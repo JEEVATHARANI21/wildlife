@@ -1,9 +1,9 @@
-export default function FoundersSection({ founders }) {
+export default function FoundersSection({ founders, onViewFullAbout }) {
   return (
     <section id="founders" className="py-24 px-5 sm:px-8 md:px-16 bg-[#151815] border-b border-[#242923]">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 mb-3">
             <span className="w-8 h-[1.5px] bg-[#B87333]" />
             <span className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#D6A85C] font-semibold">
@@ -20,7 +20,7 @@ export default function FoundersSection({ founders }) {
         </div>
 
         {/* The Two Founders Grid - Small & Sleek Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-7 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-7 max-w-5xl mx-auto mb-10">
           {founders.map((founder, idx) => (
             <div
               key={founder.id}
@@ -90,6 +90,20 @@ export default function FoundersSection({ founders }) {
             </div>
           ))}
         </div>
+
+        {/* View Full About Page Button */}
+        {onViewFullAbout && (
+          <div className="text-center">
+            <button
+              type="button"
+              onClick={onViewFullAbout}
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] font-sans text-xs uppercase tracking-widest font-bold hover:shadow-[0_4px_22px_rgba(214,168,92,0.4)] hover:scale-[1.02] transition-all cursor-pointer"
+            >
+              <span>Read Full Founder & Mission Story</span>
+              <span>→</span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )
