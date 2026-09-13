@@ -124,13 +124,12 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
               {/* Card Information */}
               <div className="p-5 flex-1 flex flex-col justify-between space-y-2">
                 <div>
-                  <span className="text-[10px] font-sans tracking-wider uppercase text-[#D6A85C] block mb-0.5">
-                    {photo.location}
+                  <span className="text-[10px] font-sans tracking-wider uppercase text-[#D6A85C] block mb-1 font-semibold">
+                    {photo.category}
                   </span>
                   <h3 className="font-serif text-xl text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors leading-snug">
-                    {photo.title}
+                    {photo.location}
                   </h3>
-                  <p className="font-sans text-xs text-[#A7A59B] italic mt-0.5">{photo.species}</p>
                 </div>
 
                 <div className="pt-3 border-t border-[#242923] flex items-center justify-between text-[10px] font-mono text-[#A7A59B]">
@@ -167,7 +166,7 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
             <div className="lg:w-3/5 bg-[#080908] flex items-center justify-center overflow-hidden min-h-[300px] lg:min-h-[500px]">
               <img
                 src={activePhoto.src}
-                alt={activePhoto.title}
+                alt={activePhoto.location}
                 className="w-full h-full object-contain max-h-[75vh]"
               />
             </div>
@@ -177,14 +176,11 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
               <div className="space-y-4">
                 <div>
                   <span className="px-2.5 py-0.5 rounded-full bg-[#242923] text-[#D6A85C] text-[9.5px] font-sans tracking-widest uppercase font-semibold">
-                    {activePhoto.location}
+                    {activePhoto.category}
                   </span>
                   <h2 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] mt-2 leading-tight">
-                    {activePhoto.title}
+                    {activePhoto.location}
                   </h2>
-                  <p className="font-sans text-xs text-[#A7A59B] italic mt-1">
-                    {activePhoto.species}
-                  </p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-[#080908]/80 border border-[#242923] space-y-2 text-xs">
@@ -194,11 +190,6 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
                   <div className="font-mono text-[#F2F0E8]/90 text-[11px]">
                     {activePhoto.gear}
                   </div>
-                </div>
-
-                <div className="space-y-1 text-xs sm:text-sm text-[#A7A59B] font-light leading-relaxed">
-                  <span className="text-[#F2F0E8] font-medium block">Field Notes:</span>
-                  <p>{activePhoto.caption}</p>
                 </div>
               </div>
 
@@ -210,7 +201,7 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
                   }}
                   className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] font-sans text-xs uppercase tracking-wider font-bold text-center cursor-pointer hover:brightness-110 transition-all"
                 >
-                  Plan Expedition to Photograph This Subject →
+                  Plan Expedition to This Location →
                 </button>
               </div>
             </div>

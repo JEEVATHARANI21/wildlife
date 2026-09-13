@@ -302,22 +302,14 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                   }`}
                 >
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="text-[9px] font-sans tracking-widest uppercase font-semibold text-[#D6A85C]">
-                      {item.location}
-                    </span>
-                    <span className="text-[#A7A59B]/50 text-[10px]">•</span>
-                    <span className="text-[9.5px] font-sans tracking-wider text-[#A7A59B] uppercase">
+                    <span className="text-[9.5px] font-sans tracking-widest uppercase font-semibold text-[#D6A85C]">
                       {item.category}
                     </span>
                   </div>
 
                   <h3 className="font-serif text-lg sm:text-2xl md:text-[26px] text-[#F2F0E8] font-medium leading-tight group-hover:text-[#D6A85C] transition-colors">
-                    {item.title}
+                    {item.location}
                   </h3>
-
-                  <p className="font-sans text-[11px] sm:text-xs text-[#A7A59B] italic mt-0.5 line-clamp-1">
-                    {item.species}
-                  </p>
 
                   {/* Optical Specs & Action for Active Center Card */}
                   {isCenter && (
@@ -381,7 +373,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                       ? 'w-10 sm:w-12 bg-[#D6A85C] shadow-[0_0_12px_rgba(214,168,92,0.5)]'
                       : 'w-2.5 bg-[#242923] hover:bg-[#3a4239]'
                   }`}
-                  title={img.title}
+                  title={img.location}
                   aria-label={`Go to slide ${i + 1}`}
                 />
               )
@@ -390,9 +382,9 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
 
           {/* Active Frame Info */}
           <div className="flex items-center gap-2 text-center sm:text-right">
-            <span className="text-[11px] font-sans text-[#A7A59B]">Featured Frame:</span>
+            <span className="text-[11px] font-sans text-[#A7A59B]">Featured Location:</span>
             <span className="text-xs font-sans font-semibold tracking-wide text-[#D6A85C]">
-              {activeItem.title} · {activeItem.location}
+              {activeItem.location}
             </span>
           </div>
         </div>
