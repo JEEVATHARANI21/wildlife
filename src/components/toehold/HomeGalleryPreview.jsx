@@ -1,6 +1,7 @@
-﻿import { GALLERY_IMAGES } from '../../data/galleryData'
+import { GALLERY_IMAGES } from '../../data/galleryData'
 
-export default function HomeGalleryPreview({ onNavigateToGallery }) {
+export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGallery }) {
+  const handleViewGallery = onViewFullGallery || onNavigateToGallery
   // Take exactly 5 featured images for the home preview
   const previewImages = GALLERY_IMAGES.filter((img) => img.featuredOnHome).slice(0, 5)
 
@@ -29,7 +30,7 @@ export default function HomeGalleryPreview({ onNavigateToGallery }) {
           </div>
 
           <button
-            onClick={onNavigateToGallery}
+            onClick={handleViewGallery}
             className="self-start sm:self-end px-5 py-3 rounded-full bg-[#151815] border border-[#242923] hover:border-[#D6A85C] hover:bg-[#D6A85C] text-[#F2F0E8] hover:text-[#080908] font-sans text-xs uppercase tracking-wider font-semibold transition-all duration-300 shadow-xl flex items-center gap-2 cursor-pointer group"
           >
             <span>VIEW FULL GALLERY</span>
@@ -42,7 +43,7 @@ export default function HomeGalleryPreview({ onNavigateToGallery }) {
           {/* Main Hero Card (takes 7 cols on desktop) */}
           {previewImages[0] && (
             <div
-              onClick={onNavigateToGallery}
+              onClick={handleViewGallery}
               className="md:col-span-7 group relative aspect-[16/10] sm:aspect-[16/11] rounded-3xl overflow-hidden bg-[#151815] border border-[#242923] hover:border-[#D6A85C]/70 transition-all duration-500 shadow-2xl cursor-pointer"
             >
               <img
@@ -76,7 +77,7 @@ export default function HomeGalleryPreview({ onNavigateToGallery }) {
             {previewImages.slice(1, 3).map((item) => (
               <div
                 key={item.id}
-                onClick={onNavigateToGallery}
+                onClick={handleViewGallery}
                 className="group relative aspect-[16/10] sm:aspect-[16/10] rounded-3xl overflow-hidden bg-[#151815] border border-[#242923] hover:border-[#D6A85C]/70 transition-all duration-500 shadow-2xl cursor-pointer"
               >
                 <img
@@ -103,7 +104,7 @@ export default function HomeGalleryPreview({ onNavigateToGallery }) {
           {previewImages.slice(3, 5).map((item) => (
             <div
               key={item.id}
-              onClick={onNavigateToGallery}
+              onClick={handleViewGallery}
               className="md:col-span-6 group relative aspect-[16/9] rounded-3xl overflow-hidden bg-[#151815] border border-[#242923] hover:border-[#D6A85C]/70 transition-all duration-500 shadow-2xl cursor-pointer"
             >
               <img
@@ -144,7 +145,7 @@ export default function HomeGalleryPreview({ onNavigateToGallery }) {
           </div>
 
           <button
-            onClick={onNavigateToGallery}
+            onClick={handleViewGallery}
             className="py-3 px-7 rounded-full bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] font-sans text-xs uppercase tracking-wider font-bold hover:shadow-[0_4px_20px_rgba(214,168,92,0.4)] transition-all cursor-pointer whitespace-nowrap"
           >
             View Full Gallery ({GALLERY_IMAGES.length}+ Photos) →

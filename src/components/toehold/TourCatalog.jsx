@@ -73,7 +73,7 @@ export default function TourCatalog({
   ]
 
   return (
-    <section id="tours" className="py-24 sm:py-28 bg-[#080908] border-b border-[#242923] select-none">
+    <section id="destinations" className="py-24 sm:py-28 bg-[#080908] border-b border-[#242923] select-none">
       <div className="max-w-[1380px] mx-auto px-5 sm:px-8 md:px-12 lg:px-16">
         {/* 1. Spacious Editorial Hero / Intro */}
         <div className="relative text-center max-w-3xl mx-auto mb-16">
