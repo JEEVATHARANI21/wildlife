@@ -131,9 +131,6 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
                     {photo.title}
                   </h3>
                   <p className="font-sans text-xs text-[#A7A59B] italic mt-0.5">{photo.species}</p>
-                  <p className="font-sans text-[11px] text-[#A7A59B] font-light leading-relaxed mt-2 line-clamp-2">
-                    {photo.caption}
-                  </p>
                 </div>
 
                 <div className="pt-3 border-t border-[#242923] flex items-center justify-between text-[10px] font-mono text-[#A7A59B]">
