@@ -7,15 +7,10 @@ import ToeholdNavbar from './components/toehold/ToeholdNavbar'
 import ToursHero from './components/toehold/ToursHero'
 import TourCatalog from './components/toehold/TourCatalog'
 import FoundersSection from './components/toehold/FoundersSection'
-import ExpeditionDifference from './components/toehold/ExpeditionDifference'
 import Testimonials from './components/toehold/Testimonials'
-import InstagramFeed from './components/toehold/InstagramFeed'
 import ContactFooter from './components/toehold/ContactFooter'
 import SeasonCalendarModal from './components/toehold/SeasonCalendarModal'
-import ChooseYourWild from './components/toehold/ChooseYourWild'
 import PlanExpeditionModal from './components/toehold/PlanExpeditionModal'
-import SpeciesExplorer from './components/toehold/SpeciesExplorer'
-import EssentialGuideFAQ from './components/toehold/EssentialGuideFAQ'
 import HomeGalleryPreview from './components/toehold/HomeGalleryPreview'
 
 import FullGalleryView from './components/views/FullGalleryView'
@@ -151,16 +146,22 @@ export default function App() {
 
       {currentView === 'home' && (
         <main>
-          {/* 2. Photo Tours Hero (Page 1) */}
+          {/* 1. Home Page / Hero */}
           <ToursHero onPlanTrip={() => setPlanTripModalOpen(true)} />
 
-          {/* 3. Choose Your Wild (Strategic 3-Path Expedition Gateway) */}
-          <ChooseYourWild
-            onSelectCategory={setActiveCategory}
+          {/* 2. Founder Section (Page 2 Preview -> Click button to open full Founder Page) */}
+          <FoundersSection
+            founders={TOURS_DATA.founders}
+            onViewFullAbout={() => navigateTo('about')}
+          />
+
+          {/* 3. Gallery (4 to 5 images + "View Full Gallery" button that redirects to full gallery page) */}
+          <HomeGalleryPreview
+            onViewFullGallery={() => navigateTo('gallery')}
             onPlanTrip={() => setPlanTripModalOpen(true)}
           />
 
-          {/* 4. Tracking Package Tour Itineraries (Sample Cards -> Click redirects to dedicated fototrails365 itinerary view) */}
+          {/* 4. Tracking Package Tour Itineraries (sample details only; clicking redirects to fototrails365 itinerary page) */}
           <TourCatalog
             animalTours={TOURS_DATA.animalTours}
             birdTours={TOURS_DATA.birdTours}
@@ -170,31 +171,10 @@ export default function App() {
             onOpenCalendar={() => setCalendarOpen(true)}
           />
 
-          {/* 5. Target Species Showcase (Movable cards) */}
-          <SpeciesExplorer onSelectTour={handleOpenItinerary} />
-
-          {/* 6. Gallery: 4 to 5 images + "View Full Gallery" button that redirects to dedicated page */}
-          <HomeGalleryPreview
-            onViewFullGallery={() => navigateTo('gallery')}
-            onPlanTrip={() => setPlanTripModalOpen(true)}
-          />
-
-          {/* 7. The 2 Founders of VM Wild Expeditions (Page 2 preview) */}
-          <FoundersSection
-            founders={TOURS_DATA.founders}
-            onViewFullAbout={() => navigateTo('about')}
-          />
-
-          {/* 8. The VM Wild Edge / Why Travel With Us */}
-          <ExpeditionDifference features={TOURS_DATA.difference} />
-
-          {/* 9. Customer Reviews / Guest Testimonials (Page 5) */}
+          {/* 5. Customer Reviews */}
           <Testimonials testimonials={TOURS_DATA.testimonials} />
 
-          {/* 10. Instagram Live Feed Grid */}
-          <InstagramFeed posts={TOURS_DATA.instagramPosts} />
-
-          {/* 11. Ready to Plan / Contact Page (Page 6) */}
+          {/* 6. Ready to Plan / Contact Page */}
           <ContactFooter
             openLegal={openLegal}
             onPlanTrip={() => setPlanTripModalOpen(true)}
