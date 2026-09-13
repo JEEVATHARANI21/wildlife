@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-export default function ToeholdNavbar({ onSelectCategory }) {
+export default function ToeholdNavbar({ onSelectCategory, onOpenCalendar }) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState(null)
@@ -40,10 +40,27 @@ export default function ToeholdNavbar({ onSelectCategory }) {
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const handleOpenCalendar = () => {
+    setActiveDropdown(null)
+    setMobileMenuOpen(false)
+    if (onOpenCalendar) {
+      onOpenCalendar()
+    } else {
+      scrollTo('tours')
+    }
+  }
+
+  const handleSchedules = () => {
+    setActiveDropdown(null)
+    setMobileMenuOpen(false)
+    const el = document.getElementById('tours')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
+  }
+
   const photoToursMenu = [
     { label: 'All Photography Expeditions', action: () => scrollTo('tours') },
-    { label: 'Upcoming Expedition Schedules', action: () => scrollTo('tours') },
-    { label: '2026–2027 Season Calendar', action: () => scrollTo('tours') },
+    { label: 'Upcoming Expedition Schedules', action: handleSchedules },
+    { label: '2026–2027 Season Calendar', action: handleOpenCalendar },
   ]
 
   const animalToursMenu = [
@@ -70,40 +87,40 @@ export default function ToeholdNavbar({ onSelectCategory }) {
           : 'bg-gradient-to-b from-[#080908]/90 via-[#080908]/40 to-transparent py-4 sm:py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12 flex items-center justify-between">
+      <div className="max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 flex items-center justify-between gap-4">
         {/* Left: Compact & Elegant VM Wild Expeditions Logo */}
         <a
           href="#"
-          className="flex items-center gap-3 group no-underline"
+          className="flex items-center gap-3 group no-underline flex-shrink-0"
           title="VM Wild Expeditions — Beyond the Map. Into the Wild."
         >
           <img
             src="/logo-clean.png"
             alt="VM Wild Expeditions Logo"
-            className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md"
+            className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md flex-shrink-0"
           />
-          <div className="hidden lg:flex flex-col border-l border-[#242923] pl-3 py-0.5">
-            <span className="font-serif text-[13px] tracking-[0.18em] uppercase text-[#D6A85C] font-semibold leading-tight">
+          <div className="hidden lg:flex flex-col border-l border-[#242923] pl-3 py-0.5 flex-shrink-0">
+            <span className="font-serif text-[13px] tracking-[0.18em] uppercase text-[#D6A85C] font-semibold leading-tight whitespace-nowrap">
               VM Wild Expeditions
             </span>
-            <span className="font-sans text-[8.5px] tracking-[0.24em] uppercase text-[#B87333] font-light mt-0.5">
+            <span className="font-sans text-[8.5px] tracking-[0.24em] uppercase text-[#B87333] font-light mt-0.5 whitespace-nowrap">
               Beyond the Map. Into the Wild.
             </span>
           </div>
         </a>
 
-        {/* Center Navigation with Subtle Dropdowns */}
-        <nav className="hidden xl:flex items-center gap-8 text-[11.5px] font-sans tracking-[0.14em] uppercase font-medium">
+        {/* Center Navigation: Clean, Simple & Attractive Words on One Line */}
+        <nav className="hidden xl:flex items-center gap-6 2xl:gap-8 text-[12px] font-sans tracking-[0.14em] uppercase font-medium">
           {/* PHOTO TOURS ▾ */}
           <div
-            className="relative"
+            className="relative flex-shrink-0"
             onMouseEnter={() => handleMouseEnter('photo')}
             onMouseLeave={handleMouseLeave}
           >
             <button
               type="button"
               onClick={() => scrollTo('tours')}
-              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors cursor-pointer whitespace-nowrap"
             >
               <span>PHOTO TOURS</span>
               <svg
@@ -121,13 +138,13 @@ export default function ToeholdNavbar({ onSelectCategory }) {
               </svg>
             </button>
             {activeDropdown === 'photo' && (
-              <div className="absolute top-full left-0 pt-2 min-w-[240px] animate-fadeIn z-50">
+              <div className="absolute top-full left-0 pt-2 min-w-[250px] animate-fadeIn z-50">
                 <div className="p-2 rounded-2xl bg-[#151815]/98 backdrop-blur-xl border border-[#242923] shadow-[0_20px_50px_rgba(0,0,0,0.9)] space-y-1">
                   {photoToursMenu.map((item, idx) => (
                     <button
                       key={idx}
                       onClick={item.action}
-                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block"
+                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block whitespace-nowrap"
                     >
                       {item.label}
                     </button>
@@ -137,18 +154,18 @@ export default function ToeholdNavbar({ onSelectCategory }) {
             )}
           </div>
 
-          {/* ANIMAL EXPEDITIONS ▾ */}
+          {/* ANIMALS ▾ */}
           <div
-            className="relative"
+            className="relative flex-shrink-0"
             onMouseEnter={() => handleMouseEnter('animals')}
             onMouseLeave={handleMouseLeave}
           >
             <button
               type="button"
               onClick={() => handleCategoryNav('animals')}
-              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors cursor-pointer whitespace-nowrap"
             >
-              <span>ANIMAL EXPEDITIONS</span>
+              <span>ANIMALS</span>
               <svg
                 className={`w-3 h-3 text-[#B87333] transition-transform duration-200 ${
                   activeDropdown === 'animals' ? 'rotate-180 text-[#D6A85C]' : ''
@@ -170,7 +187,7 @@ export default function ToeholdNavbar({ onSelectCategory }) {
                     <button
                       key={idx}
                       onClick={item.action}
-                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block"
+                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block whitespace-nowrap"
                     >
                       {item.label}
                     </button>
@@ -180,18 +197,18 @@ export default function ToeholdNavbar({ onSelectCategory }) {
             )}
           </div>
 
-          {/* BIRDING TOURS ▾ */}
+          {/* BIRDS ▾ */}
           <div
-            className="relative"
+            className="relative flex-shrink-0"
             onMouseEnter={() => handleMouseEnter('birds')}
             onMouseLeave={handleMouseLeave}
           >
             <button
               type="button"
               onClick={() => handleCategoryNav('birds')}
-              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors cursor-pointer whitespace-nowrap"
             >
-              <span>BIRDING TOURS</span>
+              <span>BIRDS</span>
               <svg
                 className={`w-3 h-3 text-[#B87333] transition-transform duration-200 ${
                   activeDropdown === 'birds' ? 'rotate-180 text-[#D6A85C]' : ''
@@ -213,7 +230,7 @@ export default function ToeholdNavbar({ onSelectCategory }) {
                     <button
                       key={idx}
                       onClick={item.action}
-                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block"
+                      className="w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-sans normal-case text-[#F2F0E8]/90 hover:text-[#D6A85C] hover:bg-[#242923]/60 transition-all cursor-pointer block whitespace-nowrap"
                     >
                       {item.label}
                     </button>
@@ -223,39 +240,39 @@ export default function ToeholdNavbar({ onSelectCategory }) {
             )}
           </div>
 
-          {/* THE DIFFERENCE */}
+          {/* WHY US */}
           <a
             href="#difference"
-            className="py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors"
+            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
           >
-            THE DIFFERENCE
+            WHY US
           </a>
 
-          {/* TESTIMONIALS */}
+          {/* REVIEWS */}
           <a
             href="#testimonials"
-            className="py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors"
+            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
           >
-            TESTIMONIALS
+            REVIEWS
           </a>
 
           {/* CONTACT */}
           <a
             href="#contact"
-            className="py-2 text-[#F2F0E8]/85 hover:text-[#D6A85C] transition-colors"
+            className="py-2 text-[#F2F0E8]/90 hover:text-[#D6A85C] transition-colors whitespace-nowrap flex-shrink-0"
           >
             CONTACT
           </a>
         </nav>
 
-        {/* Right: Premium Rounded Gold Button */}
-        <div className="hidden sm:flex items-center gap-4">
+        {/* Right: Attractive Gold Pill Button */}
+        <div className="hidden sm:flex items-center flex-shrink-0">
           <a
             href="#tours"
-            className="py-2.5 px-6 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-[#D6A85C] text-[#080908] hover:bg-[#B87333] hover:shadow-[0_4px_25px_rgba(214,168,92,0.4)] hover:scale-[1.03] transition-all duration-300 cursor-pointer flex items-center gap-2"
+            className="py-2.5 px-5 rounded-full font-sans text-xs uppercase tracking-wider font-semibold bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] hover:shadow-[0_4px_22px_rgba(214,168,92,0.45)] hover:scale-[1.02] hover:brightness-105 transition-all duration-300 cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
           >
-            <span>BOOK AN EXPEDITION</span>
-            <span>→</span>
+            <span>BOOK NOW</span>
+            <span className="text-sm font-bold">→</span>
           </a>
         </div>
 
@@ -308,39 +325,57 @@ export default function ToeholdNavbar({ onSelectCategory }) {
         </div>
 
         <div className="flex flex-col gap-3 py-6 my-auto text-left">
-          <button
-            onClick={() => scrollTo('tours')}
-            className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
-          >
-            <span>Photo Tours</span>
-            <span className="text-xs font-sans text-[#B87333]">01 →</span>
-          </button>
+          <div className="border-b border-[#242923]/60 pb-2">
+            <button
+              onClick={() => scrollTo('tours')}
+              className="w-full py-1.5 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
+            >
+              <span>Photo Tours</span>
+              <span className="text-xs font-sans text-[#B87333]">01 →</span>
+            </button>
+            <div className="flex flex-col gap-2 mt-2 pl-3 pb-1">
+              <button
+                onClick={handleSchedules}
+                className="text-left text-xs font-sans text-[#A7A59B] hover:text-[#D6A85C] flex items-center gap-2"
+              >
+                <span>🗓</span>
+                <span>Upcoming Expedition Schedules</span>
+              </button>
+              <button
+                onClick={handleOpenCalendar}
+                className="text-left text-xs font-sans text-[#D6A85C] hover:text-[#B87333] flex items-center gap-2 font-medium"
+              >
+                <span>📅</span>
+                <span>2026–2027 Season Calendar (10 Tours)</span>
+              </button>
+            </div>
+          </div>
           <button
             onClick={() => handleCategoryNav('animals')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
-            <span>🐅 Animal Expeditions</span>
+            <span>🐅 Animals</span>
             <span className="text-xs font-sans text-[#B87333]">02 →</span>
           </button>
           <button
             onClick={() => handleCategoryNav('birds')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
-            <span>🦅 Birding Tours</span>
+            <span>🦜 Birds</span>
             <span className="text-xs font-sans text-[#B87333]">03 →</span>
           </button>
           <button
             onClick={() => scrollTo('difference')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
-            <span>The Difference</span>
+            <span>Why Us</span>
             <span className="text-xs font-sans text-[#B87333]">04 →</span>
           </button>
           <button
             onClick={() => scrollTo('testimonials')}
             className="py-2.5 border-b border-[#242923]/60 font-serif text-2xl text-[#F2F0E8] hover:text-[#D6A85C] flex items-center justify-between text-left"
           >
-            <span>Testimonials</span>
+            <span>Reviews</span>
             <span className="text-xs font-sans text-[#B87333]">05 →</span>
           </button>
           <button
@@ -356,9 +391,9 @@ export default function ToeholdNavbar({ onSelectCategory }) {
           <a
             href="#tours"
             onClick={() => setMobileMenuOpen(false)}
-            className="py-3 px-6 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-[#D6A85C] text-[#080908] text-center"
+            className="py-3 px-6 rounded-full font-sans text-xs uppercase tracking-widest font-bold bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] text-center"
           >
-            BOOK AN EXPEDITION →
+            BOOK NOW →
           </a>
           <a
             href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20to%20inquire%20about%20VM%20Wild%20Expeditions%20Photo%20Tours."

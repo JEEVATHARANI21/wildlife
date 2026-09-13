@@ -29,6 +29,7 @@ export default function TourCatalog({
   activeCategory = 'animals',
   setActiveCategory,
   onSelectTour,
+  onOpenCalendar,
 }) {
   const [destinationFilter, setDestinationFilter] = useState('all')
   const [monthFilter, setMonthFilter] = useState('all')
@@ -76,13 +77,22 @@ export default function TourCatalog({
       <div className="max-w-[1380px] mx-auto px-5 sm:px-8 md:px-12 lg:px-16">
         {/* 1. Spacious Editorial Hero / Intro */}
         <div className="relative text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2.5 mb-3.5 select-none">
+          <button
+            type="button"
+            onClick={onOpenCalendar}
+            className="inline-flex items-center gap-2.5 mb-3.5 select-none group cursor-pointer"
+            title="Click to view full 2026-2027 Season Calendar"
+          >
             <span className="w-7 h-[1.5px] bg-[#B87333]" />
-            <span className="font-sans text-[10.5px] tracking-[0.28em] uppercase text-[#D6A85C] font-semibold">
-              2026–27 EXPEDITION CALENDAR
+            <span className="font-sans text-[10.5px] tracking-[0.28em] uppercase text-[#D6A85C] group-hover:text-[#F2F0E8] font-semibold transition-colors flex items-center gap-1.5">
+              <span>📅</span>
+              <span>2026–27 EXPEDITION CALENDAR</span>
+              <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#D6A85C]/20 border border-[#D6A85C]/40 group-hover:bg-[#D6A85C] group-hover:text-[#080908] transition-all">
+                VIEW DEPARTURES →
+              </span>
             </span>
             <span className="w-7 h-[1.5px] bg-[#B87333]" />
-          </div>
+          </button>
 
           <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#F2F0E8] font-light leading-tight mb-4">
             Photo Tour <span className="italic text-[#D6A85C] font-normal">Schedules</span>
@@ -91,6 +101,19 @@ export default function TourCatalog({
           <p className="font-sans text-xs sm:text-sm md:text-base text-[#A7A59B] font-light leading-relaxed max-w-2xl mx-auto">
             Choose your subject, select your season, and join a small-group expedition designed around exceptional wildlife encounters and photography opportunities.
           </p>
+
+          {/* Quick Calendar Modal Trigger */}
+          <div className="mt-5 flex items-center justify-center">
+            <button
+              type="button"
+              onClick={onOpenCalendar}
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#151815] border border-[#D6A85C]/40 hover:border-[#D6A85C] text-[#D6A85C] hover:text-[#F2F0E8] text-xs font-sans uppercase tracking-wider font-semibold transition-all hover:bg-[#242923] shadow-md cursor-pointer group"
+            >
+              <span>📅</span>
+              <span>Open 2026–2027 Season Calendar</span>
+              <span className="text-[#A7A59B] group-hover:text-[#D6A85C] transition-colors">(10 Confirmed Departures) →</span>
+            </button>
+          </div>
         </div>
 
         {/* 2. Large Category Selector: Two Prominent Luxury Cards */}
