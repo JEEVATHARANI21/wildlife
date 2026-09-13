@@ -23,6 +23,20 @@ const SHORT_DESCRIPTIONS = {
     'Thousands of Greater Flamingos, Desert Foxes, and hunting harriers across the surreal white salt desert.',
 }
 
+const getCardTitle = (tour) => {
+  if (tour.id === 'tour-ranthambhore-solstice') return 'Ranthambore Tiger Safari'
+  if (tour.id === 'tour-tadoba-feline') return 'Corbett Tiger Safari'
+  if (tour.id === 'tour-jawai-granite') return 'Jawai Leopard Safari'
+  if (tour.id === 'tour-kabini-viceroy') return 'Kabini Leopard Safari'
+  if (tour.id === 'tour-bandipur-primeval') return 'Bandipur Tiger Safari'
+  if (tour.id === 'tour-western-ghats-shola') return 'Western Ghats Hornbill Safari'
+  if (tour.id === 'tour-bharatpur-odyssey') return 'Bharatpur Wetland Safari'
+  if (tour.id === 'tour-thattekad-munnar') return 'Thattekad Rainforest Safari'
+  if (tour.id === 'tour-sattal-pangot') return 'Himalayan Mountain Birds Safari'
+  if (tour.id === 'tour-kutch-flamingos') return 'Kutch Flamingo Safari'
+  return tour.packageName || tour.title
+}
+
 export default function TourCatalog({
   animalTours = [],
   birdTours = [],
@@ -52,6 +66,18 @@ export default function TourCatalog({
       if (!tour.status.toLowerCase().includes(availabilityFilter.toLowerCase())) return false
     }
     return true
+  })
+
+  // Priority order matching reference design (Ranthambore first, then Corbett, then Jawai)
+  const sortedTours = [...filteredTours].sort((a, b) => {
+    const priority = {
+      'tour-ranthambhore-solstice': 1,
+      'tour-tadoba-feline': 2,
+      'tour-jawai-granite': 3,
+      'tour-kabini-viceroy': 4,
+      'tour-bandipur-primeval': 5,
+    }
+    return (priority[a.id] || 99) - (priority[b.id] || 99)
   })
 
   const hasActiveFilters =
@@ -317,123 +343,87 @@ export default function TourCatalog({
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-16 max-w-6xl mx-auto">
-            {filteredTours.map((tour) => {
-              const shortDesc =
-                SHORT_DESCRIPTIONS[tour.id] ||
-                tour.overview?.split('.')[0] + '.' ||
-                'Exclusive wildlife photography masterclass led by experienced field naturalists.'
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 mb-16 max-w-6xl mx-auto">
+            {sortedTours.map((tour, index) => {
+              const displayTitle = getCardTitle(tour)
+              const expeditionBadge = activeCategory === 'animals' ? 'Wild Expedition' : 'Bird Expedition'
 
               return (
                 <article
                   key={tour.id}
                   onClick={() => onSelectTour && onSelectTour(tour)}
-                  className="group relative rounded-xl overflow-hidden bg-[#151815] border border-[#242923] hover:border-[#D6A85C] transition-all duration-300 shadow-lg cursor-pointer flex flex-col justify-between hover:-translate-y-0.5"
+                  className="group relative rounded-[28px] overflow-hidden bg-white shadow-2xl hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)] transition-all duration-400 cursor-pointer flex flex-col justify-between border border-white/20 hover:-translate-y-1.5"
                 >
-                  <div>
-                    {/* 1. Sleek Compact Wildlife Photograph */}
-                    <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#080908]">
-                      <img
-                        src={tour.heroImage}
-                        alt={tour.packageName || tour.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out brightness-[0.92] group-hover:brightness-100"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#151815] via-transparent to-transparent pointer-events-none" />
+                  {/* 1. Upper Wildlife Photo Area with Overlay Badges and Title */}
+                  <div className="relative w-full aspect-[4/3] overflow-hidden bg-[#0c120e]">
+                    <img
+                      src={tour.heroImage}
+                      alt={displayTitle}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out brightness-[0.95] group-hover:brightness-100"
+                      loading="lazy"
+                    />
 
-                      {/* Single Subtle Availability Badge */}
-                      <div className="absolute top-2 right-2 pointer-events-none">
-                        <span className="px-2 py-0.5 rounded-full bg-[#080908]/85 backdrop-blur-md text-[8px] font-sans tracking-wider uppercase font-semibold text-[#D6A85C] border border-[#D6A85C]/35 shadow-md flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#D6A85C] animate-pulse" />
-                          <span>{tour.status || 'OPEN FOR BOOKING'}</span>
-                        </span>
-                      </div>
-                    </div>
+                    {/* Shading gradient for crisp title legibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
 
-                    {/* Card Body - Small & Sleek */}
-                    <div className="p-3.5 sm:p-4 space-y-2 text-left">
-                      {/* Location */}
-                      <div className="text-[9px] font-sans tracking-[0.16em] uppercase text-[#D6A85C] font-semibold flex items-center gap-1.5">
-                        <span>📍</span>
-                        <span className="truncate">{tour.destination}</span>
-                      </div>
-
-                      {/* Package Name */}
-                      <h3 className="font-serif text-lg sm:text-[19px] text-[#F2F0E8] group-hover:text-[#D6A85C] transition-colors leading-snug font-normal">
-                        {tour.packageName || tour.title}
-                      </h3>
-
-                      {/* Short Description (1-2 lines) */}
-                      <p className="font-sans text-[11px] text-[#A7A59B] font-light leading-relaxed line-clamp-2">
-                        {shortDesc}
-                      </p>
-
-                      {/* Target Species */}
-                      <div className="pt-1.5 border-t border-[#242923]/60">
-                        <span className="text-[8.5px] font-sans uppercase tracking-widest text-[#D6A85C]/80 font-semibold block mb-0.5">
-                          TARGET SPECIES
-                        </span>
-                        <span className="font-sans text-[10.5px] text-[#F2F0E8] font-medium block truncate">
-                          {tour.targetSpeciesLine ||
-                            (tour.targetSpecies && tour.targetSpecies.slice(0, 3).join(' · ')) ||
-                            'Apex Predators & Rare Endemics'}
-                        </span>
-                      </div>
-
-                      {/* Trip Information */}
-                      <div className="flex items-center gap-2 text-[10.5px] font-sans text-[#A7A59B] pt-0.5">
-                        <span>📅</span>
-                        <span>{tour.dateRange}</span>
-                        <span className="text-[#242923]">•</span>
-                        <span>{tour.duration}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Pricing & Actions Footer - Small & Compact */}
-                  <div className="p-3.5 sm:p-4 pt-2.5 border-t border-[#242923] bg-[#121412] space-y-2.5">
-                    <div className="flex items-baseline justify-between">
-                      <div>
-                        <span className="text-[8.5px] font-sans uppercase tracking-wider text-[#A7A59B] block">
-                          ALL-INCLUSIVE FROM
-                        </span>
-                        <div className="flex items-baseline gap-1 text-[#F2F0E8]">
-                          <span className="font-serif text-lg sm:text-xl font-light text-[#D6A85C]">
-                            ₹XX,XXX
-                          </span>
-                          <span className="text-[9px] font-sans text-[#A7A59B] ml-1">(Contact for Quote)</span>
-                        </div>
-                      </div>
-
-                      <span className="text-[8.5px] font-sans text-[#D6A85C] bg-[#1e221d] px-2 py-0.5 rounded-full border border-[#B87333]/30 font-medium">
-                        Core Permits Incl.
+                    {/* Top Left Badge: Wild / Bird Expedition */}
+                    <div className="absolute top-4 left-4 z-10 pointer-events-none">
+                      <span className="px-3.5 py-1.5 rounded-full bg-white/95 text-[#112419] font-sans text-[11px] font-semibold tracking-wide shadow-md backdrop-blur-sm">
+                        {expeditionBadge}
                       </span>
                     </div>
 
-                    {/* Dual Action Buttons */}
-                    <div className="grid grid-cols-2 gap-2 pt-0.5">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          onSelectTour && onSelectTour(tour)
-                        }}
-                        className="py-2 px-2 rounded-lg border border-[#242923] text-[10px] font-sans uppercase tracking-wider text-[#F2F0E8] hover:border-[#D6A85C] hover:text-[#D6A85C] transition-all cursor-pointer text-center font-medium bg-[#080908]"
-                      >
-                        VIEW ITINERARY
-                      </button>
-
-                      <a
-                        href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20inquiring%20about%20the%20${encodeURIComponent(tour.packageName || tour.title)}%20(${tour.destination})%20Expedition%20scheduled%20for%20${encodeURIComponent(tour.dateRange)}.`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="py-2 px-2 rounded-lg bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] text-[10px] font-sans uppercase tracking-wider font-bold text-center flex items-center justify-center gap-1 hover:brightness-110 hover:shadow-[0_4px_14px_rgba(214,168,92,0.35)] transition-all cursor-pointer"
-                      >
-                        <span>ENQUIRE</span>
-                        <span className="group-hover:translate-x-0.5 transition-transform">→</span>
-                      </a>
+                    {/* Top Right Circular Badge: 4 (Max 4 Photographers per vehicle) */}
+                    <div className="absolute top-4 right-4 z-10 pointer-events-none">
+                      <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/95 text-[#8c6b2d] font-sans font-bold text-xs sm:text-sm flex items-center justify-center shadow-md backdrop-blur-sm">
+                        4
+                      </span>
                     </div>
+
+                    {/* Bottom Title Overlay on Photo */}
+                    <div className="absolute bottom-4 left-5 right-5 z-10 text-left pointer-events-none">
+                      <h3 className="font-serif text-xl sm:text-[23px] text-white font-normal leading-snug drop-shadow-md">
+                        {displayTitle}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* 2. Lower Body: Clean White with 2 Signature Action Buttons */}
+                  <div className="p-5 sm:p-6 bg-white space-y-3.5">
+                    {/* Button 1: VIEW ITINERARY with dropdown triangle */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onSelectTour && onSelectTour(tour)
+                      }}
+                      className={`w-full py-3.5 px-6 rounded-full font-sans text-xs uppercase tracking-wider font-bold flex items-center justify-between transition-all duration-300 cursor-pointer border shadow-sm group/btn ${
+                        index === 0
+                          ? 'bg-[#0055c4] text-white border-[#0055c4] hover:bg-[#00429e]'
+                          : 'bg-[#F2F4F2] text-[#1c2e21] border-gray-200/60 hover:bg-[#0055c4] hover:text-white hover:border-[#0055c4]'
+                      }`}
+                    >
+                      <span>VIEW ITINERARY</span>
+                      <span className="w-5 h-5 rounded-full bg-black/5 group-hover/btn:bg-white/20 flex items-center justify-center text-[9px] transition-colors">
+                        ▼
+                      </span>
+                    </button>
+
+                    {/* Button 2: EXPLORE THIS JOURNEY in deep forest green with gold circle arrow */}
+                    <a
+                      href={`https://wa.me/919087394546?text=Hello%20VM%20Wild%20Expeditions,%20I'm%20inquiring%20about%20the%20${encodeURIComponent(displayTitle)}%20(${tour.destination})%20Expedition.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="w-full py-2.5 pl-6 pr-2 rounded-full bg-[#102216] hover:bg-[#183321] transition-all duration-300 flex items-center justify-between shadow-md cursor-pointer group/exp"
+                    >
+                      <span className="font-sans text-xs uppercase tracking-wider font-bold text-[#D6A85C] group-hover/exp:text-[#F2F0E8] transition-colors">
+                        EXPLORE THIS JOURNEY
+                      </span>
+                      <span className="w-8 h-8 rounded-full bg-[#D6A85C] group-hover:bg-[#e2bb74] text-[#102216] flex items-center justify-center font-bold text-sm transition-transform group-hover/exp:translate-x-0.5 shadow-sm">
+                        →
+                      </span>
+                    </a>
                   </div>
                 </article>
               )
