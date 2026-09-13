@@ -5,7 +5,7 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
   const [activeCategory, setActiveCategory] = useState('All')
   const [activePhoto, setActivePhoto] = useState(null)
 
-  const categories = ['All', 'Big Cats', 'Avian', 'Mammals', 'Macro & Nocturne']
+  const categories = ['All', 'Wild', 'Birds']
 
   const filteredPhotos = GALLERY_IMAGES.filter((photo) => {
     if (activeCategory === 'All') return true
