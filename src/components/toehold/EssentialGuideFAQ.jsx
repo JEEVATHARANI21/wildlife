@@ -37,7 +37,7 @@ export default function EssentialGuideFAQ({ onPlanTrip }) {
     },
     {
       q: 'How do I book?',
-      a: 'Choose your expedition, contact our team, and we’ll share the itinerary, availability, pricing, and booking details. You can use our frictionless 1-Tap WhatsApp Concierge to pre-fill your preferred dates, group size, and dream species directly to Expedition Leader Vijay Mathiew (+91 90873 94546).',
+      a: 'Choose your expedition, contact our team, and we’ll share the itinerary, availability, pricing, and booking details. You can use our frictionless 1-Tap WhatsApp Concierge to pre-fill your preferred dates, group size, and dream species directly to Expedition Leader Vijay Mathiew via WhatsApp.',
       icon: '💬',
       hasWhatsApp: true,
     },
@@ -130,7 +130,7 @@ export default function EssentialGuideFAQ({ onPlanTrip }) {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#25D366] text-[#080908] text-xs font-sans uppercase tracking-wider font-bold shadow-md hover:bg-[#20bd5a] transition-all"
                         >
                           <span>💬</span>
-                          <span>Connect on WhatsApp (+91 90873 94546)</span>
+                          <span>Connect on WhatsApp</span>
                           <span>→</span>
                         </a>
                       </div>

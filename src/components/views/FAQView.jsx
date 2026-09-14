@@ -54,7 +54,7 @@ export default function FAQView({ onBackToHome, onPlanTrip }) {
     {
       category: 'Booking & Gear',
       q: 'How do I book my seat?',
-      a: 'Select your preferred departure, contact our team, and we will send you the itinerary, availability, and payment details. You can also connect directly with founder Vijay Mathiew via WhatsApp (+91 90873 94546) for immediate 1-on-1 assistance.',
+      a: 'Select your preferred departure, contact our team, and we will send you the itinerary, availability, and payment details. You can also connect directly with founder Vijay Mathiew via WhatsApp for immediate 1-on-1 assistance.',
       icon: '💬',
       hasWhatsApp: true,
     },
@@ -208,7 +208,7 @@ export default function FAQView({ onBackToHome, onPlanTrip }) {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#25D366] text-[#080908] text-xs font-sans uppercase tracking-wider font-bold shadow-md hover:bg-[#20bd5a] transition-all"
                         >
                           <span>💬</span>
-                          <span>Connect on WhatsApp (+91 90873 94546)</span>
+                          <span>Connect on WhatsApp</span>
                           <span>→</span>
                         </a>
                       </div>
@@ -220,16 +220,15 @@ export default function FAQView({ onBackToHome, onPlanTrip }) {
           })}
         </div>
 
-        {/* Still Have Questions Box */}
-        <div className="mt-14 p-8 rounded-3xl bg-[#151815] border border-[#242923] text-center max-w-2xl mx-auto shadow-2xl">
-          <span className="text-2xl mb-2 block">💬</span>
-          <h3 className="font-serif text-2xl text-[#F2F0E8] mb-2">
-            Have a Specific Question?
-          </h3>
-          <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light mb-6">
-            Expedition leader Vijay Mathiew is available to advise on permits, safari dates, lens recommendations, and custom group charters.
+        {/* Still Have Questions CTA */}
+        <div className="p-8 sm:p-12 rounded-3xl bg-[#151815] border border-[#242923] text-center">
+          <h2 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] mb-3">
+            Still Have Questions?
+          </h2>
+          <p className="font-sans text-xs sm:text-sm text-[#A7A59B] max-w-lg mx-auto mb-8 font-light">
+            Our expedition coordinators and mentors are always on hand to help customize dates, discuss specific photography gear recommendations, or tailor private family safaris.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={onPlanTrip}
               className="w-full sm:w-auto py-3 px-6 rounded-full bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] font-sans text-xs uppercase tracking-wider font-bold hover:shadow-[0_4px_20px_rgba(214,168,92,0.4)] transition-all cursor-pointer"
@@ -242,7 +241,7 @@ export default function FAQView({ onBackToHome, onPlanTrip }) {
               rel="noopener noreferrer"
               className="w-full sm:w-auto py-3 px-6 rounded-full bg-[#080908] border border-[#242923] hover:border-[#D6A85C] text-[#F2F0E8] font-sans text-xs uppercase tracking-wider font-semibold transition-all"
             >
-              Chat on WhatsApp (+91 90873 94546)
+              Chat on WhatsApp
             </a>
           </div>
         </div>

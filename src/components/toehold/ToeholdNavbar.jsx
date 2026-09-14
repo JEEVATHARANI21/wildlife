@@ -177,7 +177,7 @@ export default function ToeholdNavbar({
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp Concierge"
-            title="Chat on WhatsApp (+91 90873 94546)"
+            title="Chat on WhatsApp"
             className="w-9 h-9 rounded-full bg-[#151815] hover:bg-[#1f241f] border border-[#242923] hover:border-[#25D366] text-[#F2F0E8] hover:text-[#25D366] flex items-center justify-center transition-all duration-300 shadow-md group"
           >
             <svg className="w-4 h-4 text-[#25D366] fill-current" viewBox="0 0 24 24">
@@ -309,7 +309,7 @@ export default function ToeholdNavbar({
             onClick={() => setMobileMenuOpen(false)}
             className="py-3 rounded-xl bg-[#242923] text-[#F2F0E8] text-xs font-sans uppercase tracking-widest text-center flex items-center justify-center gap-2"
           >
-            <span>💬 WhatsApp Concierge (+91 90873 94546)</span>
+            <span>💬 WhatsApp Concierge</span>
           </a>
         </div>
       </div>

@@ -48,7 +48,7 @@ export default function ContactFooter({ openLegal }) {
                 </div>
                 <div>
                   <span className="text-[10px] font-sans uppercase tracking-wider text-[#A7A59B] block">Call Toll-Free / Mobile</span>
-                  <span className="text-xs font-sans text-[#F2F0E8] group-hover:text-[#D6A85C] font-semibold">+91 90873 94546</span>
+                  <span className="text-xs font-sans text-[#F2F0E8] group-hover:text-[#D6A85C] font-semibold">Click to Call</span>
                 </div>
               </a>
 
@@ -65,7 +65,7 @@ export default function ContactFooter({ openLegal }) {
                 </div>
                 <div>
                   <span className="text-[10px] font-sans uppercase tracking-wider text-[#A7A59B] block">Direct WhatsApp</span>
-                  <span className="text-xs font-sans text-[#F2F0E8] group-hover:text-[#25D366] font-semibold">+91 90873 94546</span>
+                  <span className="text-xs font-sans text-[#F2F0E8] group-hover:text-[#25D366] font-semibold">Chat With Us</span>
                 </div>
               </a>
             </div>
@@ -121,7 +121,7 @@ export default function ContactFooter({ openLegal }) {
                     <input
                       type="tel"
                       required
-                      placeholder="+91 90873 94546"
+                      placeholder="Your Phone / WhatsApp Number"
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
                       className="w-full py-2.5 px-3 rounded-xl bg-[#080908] border border-[#242923] text-xs text-[#F2F0E8] font-sans focus:outline-none focus:border-[#B87333]"
