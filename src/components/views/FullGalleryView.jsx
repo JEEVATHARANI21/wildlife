@@ -132,8 +132,7 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
                   </h3>
                 </div>
 
-                <div className="pt-3 border-t border-[#242923] flex items-center justify-between text-[10px] font-mono text-[#A7A59B]">
-                  <span className="text-[#D6A85C]">📷 {photo.gear}</span>
+                <div className="pt-3 border-t border-[#242923] flex items-center justify-end text-[10px] font-mono text-[#A7A59B]">
                   <span className="text-[#D6A85C] group-hover:translate-x-1 transition-transform font-bold">
                     Shutter View ↗
                   </span>
@@ -181,15 +180,6 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
                   <h2 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] mt-2 leading-tight">
                     {activePhoto.location}
                   </h2>
-                </div>
-
-                <div className="p-4 rounded-xl bg-[#080908]/80 border border-[#242923] space-y-2 text-xs">
-                  <div className="text-[10px] uppercase tracking-wider text-[#D6A85C] font-semibold">
-                    Technical Specifications:
-                  </div>
-                  <div className="font-mono text-[#F2F0E8]/90 text-[11px]">
-                    {activePhoto.gear}
-                  </div>
                 </div>
               </div>
 

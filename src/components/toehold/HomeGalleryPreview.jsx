@@ -311,12 +311,9 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                     {item.location}
                   </h3>
 
-                  {/* Optical Specs & Action for Active Center Card */}
+                  {/* Action for Active Center Card */}
                   {isCenter && (
-                    <div className="mt-3 pt-3 border-t border-[#242923]/90 flex items-center justify-between">
-                      <span className="text-[10px] font-mono text-[#D6A85C]/90 bg-[#0c0f0d]/80 px-2.5 py-1 rounded-lg border border-[#242923]">
-                        {item.gear}
-                      </span>
+                    <div className="mt-3 pt-3 border-t border-[#242923]/90 flex items-center justify-end">
                       <span className="text-[10.5px] font-sans font-bold uppercase tracking-wider text-[#D6A85C] flex items-center gap-1.5 transition-transform group-hover:translate-x-1">
                         <span>Inspect Frame</span>
                         <span>→</span>
