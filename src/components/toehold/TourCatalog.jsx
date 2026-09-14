@@ -199,12 +199,7 @@ export default function TourCatalog({
                     </span>
                   </div>
 
-                  {/* Top Right Circular Badge: 4 */}
-                  <div className="absolute top-4 right-4 z-10 pointer-events-none">
-                    <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#080a08]/90 text-[#D6A85C] font-sans font-bold text-xs sm:text-sm flex items-center justify-center shadow-md border border-[#242923] backdrop-blur-md">
-                      4
-                    </span>
-                  </div>
+
 
                   {/* Bottom Title Overlay on Photo */}
                   <div className="absolute bottom-3.5 left-5 right-5 z-10 text-left pointer-events-none">
