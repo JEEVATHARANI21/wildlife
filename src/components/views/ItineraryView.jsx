@@ -1,27 +1,35 @@
 import { useState } from 'react'
+import { useSiteContent } from '../../context/SiteContentContext'
 
 export default function ItineraryView({ tour, onBack, onPlanTrip }) {
   if (!tour) return null
 
+  const { content } = useSiteContent()
+  const currentTour =
+    content?.animalTours?.find((t) => t.id === tour.id) ||
+    content?.birdTours?.find((t) => t.id === tour.id) ||
+    tour
+
   const handleWhatsAppInquiry = () => {
-    const tourTitle = tour.packageName || tour.title || 'Safari'
-    const dest = tour.destination || 'India'
+    const tourTitle = currentTour.packageName || currentTour.title || 'Safari'
+    const dest = currentTour.destination || 'India'
+    const whatsappNum = content?.social?.whatsappNumber || '919087394546'
     const msg = `Hi Vijay, I'm reviewing the "${tourTitle}" (${dest}) itinerary on your website. I'd like to discuss customized departure dates and reserve a seat.`
-    window.open(`https://wa.me/919087394546?text=${encodeURIComponent(msg)}`, '_blank')
+    window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`, '_blank')
   }
 
   // Fallback Day-by-Day if itinerary array is compact
-  const days = tour.itinerary && tour.itinerary.length > 0 ? tour.itinerary : [
+  const days = currentTour.itinerary && currentTour.itinerary.length > 0 ? currentTour.itinerary : [
     {
       day: 1,
       title: 'Arrival, Forest Check-in & Orientation Drive',
-      desc: `Meet our private expedition vehicle and transfer to luxury jungle lodge near ${tour.destination || 'the park'}. Afternoon gear setup, camera calibration, and first twilight game drive.`,
-      photoTip: 'Golden hour dust backlight and animal silhouettes.',
+      desc: `Meet our private expedition vehicle and transfer to luxury jungle lodge near ${currentTour.destination || 'the park'}. Afternoon gear setup, camera calibration, and first twilight game drive.`,
+      photoTip: 'Golden hour field technique: Low vehicle perspective with 1-on-1 mentorship by Vijay Mathew.',
     },
     {
       day: 2,
       title: 'Deep Core Safaris — Dawn & Dusk Tracking',
-      desc: `Full day tracking ${tour.targetSpecies?.[0] || 'wildlife'} across prime territories. Morning drive followed by midday file reviews, histogram analysis, and afternoon field vigil.`,
+      desc: `Full day tracking ${currentTour.targetSpecies?.[0] || 'wildlife'} across prime territories. Morning drive followed by midday file reviews, histogram analysis, and afternoon field vigil.`,
       photoTip: 'Eye-level vehicle beanbag perspective at known watering holes.',
     },
     {
@@ -51,15 +59,15 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
         </button>
 
         <span className="text-xs font-sans text-[#D6A85C] uppercase tracking-wider font-semibold">
-          {tour.duration} · {tour.destination}
+          {currentTour.duration} · {currentTour.destination}
         </span>
       </div>
 
       {/* Hero Banner Section (fototrails 365 style) */}
       <section className="relative h-[55vh] min-h-[420px] flex items-end overflow-hidden">
         <img
-          src={tour.heroImage}
-          alt={tour.packageName || tour.title}
+          src={currentTour.heroImage}
+          alt={currentTour.packageName || currentTour.title}
           className="absolute inset-0 w-full h-full object-cover brightness-[0.85]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#080908] via-[#080908]/40 to-transparent" />
@@ -69,10 +77,10 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
             Sample Itinerary — All Tours Customised
           </span>
           <h1 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#F2F0E8] leading-tight mb-2">
-            {tour.packageName || tour.title}
+            {currentTour.packageName || currentTour.title}
           </h1>
           <p className="font-sans text-[#A7A59B] text-sm sm:text-lg max-w-2xl font-light">
-            {tour.photoHighlight || tour.overview?.split('.')[0] + '.'}
+            {currentTour.photoHighlight || currentTour.overview?.split('.')[0] + '.'}
           </p>
         </div>
       </section>
@@ -85,7 +93,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
               <p className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest mb-1 font-semibold">
                 Duration
               </p>
-              <p className="font-serif text-base sm:text-lg text-[#F2F0E8]">{tour.duration}</p>
+              <p className="font-serif text-base sm:text-lg text-[#F2F0E8]">{currentTour.duration}</p>
             </div>
             <div>
               <p className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest mb-1 font-semibold">
@@ -97,7 +105,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
               <p className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest mb-1 font-semibold">
                 Best Photographic Season
               </p>
-              <p className="font-serif text-base sm:text-lg text-[#D6A85C]">{tour.bestSeason}</p>
+              <p className="font-serif text-base sm:text-lg text-[#D6A85C]">{currentTour.bestSeason}</p>
             </div>
             <div>
               <p className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest mb-1 font-semibold">
@@ -129,7 +137,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                 About This Tour
               </h2>
               <p className="font-sans text-sm sm:text-base text-[#A7A59B] leading-relaxed font-light">
-                {tour.overview}
+                {currentTour.overview}
               </p>
             </div>
 
@@ -139,7 +147,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                 PRIMARY TARGET SPECIES
               </span>
               <div className="flex flex-wrap gap-2">
-                {tour.targetSpecies?.map((sp, i) => (
+                {currentTour.targetSpecies?.map((sp, i) => (
                   <span
                     key={i}
                     className="px-3 py-1 rounded-full bg-[#080908] border border-[#242923] text-xs text-[#F2F0E8] font-sans"
@@ -159,7 +167,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                     VEHICLE & SHOOTING LOGISTICS
                   </span>
                   <p className="text-xs font-sans text-[#F2F0E8]/90 leading-relaxed font-light">
-                    {tour.vehicleLogistics || 'Guaranteed Open-top 4x4 Gypsy · Strictly Max 4 photographers (1 per row) · 360° unobstructed shooting angles & beanbag mounts.'}
+                    {currentTour.vehicleLogistics || 'Guaranteed Open-top 4x4 Gypsy · Strictly Max 4 photographers (1 per row) · 360° unobstructed shooting angles & beanbag mounts.'}
                   </p>
                 </div>
               </div>
@@ -171,7 +179,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                     1-ON-1 FIELD MASTERCLASS
                   </span>
                   <p className="text-xs font-sans text-[#F2F0E8]/90 leading-relaxed font-light">
-                    Daily in-Gypsy mentoring by Vijay Mathiew on exposure compensation, histogram tracking, and animal anticipation, with evening RAW critiques in Lightroom.
+                    {currentTour.fieldMasterclass || 'Daily in-Gypsy mentoring by Vijay Mathew on exposure compensation, histogram tracking, and animal anticipation, with evening RAW critiques in Lightroom.'}
                   </p>
                 </div>
               </div>
@@ -204,13 +212,12 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                       <p className="font-sans text-xs sm:text-sm text-[#A7A59B] leading-relaxed font-light mb-3">
                         {item.desc}
                       </p>
-                      <p className="font-sans text-xs text-[#D6A85C] italic flex items-center gap-1.5">
-                        <span>📷</span>
-                        <span>
-                          {item.photoTip ||
-                            'Golden hour field technique: Low vehicle perspective with 1-on-1 mentorship by Vijay Mathiew.'}
-                        </span>
-                      </p>
+                      {item.photoTip && (
+                        <p className="font-sans text-xs text-[#D6A85C] italic flex items-center gap-1.5">
+                          <span>📷</span>
+                          <span>{item.photoTip}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -256,13 +263,13 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                 WHERE YOU'LL STAY
               </span>
               <h4 className="font-serif text-lg text-[#F2F0E8] mb-2">
-                Luxury Eco-Lodges & Heritage Tented Camps
+                {currentTour.whereYouStay?.title || 'Luxury Eco-Lodges & Heritage Tented Camps'}
               </h4>
               <p className="text-xs text-[#A7A59B] leading-relaxed font-light mb-3">
-                All accommodation is handpicked for proximity to park gates, hot-water en-suite bathrooms, high-speed charging stations, and delicious chef-prepared meals.
+                {currentTour.whereYouStay?.description || 'All accommodation is handpicked for proximity to park gates, hot-water en-suite bathrooms, high-speed charging stations, and delicious chef-prepared meals.'}
               </p>
               <span className="text-[11px] text-[#B87333] italic block">
-                Confirmed based on your dates and room preferences during the booking process.
+                {currentTour.whereYouStay?.note || 'Confirmed based on your dates and room preferences during the booking process.'}
               </span>
             </div>
 
@@ -272,7 +279,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                 WHAT'S INCLUDED
               </span>
               <ul className="space-y-2.5">
-                {tour.inclusions?.map((inc, i) => (
+                {(currentTour.inclusions || []).map((inc, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-xs text-[#F2F0E8]/85 font-light">
                     <span className="text-emerald-400 font-bold shrink-0">✓</span>
                     <span className="leading-tight">{inc}</span>
@@ -287,7 +294,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                 NOT INCLUDED
               </span>
               <ul className="space-y-2">
-                {tour.exclusions?.map((exc, i) => (
+                {(currentTour.exclusions || []).map((exc, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-xs text-[#A7A59B] font-light">
                     <span className="text-[#A7A59B]/50 shrink-0">—</span>
                     <span className="leading-tight">{exc}</span>
@@ -302,7 +309,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                 RECOMMENDED PHOTOGRAPHIC GEAR
               </span>
               <ul className="space-y-2.5">
-                {tour.recommendedGear?.map((gear, i) => (
+                {(currentTour.recommendedGear || []).map((gear, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-xs text-[#D6A85C]/90 font-light">
                     <span className="text-[#B87333] shrink-0">✦</span>
                     <span className="leading-tight">{gear}</span>

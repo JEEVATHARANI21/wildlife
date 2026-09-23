@@ -4,6 +4,62 @@ import { GALLERY_IMAGES } from '../data/galleryData'
 
 const STORAGE_KEY = 'vm_wild_site_content_v2'
 
+export const normalizeTour = (tour) => {
+  return {
+    ...tour,
+    vehicleLogistics: tour.vehicleLogistics || 'Guaranteed Open-top 4x4 Gypsy · Max 4 photographers (1 per row) · 360° unobstructed panning',
+    fieldMasterclass: tour.fieldMasterclass || 'Daily in-Gypsy mentoring by Vijay Mathew on exposure compensation, histogram tracking, and animal anticipation, with evening RAW critiques in Lightroom.',
+    whereYouStay: {
+      title: tour.whereYouStay?.title || 'Luxury Eco-Lodges & Heritage Tented Camps',
+      description: tour.whereYouStay?.description || 'All accommodation is handpicked for proximity to park gates, hot-water en-suite bathrooms, high-speed charging stations, and delicious chef-prepared meals.',
+      note: tour.whereYouStay?.note || 'Confirmed based on your dates and room preferences during the booking process.',
+    },
+    itinerary: (tour.itinerary && tour.itinerary.length > 0)
+      ? tour.itinerary
+      : [
+          {
+            day: 1,
+            title: `Arrival ${tour.destination || 'Reserve'} & Sunset Safari`,
+            desc: `Check-in at heritage camp. First safari tracking predator trails around ${tour.destination || 'the park'}.`,
+            photoTip: 'Golden hour field technique: Low vehicle perspective with 1-on-1 mentorship by Vijay Mathew.',
+          },
+          {
+            day: 2,
+            title: 'Dawn & Dusk Prime Core Drives',
+            desc: 'Morning and evening drives in prime lake and corridor zones with maximum predator density.',
+            photoTip: 'Golden hour field technique: Low vehicle perspective with 1-on-1 mentorship by Vijay Mathew.',
+          },
+          {
+            day: 3,
+            title: 'Morning Safari & Naturalist Masterclass',
+            desc: 'Early morning game drive followed by afternoon guided architectural / habitat walk.',
+            photoTip: 'Golden hour field technique: Low vehicle perspective with 1-on-1 mentorship by Vijay Mathew.',
+          },
+          {
+            day: 4,
+            title: 'Dawn Farewell Safari & Departure',
+            desc: 'Final sunrise drive. Brunch, portfolio review, and departure transfer.',
+            photoTip: 'Golden hour field technique: Low vehicle perspective with 1-on-1 mentorship by Vijay Mathew.',
+          },
+        ],
+    inclusions: (tour.inclusions && tour.inclusions.length > 0)
+      ? tour.inclusions
+      : [
+          '5 Core Zone Gypsy Safaris with priority allotment',
+          '3 Nights Heritage Glamping stay',
+          'All gourmet Rajasthani & Continental meals',
+          'Guided by VM Wild Expeditions skipper',
+          'All park permits and naturalist guide charges',
+        ],
+    exclusions: (tour.exclusions && tour.exclusions.length > 0)
+      ? tour.exclusions
+      : [
+          `Travel to/from ${tour.destination || 'destination'}`,
+          'Camera charges',
+        ],
+  }
+}
+
 export const DEFAULT_CONTENT = {
   brand: {
     siteName: 'VM Wild Expeditions',
@@ -24,8 +80,8 @@ export const DEFAULT_CONTENT = {
     heroBgImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1920&q=85&auto=format&fit=crop',
   },
   founders: TOURS_DATA.founders || [],
-  animalTours: TOURS_DATA.animalTours || [],
-  birdTours: TOURS_DATA.birdTours || [],
+  animalTours: (TOURS_DATA.animalTours || []).map(normalizeTour),
+  birdTours: (TOURS_DATA.birdTours || []).map(normalizeTour),
   galleryImages: GALLERY_IMAGES || [],
   adminSettings: {
     passcode: 'vmwild2026',
@@ -47,6 +103,8 @@ export function SiteContentProvider({ children }) {
           social: { ...DEFAULT_CONTENT.social, ...(parsed.social || {}) },
           hero: { ...DEFAULT_CONTENT.hero, ...(parsed.hero || {}) },
           adminSettings: { ...DEFAULT_CONTENT.adminSettings, ...(parsed.adminSettings || {}) },
+          animalTours: (parsed.animalTours || DEFAULT_CONTENT.animalTours).map(normalizeTour),
+          birdTours: (parsed.birdTours || DEFAULT_CONTENT.birdTours).map(normalizeTour),
         }
       }
     } catch (e) {
@@ -115,6 +173,17 @@ export function SiteContentProvider({ children }) {
     }))
   }
 
+  const updateTourById = (tourId, tourData) => {
+    setContent((prev) => {
+      const isAnimal = prev.animalTours.some((t) => t.id === tourId)
+      const key = isAnimal ? 'animalTours' : 'birdTours'
+      return {
+        ...prev,
+        [key]: prev[key].map((t) => (t.id === tourId ? { ...t, ...tourData } : t)),
+      }
+    })
+  }
+
   const updateGallery = (newGallery) => {
     setContent((prev) => ({
       ...prev,
@@ -168,6 +237,7 @@ export function SiteContentProvider({ children }) {
         updateFounder,
         updateTours,
         updateSingleTour,
+        updateTourById,
         updateGallery,
         updateAdminSettings,
         resetToDefaults,

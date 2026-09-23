@@ -15,6 +15,7 @@ export default function AdminPanel({ onExitAdmin }) {
     updateHero,
     updateFounder,
     updateSingleTour,
+    updateTourById,
     updateAdminSettings,
     resetToDefaults,
     exportContentJSON,
@@ -28,10 +29,84 @@ export default function AdminPanel({ onExitAdmin }) {
   const [passcodeInput, setPasscodeInput] = useState('')
   const [authError, setAuthError] = useState('')
 
-  // Active Tab: 'brand' | 'social' | 'hero' | 'founders' | 'tours' | 'backup'
+  // Active Tab: 'brand' | 'social' | 'hero' | 'founders' | 'tours' | 'itinerary' | 'backup'
   const [activeTab, setActiveTab] = useState('brand')
   const [toastMessage, setToastMessage] = useState('')
   const fileInputRef = useRef(null)
+
+  // Itinerary & Logistics Selection State
+  const allTours = [...(content.animalTours || []), ...(content.birdTours || [])]
+  const [selectedItineraryTourId, setSelectedItineraryTourId] = useState(() => {
+    return allTours.find((t) => t.id === 'tour-ranthambhore-solstice')?.id || allTours[0]?.id || 'tour-ranthambhore-solstice'
+  })
+
+  const activeItineraryTour = allTours.find((t) => t.id === selectedItineraryTourId) || allTours[0] || {}
+
+  // Helpers for Itinerary & Logistics editing
+  const updateItineraryDay = (dayIndex, field, value) => {
+    const updated = [...(activeItineraryTour.itinerary || [])]
+    if (updated[dayIndex]) {
+      updated[dayIndex] = { ...updated[dayIndex], [field]: value }
+      updateTourById(selectedItineraryTourId, { itinerary: updated })
+    }
+  }
+
+  const addItineraryDay = () => {
+    const updated = [...(activeItineraryTour.itinerary || [])]
+    const nextDay = updated.length + 1
+    updated.push({
+      day: nextDay,
+      title: `Day ${nextDay} Game Drive & Habitat Tracking`,
+      desc: 'Morning and evening safaris tracking prime wildlife corridors with photographic mentor.',
+      photoTip: 'Golden hour field technique: Low vehicle perspective with 1-on-1 mentorship by Vijay Mathew.',
+    })
+    updateTourById(selectedItineraryTourId, { itinerary: updated })
+  }
+
+  const removeItineraryDay = (dayIndex) => {
+    const updated = (activeItineraryTour.itinerary || [])
+      .filter((_, i) => i !== dayIndex)
+      .map((item, i) => ({ ...item, day: i + 1 }))
+    updateTourById(selectedItineraryTourId, { itinerary: updated })
+  }
+
+  const updateStayField = (field, value) => {
+    const currentStay = { ...(activeItineraryTour.whereYouStay || {}) }
+    currentStay[field] = value
+    updateTourById(selectedItineraryTourId, { whereYouStay: currentStay })
+  }
+
+  const updateInclusionItem = (index, value) => {
+    const updated = [...(activeItineraryTour.inclusions || [])]
+    updated[index] = value
+    updateTourById(selectedItineraryTourId, { inclusions: updated })
+  }
+
+  const addInclusionItem = () => {
+    const updated = [...(activeItineraryTour.inclusions || []), 'Priority Core Zone safaris with certified naturalist']
+    updateTourById(selectedItineraryTourId, { inclusions: updated })
+  }
+
+  const removeInclusionItem = (index) => {
+    const updated = (activeItineraryTour.inclusions || []).filter((_, i) => i !== index)
+    updateTourById(selectedItineraryTourId, { inclusions: updated })
+  }
+
+  const updateExclusionItem = (index, value) => {
+    const updated = [...(activeItineraryTour.exclusions || [])]
+    updated[index] = value
+    updateTourById(selectedItineraryTourId, { exclusions: updated })
+  }
+
+  const addExclusionItem = () => {
+    const updated = [...(activeItineraryTour.exclusions || []), 'Camera lens fees (if applicable)']
+    updateTourById(selectedItineraryTourId, { exclusions: updated })
+  }
+
+  const removeExclusionItem = (index) => {
+    const updated = (activeItineraryTour.exclusions || []).filter((_, i) => i !== index)
+    updateTourById(selectedItineraryTourId, { exclusions: updated })
+  }
 
   const showToast = (msg = 'Changes saved successfully!') => {
     setToastMessage(msg)
@@ -181,7 +256,8 @@ export default function AdminPanel({ onExitAdmin }) {
               { id: 'social', label: '🔗 Social & Contact', desc: 'Instagram, WhatsApp, email' },
               { id: 'hero', label: '🌅 Hero Banner', desc: 'Headlines & hero photo' },
               { id: 'founders', label: '👥 Founders & Mentors', desc: 'Vijay & Jayavignesh' },
-              { id: 'tours', label: '🦁 Photo Tours', desc: 'Animal & Bird expeditions' },
+              { id: 'tours', label: '🦁 Photo Tours', desc: 'Overview, dates & status' },
+              { id: 'itinerary', label: '🗺️ Itinerary & Logistics', desc: 'Days, stays, vehicle & inclusions' },
               { id: 'backup', label: '⚙️ Backup & Security', desc: 'Export, import, passcode' },
             ].map((tab) => (
               <button
@@ -699,6 +775,19 @@ export default function AdminPanel({ onExitAdmin }) {
                             className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8]"
                           />
                         </div>
+
+                        <div className="sm:col-span-3 pt-1 flex items-center justify-end">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSelectedItineraryTourId(tour.id)
+                              setActiveTab('itinerary')
+                            }}
+                            className="py-1.5 px-3 rounded-lg bg-[#181d18] hover:bg-[#D6A85C] hover:text-[#080908] border border-[#D6A85C]/40 text-xs font-semibold text-[#D6A85C] transition-all cursor-pointer flex items-center gap-1.5"
+                          >
+                            <span>🗺️ Edit Day-by-Day Itinerary, Stays & Inclusions →</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -788,6 +877,19 @@ export default function AdminPanel({ onExitAdmin }) {
                             className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8]"
                           />
                         </div>
+
+                        <div className="sm:col-span-3 pt-1 flex items-center justify-end">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setSelectedItineraryTourId(tour.id)
+                              setActiveTab('itinerary')
+                            }}
+                            className="py-1.5 px-3 rounded-lg bg-[#181d18] hover:bg-[#D6A85C] hover:text-[#080908] border border-[#D6A85C]/40 text-xs font-semibold text-[#D6A85C] transition-all cursor-pointer flex items-center gap-1.5"
+                          >
+                            <span>🗺️ Edit Day-by-Day Itinerary, Stays & Inclusions →</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -806,7 +908,341 @@ export default function AdminPanel({ onExitAdmin }) {
             </div>
           )}
 
-          {/* TAB 6: Backup, Reset & Passcode */}
+          {/* TAB 6: Tour Itinerary & Logistics */}
+          {activeTab === 'itinerary' && (
+            <div className="space-y-8">
+              <div>
+                <h2 className="font-serif text-2xl text-[#F2F0E8]">Itinerary, Stays & Logistics Editor</h2>
+                <p className="text-xs text-[#A7A59B] mt-1">
+                  Customize the Day-by-Day itinerary breakdown, 4x4 Gypsy vehicle specs, 1-on-1 masterclasses, eco-lodge stays, and inclusions for every expedition.
+                </p>
+              </div>
+
+              {/* Tour Selector Dropdown */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#0a0d0a] border border-[#D6A85C]/40 shadow-xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block">
+                    Select Expedition to Customize
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-serif text-base sm:text-lg text-[#F2F0E8] font-semibold">
+                      {activeItineraryTour.destination}
+                    </span>
+                    <span className="text-xs text-[#A7A59B]">({activeItineraryTour.duration})</span>
+                    <span className="text-[10px] text-[#D6A85C] bg-[#151815] border border-[#242923] px-2 py-0.5 rounded-full font-semibold">
+                      {activeItineraryTour.status || 'Active'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <label className="text-xs text-[#A7A59B] whitespace-nowrap">Choose Tour:</label>
+                  <select
+                    value={selectedItineraryTourId}
+                    onChange={(e) => setSelectedItineraryTourId(e.target.value)}
+                    className="py-2 px-3 rounded-xl bg-[#151815] border border-[#D6A85C]/60 text-xs text-[#F2F0E8] font-sans font-medium focus:outline-none focus:border-[#D6A85C] cursor-pointer"
+                  >
+                    <optgroup label="🐅 Wild & Big Cat Expeditions">
+                      {(content.animalTours || []).map((t) => (
+                        <option key={t.id} value={t.id}>
+                          {t.destination} — {t.title}
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="🦜 Birds & Avian Expeditions">
+                      {(content.birdTours || []).map((t) => (
+                        <option key={t.id} value={t.id}>
+                          {t.destination} — {t.title}
+                        </option>
+                      ))}
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+
+              {/* 1. Vehicle & Shooting Logistics + 1-on-1 Field Masterclass */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">🚙</span>
+                    <label className="text-[10.5px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block">
+                      Vehicle & Shooting Logistics
+                    </label>
+                  </div>
+                  <textarea
+                    rows={3}
+                    value={activeItineraryTour.vehicleLogistics || ''}
+                    onChange={(e) => updateTourById(selectedItineraryTourId, { vehicleLogistics: e.target.value })}
+                    placeholder="Guaranteed Open-top 4x4 Gypsy · Max 4 photographers (1 per row)..."
+                    className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8] leading-relaxed focus:outline-none focus:border-[#D6A85C]"
+                  />
+                  <p className="text-[10px] text-[#A7A59B]/70">
+                    Appears on the left banner card of the tour itinerary page.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">🎓</span>
+                    <label className="text-[10.5px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block">
+                      1-on-1 Field Masterclass Mentoring
+                    </label>
+                  </div>
+                  <textarea
+                    rows={3}
+                    value={activeItineraryTour.fieldMasterclass || ''}
+                    onChange={(e) => updateTourById(selectedItineraryTourId, { fieldMasterclass: e.target.value })}
+                    placeholder="Daily in-Gypsy mentoring by Vijay Mathew on exposure compensation, histogram tracking..."
+                    className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8] leading-relaxed focus:outline-none focus:border-[#D6A85C]"
+                  />
+                  <p className="text-[10px] text-[#A7A59B]/70">
+                    Appears on the right banner card of the tour itinerary page.
+                  </p>
+                </div>
+              </div>
+
+              {/* 2. Where You'll Stay (Lodging & Camp Details) */}
+              <div className="p-5 sm:p-6 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">🏨</span>
+                  <label className="text-[10.5px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold">
+                    Where You'll Stay (Eco-Lodges & Tented Camps)
+                  </label>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1 md:col-span-2">
+                    <label className="text-[10px] uppercase tracking-wider text-[#A7A59B] block">
+                      Lodge / Resort Headline
+                    </label>
+                    <input
+                      type="text"
+                      value={activeItineraryTour.whereYouStay?.title || ''}
+                      onChange={(e) => updateStayField('title', e.target.value)}
+                      placeholder="e.g. Luxury Eco-Lodges & Heritage Tented Camps"
+                      className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8] focus:outline-none focus:border-[#D6A85C]"
+                    />
+                  </div>
+
+                  <div className="space-y-1 md:col-span-2">
+                    <label className="text-[10px] uppercase tracking-wider text-[#A7A59B] block">
+                      Accommodation Description & Amenities
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={activeItineraryTour.whereYouStay?.description || ''}
+                      onChange={(e) => updateStayField('description', e.target.value)}
+                      placeholder="All accommodation is handpicked for proximity to park gates, hot-water en-suite bathrooms..."
+                      className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8] leading-relaxed focus:outline-none focus:border-[#D6A85C]"
+                    />
+                  </div>
+
+                  <div className="space-y-1 md:col-span-2">
+                    <label className="text-[10px] uppercase tracking-wider text-[#A7A59B] block">
+                      Booking / Confirmation Note
+                    </label>
+                    <input
+                      type="text"
+                      value={activeItineraryTour.whereYouStay?.note || ''}
+                      onChange={(e) => updateStayField('note', e.target.value)}
+                      placeholder="Confirmed based on your dates and room preferences during the booking process."
+                      className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] text-xs text-[#B87333] italic focus:outline-none focus:border-[#D6A85C]"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. Day by Day Itinerary Breakdown */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between pb-2 border-b border-[#242923]">
+                  <h3 className="font-serif text-lg text-[#F2F0E8] flex items-center gap-2">
+                    <span>📅</span>
+                    <span>Day-by-Day Itinerary Schedule</span>
+                    <span className="text-xs text-[#D6A85C] font-sans font-normal uppercase tracking-wider bg-[#151815] px-2.5 py-0.5 rounded-full border border-[#242923]">
+                      {(activeItineraryTour.itinerary || []).length} Days
+                    </span>
+                  </h3>
+
+                  <button
+                    type="button"
+                    onClick={addItineraryDay}
+                    className="py-1.5 px-3 rounded-xl bg-[#1c241c] hover:bg-[#D6A85C] hover:text-[#080908] border border-[#D6A85C]/50 text-xs font-semibold text-[#D6A85C] transition-all cursor-pointer flex items-center gap-1.5 shadow-sm"
+                  >
+                    <span>+ Add New Day</span>
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {(activeItineraryTour.itinerary || []).map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 sm:p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-3 hover:border-[#D6A85C]/40 transition-colors"
+                    >
+                      <div className="flex items-center justify-between gap-3 border-b border-[#242923] pb-2">
+                        <div className="flex items-center gap-2.5">
+                          <span className="w-8 h-8 rounded-full bg-[#151815] border border-[#D6A85C]/60 flex items-center justify-center font-serif text-xs font-bold text-[#D6A85C]">
+                            {item.day || idx + 1}
+                          </span>
+                          <span className="text-xs font-semibold uppercase tracking-wider text-[#D6A85C]">
+                            Day {item.day || idx + 1} Breakdown
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => removeItineraryDay(idx)}
+                          className="text-xs text-red-400 hover:text-red-300 hover:bg-red-950/40 border border-red-900/40 px-2.5 py-1 rounded-lg transition-colors cursor-pointer flex items-center gap-1"
+                          title="Remove this Day"
+                        >
+                          <span>✕</span>
+                          <span>Delete</span>
+                        </button>
+                      </div>
+
+                      <div className="space-y-3">
+                        <div className="space-y-1">
+                          <label className="text-[10px] uppercase tracking-wider text-[#A7A59B] block">
+                            Day Title
+                          </label>
+                          <input
+                            type="text"
+                            value={item.title || ''}
+                            onChange={(e) => updateItineraryDay(idx, 'title', e.target.value)}
+                            placeholder="e.g. Arrival Sawai Madhopur & Sunset Safari"
+                            className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8] font-semibold focus:outline-none focus:border-[#D6A85C]"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-[10px] uppercase tracking-wider text-[#A7A59B] block">
+                            Day Activities & Safari Highlights
+                          </label>
+                          <textarea
+                            rows={2}
+                            value={item.desc || ''}
+                            onChange={(e) => updateItineraryDay(idx, 'desc', e.target.value)}
+                            placeholder="Check-in at heritage camp. First safari tracking tiger trails around Rajbagh ruins..."
+                            className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8] leading-relaxed focus:outline-none focus:border-[#D6A85C]"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-[10px] uppercase tracking-wider text-[#D6A85C] flex items-center gap-1 font-semibold">
+                            <span>📷</span>
+                            <span>Photography Field Tip / Technique</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={item.photoTip || ''}
+                            onChange={(e) => updateItineraryDay(idx, 'photoTip', e.target.value)}
+                            placeholder="Golden hour field technique: Low vehicle perspective with 1-on-1 mentorship by Vijay Mathew."
+                            className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] text-xs text-[#D6A85C] italic focus:outline-none focus:border-[#D6A85C]"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Inclusions & Exclusions */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-[#242923]">
+                {/* Inclusions */}
+                <div className="p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#242923]">
+                    <span className="text-xs uppercase tracking-widest text-emerald-400 font-bold flex items-center gap-1.5">
+                      <span>✓</span>
+                      <span>What's Included ({(activeItineraryTour.inclusions || []).length})</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={addInclusionItem}
+                      className="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold bg-emerald-950/40 border border-emerald-800/40 px-2 py-0.5 rounded-lg cursor-pointer"
+                    >
+                      + Add Item
+                    </button>
+                  </div>
+
+                  <div className="space-y-2">
+                    {(activeItineraryTour.inclusions || []).map((inc, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <span className="text-emerald-400 text-xs font-bold shrink-0">✓</span>
+                        <input
+                          type="text"
+                          value={inc}
+                          onChange={(e) => updateInclusionItem(i, e.target.value)}
+                          className="flex-1 py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8] focus:outline-none focus:border-emerald-500"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeInclusionItem(i)}
+                          className="text-[#A7A59B] hover:text-red-400 text-xs p-1 cursor-pointer"
+                          title="Delete item"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Exclusions */}
+                <div className="p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#242923]">
+                    <span className="text-xs uppercase tracking-widest text-[#A7A59B] font-bold flex items-center gap-1.5">
+                      <span>—</span>
+                      <span>Not Included ({(activeItineraryTour.exclusions || []).length})</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={addExclusionItem}
+                      className="text-[11px] text-[#A7A59B] hover:text-[#F2F0E8] font-semibold bg-[#151815] border border-[#242923] px-2 py-0.5 rounded-lg cursor-pointer"
+                    >
+                      + Add Item
+                    </button>
+                  </div>
+
+                  <div className="space-y-2">
+                    {(activeItineraryTour.exclusions || []).map((exc, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <span className="text-[#A7A59B]/60 text-xs font-bold shrink-0">—</span>
+                        <input
+                          type="text"
+                          value={exc}
+                          onChange={(e) => updateExclusionItem(i, e.target.value)}
+                          className="flex-1 py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#A7A59B] focus:outline-none focus:border-[#D6A85C]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeExclusionItem(i)}
+                          className="text-[#A7A59B] hover:text-red-400 text-xs p-1 cursor-pointer"
+                          title="Delete item"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Save & Confirm Button */}
+              <div className="pt-4 border-t border-[#242923] flex items-center justify-between">
+                <span className="text-xs text-[#A7A59B]">
+                  Edits are synced to live site and cached automatically.
+                </span>
+                <button
+                  type="button"
+                  onClick={() => showToast(`Itinerary & stays for ${activeItineraryTour.destination} saved successfully!`)}
+                  className="py-2.5 px-6 rounded-full bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] text-xs font-bold uppercase tracking-wider hover:shadow-[0_4px_20px_rgba(214,168,92,0.4)] transition-all cursor-pointer"
+                >
+                  Save Itinerary & Logistics
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 7: Backup, Reset & Passcode */}
           {activeTab === 'backup' && (
             <div className="space-y-6">
               <div>
