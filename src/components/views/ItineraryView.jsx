@@ -101,10 +101,11 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
             </div>
             <div>
               <p className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest mb-1 font-semibold">
-                Investment
+                Investment (All-Inclusive)
               </p>
-              <p className="font-serif text-base sm:text-lg text-[#F2F0E8]">
-                From ₹XX,XXX <span className="text-[10px] text-[#A7A59B] font-sans">(Per Person)</span>
+              <p className="font-serif text-base sm:text-lg text-[#D6A85C]">
+                ₹{tour.price ? tour.price.toLocaleString('en-IN') : '79,900'}{' '}
+                <span className="text-[10px] text-[#A7A59B] font-sans block sm:inline">(All Taxes & Permits Included)</span>
               </p>
             </div>
           </div>

@@ -225,12 +225,12 @@ export default function TourDetailModal({ tour, onClose }) {
               <span className="text-[10px] font-sans text-[#A7A59B] uppercase tracking-wider block">
                 Expedition Package Rate
               </span>
-              <div className="flex items-baseline gap-1 text-[#F2F0E8]">
-                <span className="text-3xl font-serif font-light text-[#D6A85C]">
-                  From ₹XX,XXX
+              <div className="flex flex-wrap items-baseline gap-2 text-[#F2F0E8]">
+                <span className="text-2xl sm:text-3xl font-serif font-light text-[#D6A85C]">
+                  ₹{tour.price ? tour.price.toLocaleString('en-IN') : '79,900'}
                 </span>
-                <span className="text-xs font-sans text-[#A7A59B] ml-2">(Contact for Quote)</span>
-                <span className="text-xs font-sans text-[#D6A85C] ml-2 font-medium bg-[#242923] px-2 py-0.5 rounded">
+                <span className="text-xs font-sans text-[#A7A59B]">(All-Inclusive · Includes 5% GST & Permits)</span>
+                <span className="text-xs font-sans text-[#D6A85C] font-medium bg-[#242923] px-2.5 py-0.5 rounded-full border border-[#D6A85C]/30">
                   {tour.status}
                 </span>
               </div>

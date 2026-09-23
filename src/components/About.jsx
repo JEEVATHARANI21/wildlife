@@ -15,12 +15,13 @@ const STATS = [
 ]
 
 function useCountUp(target, inView) {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(target)
   const started = useRef(false)
   useEffect(() => {
     if (!inView || started.current) return
     started.current = true
-    const duration = 2000
+    setCount(0)
+    const duration = 1600
     const start = performance.now()
     const tick = (now) => {
       const progress = Math.min((now - start) / duration, 1)
@@ -135,7 +136,7 @@ export default function About() {
             className="about-line font-sans text-sm leading-relaxed"
             style={{ color: 'var(--muted)', maxWidth: 440 }}
           >
-            As a <strong className="text-[#F1EFE8] font-normal">professional wildlife photographer</strong> based in Tamil Nadu, twelve years in the wild have taught me that patience is the
+            As a <strong className="text-[#F1EFE8] font-normal">professional wildlife photographer</strong> based in Tamil Nadu, five years in the wild have taught me that patience is the
             only equipment that truly matters. Every expedition begins with
             silence and ends with a single frame — the one that holds the
             breath of the forest, the weight of the moment, the animal in
