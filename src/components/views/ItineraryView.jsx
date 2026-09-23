@@ -104,7 +104,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                 Investment (All-Inclusive)
               </p>
               <p className="font-serif text-base sm:text-lg text-[#D6A85C]">
-                ₹{tour.price ? tour.price.toLocaleString('en-IN') : '79,900'}{' '}
+                From ₹XX,XXX{' '}
                 <span className="text-[10px] text-[#A7A59B] font-sans block sm:inline">(All Taxes & Permits Included)</span>
               </p>
             </div>

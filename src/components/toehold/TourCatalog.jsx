@@ -266,8 +266,8 @@ export default function TourCatalog({
                     </div>
 
                     <div className="p-2 rounded-xl bg-[#0a0d0a] border border-[#202620]">
-                      <span className="text-[9px] uppercase tracking-wider text-[#A7A59B] block font-light">All-Inclusive</span>
-                      <span className="text-[11px] font-sans font-semibold text-[#D6A85C] block truncate">₹{tour.price ? tour.price.toLocaleString('en-IN') : '79,900'}</span>
+                      <span className="text-[9px] uppercase tracking-wider text-[#A7A59B] block font-light">Package</span>
+                      <span className="text-[11px] font-sans font-semibold text-[#D6A85C] block truncate">From ₹XX,XXX</span>
                     </div>
                   </div>
                 </div>
