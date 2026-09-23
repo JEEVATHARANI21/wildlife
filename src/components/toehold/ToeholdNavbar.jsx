@@ -1,10 +1,23 @@
 import { useState, useEffect } from 'react'
+import { useSiteContent } from '../../context/SiteContentContext'
 
 export default function ToeholdNavbar({
   currentView = 'home',
   onNavigate,
   onOpenEnquire,
 }) {
+  const { content } = useSiteContent()
+  const brand = content?.brand || {
+    siteName: 'VM Wild Expeditions',
+    tagline: 'Beyond the Map. Into the Wild.',
+    logoUrl: '/logo-clean.png',
+  }
+  const social = content?.social || {
+    instagramUrl: 'https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz',
+    instagramHandle: '@vm_wild_expeditions',
+    whatsappNumber: '919087394546',
+  }
+
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
@@ -68,19 +81,19 @@ export default function ToeholdNavbar({
           href="#"
           onClick={handleLogoClick}
           className="flex items-center gap-3 group no-underline flex-shrink-0"
-          title="VM Wild Expeditions — Beyond the Map. Into the Wild."
+          title={`${brand.siteName} — ${brand.tagline}`}
         >
           <img
-            src="/logo-clean.png"
-            alt="VM Wild Expeditions Logo"
+            src={brand.logoUrl || '/logo-clean.png'}
+            alt={`${brand.siteName} Logo`}
             className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md flex-shrink-0"
           />
           <div className="flex flex-col border-l border-[#242923] pl-3 py-0.5 flex-shrink-0">
             <span className="font-serif text-[13px] sm:text-[14px] tracking-[0.18em] uppercase text-[#D6A85C] font-semibold leading-tight whitespace-nowrap">
-              VM Wild Expeditions
+              {brand.siteName}
             </span>
             <span className="font-sans text-[8.5px] sm:text-[9.5px] tracking-[0.24em] uppercase text-[#B87333] font-light mt-0.5 whitespace-nowrap">
-              Beyond the Map. Into the Wild.
+              {brand.tagline}
             </span>
           </div>
         </a>
@@ -157,11 +170,11 @@ export default function ToeholdNavbar({
         <div className="hidden sm:flex items-center gap-2.5 flex-shrink-0">
           {/* Instagram Icon Button */}
           <a
-            href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz"
+            href={social.instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram Profile"
-            title="Follow us on Instagram @vm_wild_expeditions"
+            title={`Follow us on Instagram ${social.instagramHandle || ''}`}
             className="w-9 h-9 rounded-full bg-[#151815] hover:bg-[#1f241f] border border-[#242923] hover:border-[#E1306C] text-[#F2F0E8] hover:text-[#E1306C] flex items-center justify-center transition-all duration-300 shadow-md group"
           >
             <svg className="w-4 h-4 text-[#E1306C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -173,7 +186,7 @@ export default function ToeholdNavbar({
 
           {/* WhatsApp Icon Button */}
           <a
-            href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20to%20inquire%20about%20VM%20Wild%20Expeditions."
+            href={`https://wa.me/${social.whatsappNumber}?text=Hi%20Vijay,%20I'm%20reaching%20out%20to%20inquire%20about%20${encodeURIComponent(brand.siteName)}.`}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="WhatsApp Concierge"
@@ -230,13 +243,13 @@ export default function ToeholdNavbar({
       >
         <div className="flex items-center justify-between pb-4 border-b border-[#242923]">
           <div className="flex items-center gap-3">
-            <img src="/logo-clean.png" alt="VM Wild Expeditions" className="h-9 w-auto object-contain" />
+            <img src={brand.logoUrl || '/logo-clean.png'} alt={brand.siteName} className="h-9 w-auto object-contain" />
             <div className="flex flex-col">
               <span className="font-serif text-xs tracking-widest uppercase text-[#D6A85C] font-semibold">
-                VM Wild Expeditions
+                {brand.siteName}
               </span>
               <span className="font-sans text-[8px] tracking-[0.2em] uppercase text-[#B87333]">
-                Beyond the Map. Into the Wild.
+                {brand.tagline}
               </span>
             </div>
           </div>
@@ -303,7 +316,7 @@ export default function ToeholdNavbar({
             ENQUIRE NOW →
           </button>
           <a
-            href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20to%20inquire%20about%20VM%20Wild%20Expeditions."
+            href={`https://wa.me/${social.whatsappNumber}?text=Hi%20Vijay,%20I'm%20reaching%20out%20to%20inquire%20about%20${encodeURIComponent(brand.siteName)}.`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}

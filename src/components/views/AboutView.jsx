@@ -1,8 +1,15 @@
 import { useState } from 'react'
 import { TOURS_DATA } from '../../data/photoToursData'
+import { useSiteContent } from '../../context/SiteContentContext'
 
 export default function AboutView({ onBackToHome, onPlanTrip }) {
-  const founders = TOURS_DATA.founders
+  const { content } = useSiteContent()
+  const founders = (content?.founders && content.founders.length > 0)
+    ? content.founders
+    : TOURS_DATA.founders
+  const brand = content?.brand || { siteName: 'VM Wild Expeditions' }
+  const social = content?.social || { whatsappNumber: '919087394546' }
+
   const [activeIdx, setActiveIdx] = useState(0)
 
   if (!founders || founders.length === 0) return null
@@ -190,7 +197,7 @@ export default function AboutView({ onBackToHome, onPlanTrip }) {
 
                   {/* WhatsApp Button */}
                   <a
-                    href={`https://wa.me/919087394546?text=Hi%20${encodeURIComponent(founder.displayName || founder.name)},%20I'm%20reaching%20out%20to%20connect%20with%20you%20from%20VM%20Wild%20Expeditions.`}
+                    href={`https://wa.me/${social.whatsappNumber}?text=Hi%20${encodeURIComponent(founder.displayName || founder.name)},%20I'm%20reaching%20out%20to%20connect%20with%20you%20from%20${encodeURIComponent(brand.siteName)}.`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-[#161a16] border border-[#242923] hover:border-[#25D366] text-xs font-sans text-[#F2F0E8] hover:text-[#25D366] transition-all group"

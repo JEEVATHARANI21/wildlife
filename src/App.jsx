@@ -21,20 +21,60 @@ import FAQView from './components/views/FAQView'
 import CustomCursor from './components/CustomCursor'
 import LegalModal from './components/LegalModal'
 import WhatsAppButton from './components/WhatsAppButton'
+import AdminPanel from './components/admin/AdminPanel'
 
 import { TOURS_DATA } from './data/photoToursData'
+import { useSiteContent } from './context/SiteContentContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
+  const { content } = useSiteContent()
   const lenisRef = useRef(null)
-  const [currentView, setCurrentView] = useState('home') // 'home' | 'gallery' | 'about' | 'itinerary'
+
+  const getInitialView = () => {
+    const path = window.location.pathname.toLowerCase()
+    const hash = window.location.hash.toLowerCase()
+    const search = window.location.search.toLowerCase()
+    if (path.includes('/admin') || hash === '#admin' || search.includes('admin=true') || search.includes('view=admin')) {
+      return 'admin'
+    }
+    return 'home'
+  }
+
+  const [currentView, setCurrentView] = useState(getInitialView) // 'home' | 'gallery' | 'about' | 'itinerary' | 'faq' | 'admin'
   const [activeCategory, setActiveCategory] = useState('animals') // 'animals' | 'birds'
   const [selectedTour, setSelectedTour] = useState(null)
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [planTripModalOpen, setPlanTripModalOpen] = useState(false)
   const [legalModalOpen, setLegalModalOpen] = useState(false)
   const [legalTab, setLegalTab] = useState('terms')
+
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const hash = window.location.hash.toLowerCase()
+      const path = window.location.pathname.toLowerCase()
+      const search = window.location.search.toLowerCase()
+      if (hash === '#admin' || path.includes('/admin') || search.includes('admin=true')) {
+        setCurrentView('admin')
+      }
+    }
+    window.addEventListener('hashchange', handleUrlChange)
+    window.addEventListener('popstate', handleUrlChange)
+    return () => {
+      window.removeEventListener('hashchange', handleUrlChange)
+      window.removeEventListener('popstate', handleUrlChange)
+    }
+  }, [])
+
+  const handleExitAdmin = () => {
+    if (window.location.hash === '#admin') {
+      window.history.pushState(null, '', window.location.pathname || '/')
+    } else if (window.location.pathname.includes('/admin')) {
+      window.history.pushState(null, '', '/')
+    }
+    navigateTo('home')
+  }
 
   const openLegal = (tab = 'terms') => {
     setLegalTab(tab)
@@ -103,6 +143,10 @@ export default function App() {
     }
   }, [isAnyModalOpen])
 
+  if (currentView === 'admin') {
+    return <AdminPanel onExitAdmin={handleExitAdmin} />
+  }
+
   return (
     <div className="grain" style={{ background: '#080908', color: '#F2F0E8' }}>
       <CustomCursor />
@@ -149,9 +193,9 @@ export default function App() {
           {/* 1. Home Page / Hero */}
           <ToursHero onPlanTrip={() => setPlanTripModalOpen(true)} />
 
-          {/* 2. Founder Section (Page 2 Preview -> Click button to open full Founder Page) */}
+          {/* 2. Founder Section */}
           <FoundersSection
-            founders={TOURS_DATA.founders}
+            founders={content.founders || TOURS_DATA.founders}
             onViewFullAbout={() => navigateTo('about')}
             onPlanTrip={() => setPlanTripModalOpen(true)}
             onExploreTrips={() => {
@@ -160,16 +204,16 @@ export default function App() {
             }}
           />
 
-          {/* 3. Gallery (4 to 5 images + "View Full Gallery" button that redirects to full gallery page) */}
+          {/* 3. Gallery */}
           <HomeGalleryPreview
             onViewFullGallery={() => navigateTo('gallery')}
             onPlanTrip={() => setPlanTripModalOpen(true)}
           />
 
-          {/* 4. Tracking Package Tour Itineraries (sample details only; clicking redirects to fototrails365 itinerary page) */}
+          {/* 4. Tracking Package Tour Itineraries */}
           <TourCatalog
-            animalTours={TOURS_DATA.animalTours}
-            birdTours={TOURS_DATA.birdTours}
+            animalTours={content.animalTours || TOURS_DATA.animalTours}
+            birdTours={content.birdTours || TOURS_DATA.birdTours}
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
             onSelectTour={handleOpenItinerary}
@@ -183,6 +227,7 @@ export default function App() {
           <ContactFooter
             openLegal={openLegal}
             onPlanTrip={() => setPlanTripModalOpen(true)}
+            onOpenAdmin={() => navigateTo('admin')}
           />
         </main>
       )}
@@ -192,8 +237,8 @@ export default function App() {
         isOpen={calendarOpen}
         onClose={() => setCalendarOpen(false)}
         onSelectTour={handleOpenItinerary}
-        animalTours={TOURS_DATA.animalTours}
-        birdTours={TOURS_DATA.birdTours}
+        animalTours={content.animalTours || TOURS_DATA.animalTours}
+        birdTours={content.birdTours || TOURS_DATA.birdTours}
       />
 
       {/* Plan Your Expedition Qualification Lead Funnel Modal (Enquire) */}

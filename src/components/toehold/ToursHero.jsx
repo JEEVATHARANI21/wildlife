@@ -1,10 +1,21 @@
+import { useSiteContent } from '../../context/SiteContentContext'
+
 export default function ToursHero({ onPlanTrip }) {
+  const { content } = useSiteContent()
+  const hero = content?.hero || {
+    eyebrow: 'WILDLIFE & BIRD PHOTOGRAPHY EXPEDITIONS',
+    headlinePart1: 'Go Where the Wild',
+    headlinePart2: 'Still Roams.',
+    description: "Expert-led wildlife and bird photography tours across India's most extraordinary wildernesses — designed for photographers, birders, and nature lovers who want more than a typical safari.",
+    heroBgImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=2400&q=90&auto=format&fit=crop',
+  }
+
   return (
     <section className="relative w-full min-h-[92vh] sm:min-h-screen flex items-center overflow-hidden bg-[#080908] select-none">
       {/* Background High-Impact Cinematic Wildlife Photography Layer */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=2400&q=90&auto=format&fit=crop"
+          src={hero.heroBgImage || 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=2400&q=90&auto=format&fit=crop'}
           alt="Wild Bengal Tiger — VM Wild Expeditions"
           className="w-full h-full object-cover object-[72%_center] md:object-[80%_center] lg:object-[84%_center] brightness-[0.88] contrast-[1.05]"
         />
@@ -26,21 +37,21 @@ export default function ToursHero({ onPlanTrip }) {
           <div className="inline-flex items-center gap-2.5 mb-5">
             <span className="w-7 h-[1.5px] bg-[#B87333]" />
             <span className="font-sans text-[10.5px] sm:text-xs tracking-[0.28em] uppercase text-[#D6A85C] font-semibold">
-              WILDLIFE & BIRD PHOTOGRAPHY EXPEDITIONS
+              {hero.eyebrow || 'WILDLIFE & BIRD PHOTOGRAPHY EXPEDITIONS'}
             </span>
           </div>
 
           {/* Main Heading */}
           <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-[5.4rem] font-light text-[#F2F0E8] leading-[1.04] tracking-tight mb-6">
-            <span className="block">Go Where the Wild</span>
+            <span className="block">{hero.headlinePart1 || 'Go Where the Wild'}</span>
             <span className="block italic text-[#D6A85C] font-normal mt-1">
-              Still Roams.
+              {hero.headlinePart2 || 'Still Roams.'}
             </span>
           </h1>
 
           {/* Supporting Text */}
           <p className="font-sans text-sm sm:text-base md:text-lg text-[#F2F0E8]/90 max-w-xl font-light leading-relaxed mb-9">
-            Expert-led wildlife and bird photography tours across India's most extraordinary wildernesses — designed for photographers, birders, and nature lovers who want more than a typical safari.
+            {hero.description || "Expert-led wildlife and bird photography tours across India's most extraordinary wildernesses — designed for photographers, birders, and nature lovers who want more than a typical safari."}
           </p>
 
           {/* CTA Buttons */}

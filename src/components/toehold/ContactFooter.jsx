@@ -1,6 +1,19 @@
 import { useState } from 'react'
+import { useSiteContent } from '../../context/SiteContentContext'
 
-export default function ContactFooter({ openLegal }) {
+export default function ContactFooter({ openLegal, onOpenAdmin }) {
+  const { content } = useSiteContent()
+  const brand = content?.brand || {
+    siteName: 'VM Wild Expeditions',
+    tagline: 'Beyond the Map. Into the wild',
+    logoUrl: '/logo-clean.png',
+  }
+  const social = content?.social || {
+    instagramUrl: 'https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz',
+    instagramHandle: '@vm_wild_expeditions',
+    whatsappNumber: '919087394546',
+  }
+
   const [form, setForm] = useState({ name: '', phone: '', email: '', category: 'animal', message: '' })
   const [sent, setSent] = useState(false)
 
@@ -8,9 +21,9 @@ export default function ContactFooter({ openLegal }) {
     e.preventDefault()
     setSent(true)
     const encodedText = encodeURIComponent(
-      `Hello VM Wild Expeditions,\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nInterested Track: ${form.category === 'animal' ? 'Wild Photography' : form.category === 'bird' ? 'Birds Photography' : 'Custom Expedition'}\nMessage: ${form.message}`
+      `Hello ${brand.siteName},\n\nName: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\nInterested Track: ${form.category === 'animal' ? 'Wild Photography' : form.category === 'bird' ? 'Birds Photography' : 'Custom Expedition'}\nMessage: ${form.message}`
     )
-    window.open(`https://wa.me/919087394546?text=${encodedText}`, '_blank')
+    window.open(`https://wa.me/${social.whatsappNumber}?text=${encodedText}`, '_blank')
   }
 
   return (
@@ -21,14 +34,14 @@ export default function ContactFooter({ openLegal }) {
           <div className="lg:col-span-6 space-y-6">
             <div className="flex items-center gap-4">
               <div className="p-1.5 sm:p-2 rounded-2xl bg-[#080908] border border-[#242923] shadow-lg overflow-hidden">
-                <img src="/logo-clean.png" alt="VM Wild Expeditions" className="h-13 sm:h-16 w-auto object-contain" />
+                <img src={brand.logoUrl || '/logo-clean.png'} alt={brand.siteName} className="h-13 sm:h-16 w-auto object-contain" />
               </div>
               <div className="flex flex-col border-l border-[#242923] pl-3.5">
                 <span className="font-serif text-lg sm:text-xl tracking-[0.16em] uppercase text-[#F2F0E8] font-bold leading-tight">
-                  VM <span className="text-[#B87333] font-normal">WILD EXPEDITIONS</span>
+                  {brand.siteName}
                 </span>
                 <span className="font-sans text-[8.5px] sm:text-[9.5px] tracking-[0.22em] uppercase text-[#D6A85C] font-semibold mt-0.5">
-                  Beyond the Map. Into the wild
+                  {brand.tagline}
                 </span>
               </div>
             </div>
@@ -53,7 +66,7 @@ export default function ContactFooter({ openLegal }) {
               </a>
 
               <a
-                href="https://wa.me/919087394546?text=Hi%20Vijay,%20I'm%20reaching%20out%20from%20VM%20Wild%20Expeditions%20website%20for%20a%20Photo%20Tour%20inquiry."
+                href={`https://wa.me/${social.whatsappNumber}?text=Hi%20Vijay,%20I'm%20reaching%20out%20from%20${encodeURIComponent(brand.siteName)}%20website%20for%20a%20Photo%20Tour%20inquiry.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 rounded-2xl bg-[#151815] border border-[#242923] hover:border-[#25D366] transition-colors flex items-center gap-3.5 group"
@@ -73,7 +86,7 @@ export default function ContactFooter({ openLegal }) {
             {/* Instagram Link with official SVG icon */}
             <div className="pt-2">
               <a
-                href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz"
+                href={social.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-[#151815] border border-[#242923] hover:border-[#E1306C] text-xs font-sans text-[#F2F0E8] hover:text-[#E1306C] transition-all group"
@@ -83,7 +96,7 @@ export default function ContactFooter({ openLegal }) {
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                 </svg>
-                <span>Follow Official Instagram: <strong>@vm_wild_expeditions</strong></span>
+                <span>Follow Official Instagram: <strong>{social.instagramHandle || '@vm_wild_expeditions'}</strong></span>
                 <span className="text-[11px] text-[#A7A59B] group-hover:text-[#E1306C]">↗</span>
               </a>
             </div>
@@ -193,7 +206,7 @@ export default function ContactFooter({ openLegal }) {
 
         {/* Footer Bottom Line */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-sans text-[#A7A59B]/70">
-          <p>© {new Date().getFullYear()} VM Wild Expeditions Pvt Ltd. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} {brand.siteName} Pvt Ltd. All Rights Reserved.</p>
           <div className="flex items-center gap-5">
             <button
               onClick={() => openLegal && openLegal('terms')}
@@ -208,6 +221,19 @@ export default function ContactFooter({ openLegal }) {
             >
               Privacy Policy
             </button>
+            {onOpenAdmin && (
+              <>
+                <span>·</span>
+                <button
+                  onClick={onOpenAdmin}
+                  className="hover:text-[#D6A85C] transition-colors cursor-pointer text-[#A7A59B]/40 hover:text-[#D6A85C] flex items-center gap-1.5"
+                  title="Open Admin CMS Portal"
+                >
+                  <span>⚙️</span>
+                  <span>Admin Portal</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
