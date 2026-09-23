@@ -311,9 +311,19 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                     {item.location}
                   </h3>
 
+                  {item.gear && (
+                    <div className="flex items-center gap-1.5 mt-1.5 text-[10.5px] sm:text-xs font-mono text-[#D6A85C]/90">
+                      <span>📷</span>
+                      <span>{item.gear}</span>
+                    </div>
+                  )}
+
                   {/* Action for Active Center Card */}
                   {isCenter && (
-                    <div className="mt-3 pt-3 border-t border-[#242923]/90 flex items-center justify-end">
+                    <div className="mt-3 pt-3 border-t border-[#242923]/90 flex items-center justify-between">
+                      <span className="text-[10px] font-sans text-[#A7A59B] italic">
+                        Authentic Field Frame · EXIF Verified
+                      </span>
                       <span className="text-[10.5px] font-sans font-bold uppercase tracking-wider text-[#D6A85C] flex items-center gap-1.5 transition-transform group-hover:translate-x-1">
                         <span>Inspect Frame</span>
                         <span>→</span>

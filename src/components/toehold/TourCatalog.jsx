@@ -46,6 +46,7 @@ export default function TourCatalog({
   onOpenCalendar,
 }) {
   const [destinationFilter, setDestinationFilter] = useState('all')
+  const [regionFilter, setRegionFilter] = useState('all')
   const [monthFilter, setMonthFilter] = useState('all')
   const [durationFilter, setDurationFilter] = useState('all')
   const [availabilityFilter, setAvailabilityFilter] = useState('all')
@@ -53,6 +54,9 @@ export default function TourCatalog({
   const currentList = activeCategory === 'animals' ? animalTours : birdTours
 
   const filteredTours = currentList.filter((tour) => {
+    if (regionFilter !== 'all') {
+      if (tour.region !== regionFilter) return false
+    }
     if (destinationFilter !== 'all') {
       if (!tour.destination.toLowerCase().includes(destinationFilter.toLowerCase())) return false
     }
@@ -81,22 +85,22 @@ export default function TourCatalog({
   })
 
   const hasActiveFilters =
+    regionFilter !== 'all' ||
     destinationFilter !== 'all' ||
     monthFilter !== 'all' ||
     durationFilter !== 'all' ||
     availabilityFilter !== 'all'
 
   const resetFilters = () => {
+    setRegionFilter('all')
     setDestinationFilter('all')
     setMonthFilter('all')
     setDurationFilter('all')
     setAvailabilityFilter('all')
   }
 
-  // Unique destinations for active category
-  const destinations = [
-    ...new Set(currentList.map((t) => t.destination.split('(')[0].split('&')[0].trim())),
-  ]
+  // Unique regions available
+  const regions = ['All Regions', 'Central India', 'Western Ghats', 'Himalayas', 'North & Arid Plains']
 
   return (
     <section id="destinations" className="py-20 sm:py-24 bg-[#080908] border-b border-[#242923] select-none">
@@ -166,6 +170,33 @@ export default function TourCatalog({
               <span>Birds Expeditions</span>
             </button>
           </div>
+
+          {/* Region Filter Strip */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
+            {regions.map((reg) => (
+              <button
+                key={reg}
+                type="button"
+                onClick={() => setRegionFilter(reg === 'All Regions' ? 'all' : reg)}
+                className={`px-3.5 py-1.5 rounded-full text-[11px] font-sans transition-all duration-300 cursor-pointer border ${
+                  (reg === 'All Regions' && regionFilter === 'all') || regionFilter === reg
+                    ? 'bg-[#242923] text-[#D6A85C] border-[#D6A85C]/60 font-semibold shadow-sm'
+                    : 'bg-[#111511] text-[#A7A59B] border-[#242923] hover:text-[#F2F0E8] hover:border-[#384038]'
+                }`}
+              >
+                {reg}
+              </button>
+            ))}
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={resetFilters}
+                className="text-[10px] font-sans uppercase tracking-wider text-[#A7A59B] hover:text-[#D6A85C] ml-2 underline underline-offset-4 cursor-pointer"
+              >
+                Reset Filter
+              </button>
+            )}
+          </div>
         </div>
 
         {/* 2. Expedition Cards Grid: Showing only the requested details in the website dark theme */}
@@ -199,7 +230,12 @@ export default function TourCatalog({
                     </span>
                   </div>
 
-
+                  {/* Top Right Badge: Status */}
+                  <div className="absolute top-4 right-4 z-10 pointer-events-none">
+                    <span className="px-3 py-1 rounded-full bg-[#080a08]/90 text-[#D6A85C] font-sans text-[10px] font-bold tracking-wider uppercase shadow-md border border-[#242923] backdrop-blur-md">
+                      {tour.status}
+                    </span>
+                  </div>
 
                   {/* Bottom Title Overlay on Photo */}
                   <div className="absolute bottom-3.5 left-5 right-5 z-10 text-left pointer-events-none">
@@ -209,7 +245,34 @@ export default function TourCatalog({
                   </div>
                 </div>
 
-                {/* Lower Body: Dark Luxury Theme with ONLY the 2 Action Buttons */}
+                {/* Standardized Photography Specs Strip matching benchmark */}
+                <div className="px-5 pt-3.5 pb-1 bg-[#121512] border-t border-[#1e241e] space-y-2 text-left">
+                  {/* Focus line */}
+                  <div className="flex items-center gap-1.5 text-[11px] font-sans text-[#D6A85C] font-medium truncate">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D6A85C] shrink-0" />
+                    <span className="truncate">{tour.photoFocus || tour.targetSpeciesLine}</span>
+                  </div>
+
+                  {/* 3 Key Spec Pills: Duration | Max 4 / Jeep | All-Inclusive Price */}
+                  <div className="grid grid-cols-3 gap-1.5 text-center">
+                    <div className="p-2 rounded-xl bg-[#0a0d0a] border border-[#202620]">
+                      <span className="text-[9px] uppercase tracking-wider text-[#A7A59B] block font-light">Duration</span>
+                      <span className="text-[11px] font-sans font-semibold text-[#F2F0E8] block truncate">{tour.duration}</span>
+                    </div>
+
+                    <div className="p-2 rounded-xl bg-[#0a0d0a] border border-[#202620]">
+                      <span className="text-[9px] uppercase tracking-wider text-[#A7A59B] block font-light">Vehicle</span>
+                      <span className="text-[11px] font-sans font-semibold text-[#F2F0E8] block truncate">Max 4 / Jeep</span>
+                    </div>
+
+                    <div className="p-2 rounded-xl bg-[#0a0d0a] border border-[#202620]">
+                      <span className="text-[9px] uppercase tracking-wider text-[#A7A59B] block font-light">All-Inclusive</span>
+                      <span className="text-[11px] font-sans font-semibold text-[#D6A85C] block truncate">₹{tour.price ? tour.price.toLocaleString('en-IN') : '79,900'}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Lower Body: Dark Luxury Theme with the 2 Action Buttons */}
                 <div className="p-5 sm:p-6 bg-[#121512] space-y-3">
                   {/* Button 1: VIEW ITINERARY with dropdown triangle */}
                   <button

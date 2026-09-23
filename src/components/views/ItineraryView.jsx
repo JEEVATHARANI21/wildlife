@@ -150,6 +150,33 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
               </div>
             </div>
 
+            {/* Photography Logistics & Masterclass Guarantee */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-5 rounded-2xl bg-[#151815] border border-[#242923] flex items-start gap-3.5">
+                <span className="text-2xl">🚙</span>
+                <div>
+                  <span className="text-[10.5px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
+                    VEHICLE & SHOOTING LOGISTICS
+                  </span>
+                  <p className="text-xs font-sans text-[#F2F0E8]/90 leading-relaxed font-light">
+                    {tour.vehicleLogistics || 'Guaranteed Open-top 4x4 Gypsy · Strictly Max 4 photographers (1 per row) · 360° unobstructed shooting angles & beanbag mounts.'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-[#151815] border border-[#242923] flex items-start gap-3.5">
+                <span className="text-2xl">🎓</span>
+                <div>
+                  <span className="text-[10.5px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
+                    1-ON-1 FIELD MASTERCLASS
+                  </span>
+                  <p className="text-xs font-sans text-[#F2F0E8]/90 leading-relaxed font-light">
+                    Daily in-Gypsy mentoring by Vijay Mathiew on exposure compensation, histogram tracking, and animal anticipation, with evening RAW critiques in Lightroom.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Day by Day Section */}
             <div>
               <h3 className="font-serif text-2xl sm:text-3xl text-[#F2F0E8] mb-8 font-light flex items-center gap-3">

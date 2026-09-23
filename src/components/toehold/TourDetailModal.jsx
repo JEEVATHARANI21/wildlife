@@ -93,7 +93,7 @@ export default function TourDetailModal({ tour, onClose }) {
               <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
                 👥 Group Size
               </span>
-              <span className="text-[#F2F0E8] font-medium">Strict Max 4/Gypsy</span>
+              <span className="text-[#F2F0E8] font-medium">Strict Max 4/Jeep</span>
             </div>
             <div>
               <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
@@ -106,6 +106,33 @@ export default function TourDetailModal({ tour, onClose }) {
                 🦁 Field Skipper
               </span>
               <span className="text-[#F2F0E8] font-medium">{tour.skipper}</span>
+            </div>
+          </div>
+
+          {/* Photography Logistics & Masterclass Guarantee */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div className="p-4 rounded-2xl bg-[#080908] border border-[#242923] flex items-start gap-3">
+              <span className="text-xl">🚙</span>
+              <div>
+                <span className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
+                  VEHICLE & SHOOTING LOGISTICS
+                </span>
+                <p className="text-xs font-sans text-[#F2F0E8]/90 leading-relaxed font-light">
+                  {tour.vehicleLogistics || 'Guaranteed Open-top 4x4 Gypsy · Max 4 photographers (1 per row) · 360° unobstructed shooting angles & beanbag mounts.'}
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#080908] border border-[#242923] flex items-start gap-3">
+              <span className="text-xl">🎓</span>
+              <div>
+                <span className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
+                  1-ON-1 FIELD MASTERCLASS
+                </span>
+                <p className="text-xs font-sans text-[#F2F0E8]/90 leading-relaxed font-light">
+                  Daily in-Gypsy coaching by Vijay Mathiew on exposure, histogram, and eye-AF tracking, plus evening RAW critiques in Lightroom.
+                </p>
+              </div>
             </div>
           </div>
 
