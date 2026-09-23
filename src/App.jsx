@@ -133,15 +133,16 @@ export default function App() {
   )
 
   useEffect(() => {
+    document.body.classList.toggle('admin-active', currentView === 'admin')
     if (!lenisRef.current) return
-    if (isAnyModalOpen) {
+    if (isAnyModalOpen || currentView === 'admin') {
       lenisRef.current.stop()
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = isAnyModalOpen ? 'hidden' : 'auto'
     } else {
       lenisRef.current.start()
       document.body.style.overflow = ''
     }
-  }, [isAnyModalOpen])
+  }, [isAnyModalOpen, currentView])
 
   if (currentView === 'admin') {
     return <AdminPanel onExitAdmin={handleExitAdmin} />

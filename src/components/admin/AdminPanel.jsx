@@ -1,7 +1,13 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useSiteContent } from '../../context/SiteContentContext'
 
 export default function AdminPanel({ onExitAdmin }) {
+  useEffect(() => {
+    document.body.classList.add('admin-active')
+    return () => {
+      document.body.classList.remove('admin-active')
+    }
+  }, [])
   const {
     content,
     updateBrand,
@@ -67,7 +73,7 @@ export default function AdminPanel({ onExitAdmin }) {
   // 1. Password Protected Login Gate
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#080908] text-[#F2F0E8] flex items-center justify-center p-4">
+      <div className="admin-scope min-h-screen bg-[#080908] text-[#F2F0E8] flex items-center justify-center p-4">
         <div className="w-full max-w-md p-8 sm:p-10 rounded-3xl bg-[#111511] border border-[#242923] shadow-2xl text-center">
           <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-[#181e18] border border-[#D6A85C]/40 flex items-center justify-center text-2xl shadow-lg">
             🔐
@@ -120,7 +126,7 @@ export default function AdminPanel({ onExitAdmin }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#080908] text-[#F2F0E8] flex flex-col font-sans select-none">
+    <div className="admin-scope min-h-screen bg-[#080908] text-[#F2F0E8] flex flex-col font-sans">
       {/* Top Admin Header Bar */}
       <header className="sticky top-0 z-40 bg-[#0d100d]/95 backdrop-blur-md border-b border-[#242923] px-5 sm:px-8 py-3.5 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">

@@ -95,7 +95,37 @@
 
 /* ─── CUSTOM CURSOR ──────────────────────────────────────── */
 @media (hover: hover) and (pointer: fine) {
-  * { cursor: none; }
+  /* Public website uses the custom gold/copper cursor */
+  body:not(.admin-active) *:not(.admin-scope, .admin-scope *) {
+    cursor: none;
+  }
+
+  /* Admin Dashboard MUST have standard visible mouse pointer */
+  body.admin-active,
+  body.admin-active *,
+  .admin-scope,
+  .admin-scope * {
+    cursor: auto !important;
+  }
+
+  body.admin-active button,
+  body.admin-active a,
+  body.admin-active select,
+  body.admin-active label,
+  .admin-scope button,
+  .admin-scope a,
+  .admin-scope select,
+  .admin-scope label,
+  .admin-scope [role="button"] {
+    cursor: pointer !important;
+  }
+
+  body.admin-active input,
+  body.admin-active textarea,
+  .admin-scope input,
+  .admin-scope textarea {
+    cursor: text !important;
+  }
 
   .cursor-dot {
     position: fixed;
