@@ -133,14 +133,28 @@ export default function App() {
   )
 
   useEffect(() => {
-    document.body.classList.toggle('admin-active', currentView === 'admin')
+    const isAdmin = currentView === 'admin'
+    document.body.classList.toggle('admin-active', isAdmin)
+    document.documentElement.classList.toggle('admin-active', isAdmin)
+
     if (!lenisRef.current) return
-    if (isAnyModalOpen || currentView === 'admin') {
+
+    if (isAdmin) {
       lenisRef.current.stop()
-      document.body.style.overflow = isAnyModalOpen ? 'hidden' : 'auto'
+      // Restore native scrolling for Admin Dashboard
+      document.documentElement.style.overflow = 'auto'
+      document.body.style.overflow = 'auto'
+      document.documentElement.style.height = 'auto'
+      document.body.style.height = 'auto'
+    } else if (isAnyModalOpen) {
+      lenisRef.current.stop()
+      document.body.style.overflow = 'hidden'
     } else {
       lenisRef.current.start()
       document.body.style.overflow = ''
+      document.documentElement.style.overflow = ''
+      document.body.style.height = ''
+      document.documentElement.style.height = ''
     }
   }, [isAnyModalOpen, currentView])
 

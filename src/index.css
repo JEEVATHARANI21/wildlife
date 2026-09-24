@@ -93,6 +93,22 @@
   will-change: transform;
 }
 
+/* ─── ADMIN PANEL SCROLLING FIX ────────────────────────────── */
+html.admin-active,
+body.admin-active {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: auto !important;
+  min-height: 100vh !important;
+  position: relative !important;
+  touch-action: auto !important;
+}
+
+.admin-scope {
+  overflow-y: visible !important;
+  min-height: 100vh;
+}
+
 /* ─── CUSTOM CURSOR ──────────────────────────────────────── */
 @media (hover: hover) and (pointer: fine) {
   /* Public website uses the custom gold/copper cursor */

@@ -5,8 +5,10 @@ import ImageUploader from './ImageUploader'
 export default function AdminPanel({ onExitAdmin }) {
   useEffect(() => {
     document.body.classList.add('admin-active')
+    document.documentElement.classList.add('admin-active')
     return () => {
       document.body.classList.remove('admin-active')
+      document.documentElement.classList.remove('admin-active')
     }
   }, [])
 
@@ -283,7 +285,7 @@ export default function AdminPanel({ onExitAdmin }) {
       {/* Main Admin Content Body */}
       <div className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Navigation Sidebar */}
-        <aside className="lg:col-span-3 space-y-2">
+        <aside className="lg:col-span-3 space-y-2 lg:sticky lg:top-20 lg:self-start">
           <div className="p-3 bg-[#111511] rounded-2xl border border-[#242923] space-y-1">
             {[
               { id: 'brand', label: '🏢 Brand & Logo', desc: 'Site name, logo, tagline' },
