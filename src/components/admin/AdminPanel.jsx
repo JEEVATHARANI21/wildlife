@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useSiteContent } from '../../context/SiteContentContext'
+import ImageUploader from './ImageUploader'
 
 export default function AdminPanel({ onExitAdmin }) {
   useEffect(() => {
@@ -8,6 +9,7 @@ export default function AdminPanel({ onExitAdmin }) {
       document.body.classList.remove('admin-active')
     }
   }, [])
+
   const {
     content,
     updateBrand,
@@ -16,6 +18,7 @@ export default function AdminPanel({ onExitAdmin }) {
     updateFounder,
     updateSingleTour,
     updateTourById,
+    updateGallery,
     updateAdminSettings,
     resetToDefaults,
     exportContentJSON,
@@ -29,8 +32,8 @@ export default function AdminPanel({ onExitAdmin }) {
   const [passcodeInput, setPasscodeInput] = useState('')
   const [authError, setAuthError] = useState('')
 
-  // Active Tab: 'brand' | 'social' | 'hero' | 'founders' | 'tours' | 'itinerary' | 'backup'
-  const [activeTab, setActiveTab] = useState('brand')
+  // Active Tab: 'brand' | 'social' | 'hero' | 'founders' | 'tours' | 'itinerary' | 'gallery' | 'backup'
+  const [activeTab, setActiveTab] = useState('hero')
   const [toastMessage, setToastMessage] = useState('')
   const fileInputRef = useRef(null)
 
@@ -108,6 +111,37 @@ export default function AdminPanel({ onExitAdmin }) {
     updateTourById(selectedItineraryTourId, { exclusions: updated })
   }
 
+  // Gallery Editing Helpers
+  const addGalleryItem = () => {
+    const newImg = {
+      id: `gal-${Date.now()}`,
+      title: 'New Expedition Capture',
+      species: 'Wildlife Species',
+      location: 'National Park Reserve, India',
+      category: 'Wild',
+      src: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1200&q=85&auto=format&fit=crop',
+      caption: 'Intimate wildlife perspective captured during peak golden hour.',
+      gear: '400mm f/2.8 · 1/1000s · ISO 400',
+      featuredOnHome: true,
+    }
+    updateGallery([newImg, ...(content.galleryImages || [])])
+    showToast('New gallery image added! You can now upload a custom photo.')
+  }
+
+  const updateSingleGalleryItem = (index, updatedData) => {
+    const updated = [...(content.galleryImages || [])]
+    if (updated[index]) {
+      updated[index] = { ...updated[index], ...updatedData }
+      updateGallery(updated)
+    }
+  }
+
+  const removeGalleryItem = (index) => {
+    const updated = (content.galleryImages || []).filter((_, i) => i !== index)
+    updateGallery(updated)
+    showToast('Gallery image deleted.')
+  }
+
   const showToast = (msg = 'Changes saved successfully!') => {
     setToastMessage(msg)
     setTimeout(() => setToastMessage(''), 3000)
@@ -148,7 +182,7 @@ export default function AdminPanel({ onExitAdmin }) {
   // 1. Password Protected Login Gate
   if (!isAuthenticated) {
     return (
-      <div className="admin-scope min-h-screen bg-[#080908] text-[#F2F0E8] flex items-center justify-center p-4">
+      <div className="admin-scope min-h-screen bg-[#080908] text-[#F2F0E8] flex items-center justify-center p-4 font-sans">
         <div className="w-full max-w-md p-8 sm:p-10 rounded-3xl bg-[#111511] border border-[#242923] shadow-2xl text-center">
           <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-[#181e18] border border-[#D6A85C]/40 flex items-center justify-center text-2xl shadow-lg">
             🔐
@@ -215,7 +249,7 @@ export default function AdminPanel({ onExitAdmin }) {
                 Live Sync Active
               </span>
             </h1>
-            <p className="text-[10px] text-[#A7A59B]">All edits instantly update the live site</p>
+            <p className="text-[10px] text-[#A7A59B]">All edits & uploaded photos instantly update the live site</p>
           </div>
         </div>
 
@@ -254,10 +288,11 @@ export default function AdminPanel({ onExitAdmin }) {
             {[
               { id: 'brand', label: '🏢 Brand & Logo', desc: 'Site name, logo, tagline' },
               { id: 'social', label: '🔗 Social & Contact', desc: 'Instagram, WhatsApp, email' },
-              { id: 'hero', label: '🌅 Hero Banner', desc: 'Headlines & hero photo' },
-              { id: 'founders', label: '👥 Founders & Mentors', desc: 'Vijay & Jayavignesh' },
-              { id: 'tours', label: '🦁 Photo Tours', desc: 'Overview, dates & status' },
+              { id: 'hero', label: '🌅 Hero Banner', desc: 'Headlines & hero photo upload' },
+              { id: 'founders', label: '👥 Founders & Mentors', desc: 'Vijay & Jayavignesh portraits' },
+              { id: 'tours', label: '🦁 Photo Tours', desc: 'Overview, dates & tour cover uploads' },
               { id: 'itinerary', label: '🗺️ Itinerary & Logistics', desc: 'Days, stays, vehicle & inclusions' },
+              { id: 'gallery', label: '🖼️ Portfolio & Gallery', desc: 'Upload & manage all website photos' },
               { id: 'backup', label: '⚙️ Backup & Security', desc: 'Export, import, passcode' },
             ].map((tab) => (
               <button
@@ -280,9 +315,9 @@ export default function AdminPanel({ onExitAdmin }) {
 
           {/* Quick Help Card */}
           <div className="p-4 rounded-2xl bg-[#0a0d0a] border border-[#242923] text-xs text-[#A7A59B] space-y-2">
-            <span className="text-[#D6A85C] font-semibold block">💡 How It Works</span>
+            <span className="text-[#D6A85C] font-semibold block">📁 Image Upload & Import</span>
             <p className="text-[11px] leading-relaxed">
-              Every edit you save is immediately active across the site in real time. Download a backup JSON whenever you wish to commit changes to GitHub.
+              Every image field across the site features an <strong>Upload Image File</strong> option. Uploaded photos are automatically compressed into fast, crisp Data URLs and updated on the live site instantly!
             </p>
           </div>
         </aside>
@@ -325,51 +360,19 @@ export default function AdminPanel({ onExitAdmin }) {
                 </div>
               </div>
 
-              <div className="space-y-3 pt-2">
-                <label className="text-[10.5px] uppercase tracking-wider text-[#D6A85C] font-semibold block">
-                  Website Logo Image URL
-                </label>
-                <div className="flex flex-col sm:flex-row items-center gap-4">
-                  <input
-                    type="text"
-                    value={content.brand?.logoUrl || ''}
-                    onChange={(e) => updateBrand({ logoUrl: e.target.value })}
-                    placeholder="/logo-clean.png or image URL or /images/MYLOGO.jpeg"
-                    className="flex-1 py-2.5 px-3.5 rounded-xl bg-[#080908] border border-[#242923] focus:border-[#D6A85C] text-xs text-[#F2F0E8] outline-none"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => updateBrand({ logoUrl: '/images/MYLOGO.jpeg' })}
-                    className="py-2.5 px-4 rounded-xl bg-[#1b221b] border border-[#242923] hover:border-[#D6A85C] text-xs text-[#D6A85C] whitespace-nowrap cursor-pointer"
-                  >
-                    Use Uploaded MYLOGO.jpeg
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => updateBrand({ logoUrl: '/logo-clean.png' })}
-                    className="py-2.5 px-4 rounded-xl bg-[#151815] border border-[#242923] hover:border-[#A7A59B] text-xs text-[#A7A59B] whitespace-nowrap cursor-pointer"
-                  >
-                    Reset to Default Logo
-                  </button>
-                </div>
-
-                {/* Logo Live Preview */}
-                <div className="p-4 rounded-2xl bg-[#080908] border border-[#242923] flex items-center gap-4">
-                  <span className="text-xs text-[#A7A59B]">Logo Preview:</span>
-                  <div className="h-12 w-28 bg-[#121512] rounded-xl border border-[#242923] flex items-center justify-center p-2">
-                    <img
-                      src={content.brand?.logoUrl || '/logo-clean.png'}
-                      alt="Logo preview"
-                      className="max-h-full max-w-full object-contain"
-                      onError={(e) => {
-                        e.target.src = '/logo-clean.png'
-                      }}
-                    />
-                  </div>
-                  <span className="text-xs text-[#D6A85C] font-serif font-semibold">
-                    {content.brand?.siteName}
-                  </span>
-                </div>
+              <div className="pt-2">
+                <ImageUploader
+                  label="Website Logo Image (Upload file or paste URL)"
+                  value={content.brand?.logoUrl || ''}
+                  onChange={(newUrl) => updateBrand({ logoUrl: newUrl })}
+                  placeholder="/logo-clean.png or click Upload Image below"
+                  aspectRatio="contain"
+                  helpText="Upload PNG, SVG, or JPEG logo for header navbar and website footer."
+                  presetOptions={[
+                    { label: 'MYLOGO.jpeg', value: '/images/MYLOGO.jpeg' },
+                    { label: 'Default Clean Logo', value: '/logo-clean.png' },
+                  ]}
+                />
               </div>
 
               <div className="pt-4 border-t border-[#242923] flex justify-end">
@@ -471,7 +474,7 @@ export default function AdminPanel({ onExitAdmin }) {
                 </p>
               </div>
 
-              <div className="space-y-4 pt-2">
+              <div className="space-y-5 pt-2">
                 <div className="space-y-1.5">
                   <label className="text-[10.5px] uppercase tracking-wider text-[#D6A85C] font-semibold block">
                     Eyebrow Pill Text
@@ -522,35 +525,21 @@ export default function AdminPanel({ onExitAdmin }) {
                   />
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-[10.5px] uppercase tracking-wider text-[#D6A85C] font-semibold block">
-                    Hero Background Photography URL
-                  </label>
-                  <input
-                    type="url"
-                    value={content.hero?.heroBgImage || ''}
-                    onChange={(e) => updateHero({ heroBgImage: e.target.value })}
-                    className="w-full py-2.5 px-3.5 rounded-xl bg-[#080908] border border-[#242923] focus:border-[#D6A85C] text-xs text-[#F2F0E8] outline-none"
-                  />
-                  {content.hero?.heroBgImage && (
-                    <div className="relative mt-2 h-36 rounded-2xl overflow-hidden border border-[#242923]">
-                      <img
-                        src={content.hero.heroBgImage}
-                        alt="Hero preview"
-                        className="w-full h-full object-cover"
-                      />
-                      <span className="absolute bottom-2 left-2 px-2 py-0.5 rounded bg-black/70 text-[10px] text-[#D6A85C]">
-                        Preview
-                      </span>
-                    </div>
-                  )}
-                </div>
+                {/* Hero Background Image Upload Component */}
+                <ImageUploader
+                  label="Hero Background Photography (Upload File or URL)"
+                  value={content.hero?.heroBgImage || ''}
+                  onChange={(newUrl) => updateHero({ heroBgImage: newUrl })}
+                  placeholder="https://... or click Upload Image below"
+                  aspectRatio="banner"
+                  helpText="Upload a high-res wildlife photography image from your device or paste an image URL."
+                />
               </div>
 
               <div className="pt-4 border-t border-[#242923] flex justify-end">
                 <button
                   type="button"
-                  onClick={() => showToast('Hero banner updated!')}
+                  onClick={() => showToast('Hero banner settings saved!')}
                   className="py-2.5 px-6 rounded-full bg-[#D6A85C] text-[#080908] text-xs font-bold uppercase tracking-wider cursor-pointer"
                 >
                   Save Hero Settings
@@ -606,15 +595,15 @@ export default function AdminPanel({ onExitAdmin }) {
                         />
                       </div>
 
-                      <div className="space-y-1 sm:col-span-2">
-                        <label className="text-[10px] uppercase tracking-wider text-[#A7A59B] block font-semibold">
-                          Portrait Image URL
-                        </label>
-                        <input
-                          type="text"
+                      {/* Founder Portrait Upload Component */}
+                      <div className="sm:col-span-2">
+                        <ImageUploader
+                          label={`Portrait Image — ${founder.name}`}
                           value={founder.image || ''}
-                          onChange={(e) => updateFounder(idx, { image: e.target.value })}
-                          className="w-full py-2 px-3 rounded-xl bg-[#111511] border border-[#242923] focus:border-[#D6A85C] text-xs text-[#F2F0E8] outline-none"
+                          onChange={(newUrl) => updateFounder(idx, { image: newUrl })}
+                          placeholder="/images/vijay.jpeg or click Upload Image below"
+                          aspectRatio="portrait"
+                          helpText={`Upload custom portrait photo for Founder ${idx + 1}.`}
                         />
                       </div>
 
@@ -688,7 +677,7 @@ export default function AdminPanel({ onExitAdmin }) {
               <div>
                 <h2 className="font-serif text-2xl text-[#F2F0E8]">Photo Tour Expeditions</h2>
                 <p className="text-xs text-[#A7A59B] mt-1">
-                  Edit tour destinations, titles, durations, photographic focus, status, and photography covers.
+                  Edit tour destinations, titles, durations, photographic focus, status, and upload cover photography.
                 </p>
               </div>
 
@@ -701,7 +690,7 @@ export default function AdminPanel({ onExitAdmin }) {
 
                 <div className="space-y-4">
                   {content.animalTours?.map((tour) => (
-                    <div key={tour.id} className="p-4 sm:p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-3">
+                    <div key={tour.id} className="p-4 sm:p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-4">
                       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#242923] pb-2.5">
                         <span className="text-xs font-bold text-[#F2F0E8]">
                           {tour.destination} ({tour.state})
@@ -711,7 +700,7 @@ export default function AdminPanel({ onExitAdmin }) {
                         </span>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div className="space-y-1">
                           <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Title</label>
                           <input
@@ -766,13 +755,14 @@ export default function AdminPanel({ onExitAdmin }) {
                           />
                         </div>
 
-                        <div className="space-y-1 sm:col-span-3">
-                          <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Cover Image URL</label>
-                          <input
-                            type="text"
+                        {/* Tour Cover Image Uploader */}
+                        <div className="sm:col-span-3">
+                          <ImageUploader
+                            label={`Tour Cover Image — ${tour.destination}`}
                             value={tour.heroImage || ''}
-                            onChange={(e) => updateSingleTour('animals', tour.id, { heroImage: e.target.value })}
-                            className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8]"
+                            onChange={(newUrl) => updateSingleTour('animals', tour.id, { heroImage: newUrl })}
+                            placeholder="https://... or click Upload Image below"
+                            aspectRatio="cover"
                           />
                         </div>
 
@@ -803,7 +793,7 @@ export default function AdminPanel({ onExitAdmin }) {
 
                 <div className="space-y-4">
                   {content.birdTours?.map((tour) => (
-                    <div key={tour.id} className="p-4 sm:p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-3">
+                    <div key={tour.id} className="p-4 sm:p-5 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-4">
                       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#242923] pb-2.5">
                         <span className="text-xs font-bold text-[#F2F0E8]">
                           {tour.destination} ({tour.state})
@@ -813,7 +803,7 @@ export default function AdminPanel({ onExitAdmin }) {
                         </span>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <div className="space-y-1">
                           <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Title</label>
                           <input
@@ -868,13 +858,14 @@ export default function AdminPanel({ onExitAdmin }) {
                           />
                         </div>
 
-                        <div className="space-y-1 sm:col-span-3">
-                          <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Cover Image URL</label>
-                          <input
-                            type="text"
+                        {/* Bird Tour Cover Image Uploader */}
+                        <div className="sm:col-span-3">
+                          <ImageUploader
+                            label={`Tour Cover Image — ${tour.destination}`}
                             value={tour.heroImage || ''}
-                            onChange={(e) => updateSingleTour('birds', tour.id, { heroImage: e.target.value })}
-                            className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8]"
+                            onChange={(newUrl) => updateSingleTour('birds', tour.id, { heroImage: newUrl })}
+                            placeholder="https://... or click Upload Image below"
+                            aspectRatio="cover"
                           />
                         </div>
 
@@ -1242,7 +1233,141 @@ export default function AdminPanel({ onExitAdmin }) {
             </div>
           )}
 
-          {/* TAB 7: Backup, Reset & Passcode */}
+          {/* TAB 7: Portfolio & Gallery Images */}
+          {activeTab === 'gallery' && (
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#242923] pb-4">
+                <div>
+                  <h2 className="font-serif text-2xl text-[#F2F0E8]">Portfolio & Gallery Image Manager</h2>
+                  <p className="text-xs text-[#A7A59B] mt-1">
+                    Upload, import, and manage all showcase photographs across the homepage showcase slider and full gallery views.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={addGalleryItem}
+                  className="py-2 px-4 rounded-xl bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-[0_4px_16px_rgba(214,168,92,0.3)] transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+                >
+                  <span>📷</span>
+                  <span>+ Upload & Add New Image</span>
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {(content.galleryImages || []).map((imgItem, idx) => (
+                  <div
+                    key={imgItem.id || idx}
+                    className="p-5 sm:p-6 rounded-2xl bg-[#0a0d0a] border border-[#242923] space-y-4 hover:border-[#D6A85C]/30 transition-all"
+                  >
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#242923] pb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-serif font-bold text-[#D6A85C]">
+                          Image #{idx + 1}: {imgItem.title || 'Untitled'}
+                        </span>
+                        <span className="text-[10px] text-[#A7A59B] bg-[#151815] px-2 py-0.5 rounded-full border border-[#242923]">
+                          {imgItem.category || 'Wild'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <label className="flex items-center gap-2 cursor-pointer text-xs text-[#F2F0E8]">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(imgItem.featuredOnHome)}
+                            onChange={(e) => updateSingleGalleryItem(idx, { featuredOnHome: e.target.checked })}
+                            className="rounded accent-[#D6A85C]"
+                          />
+                          <span className="text-[11px] text-[#D6A85C]">Featured on Homepage Slider</span>
+                        </label>
+
+                        <button
+                          type="button"
+                          onClick={() => removeGalleryItem(idx)}
+                          className="text-xs text-red-400 hover:text-red-300 hover:bg-red-950/40 border border-red-900/40 px-2.5 py-1 rounded-lg transition-colors cursor-pointer"
+                        >
+                          Delete Photo
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Image Uploader for this gallery item */}
+                    <ImageUploader
+                      label={`Photograph File / URL — ${imgItem.title}`}
+                      value={imgItem.src || ''}
+                      onChange={(newUrl) => updateSingleGalleryItem(idx, { src: newUrl })}
+                      placeholder="https://... or click Upload Image below"
+                      aspectRatio="cover"
+                    />
+
+                    {/* Metadata fields */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                      <div className="space-y-1">
+                        <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Title</label>
+                        <input
+                          type="text"
+                          value={imgItem.title || ''}
+                          onChange={(e) => updateSingleGalleryItem(idx, { title: e.target.value })}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8]"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Species Name</label>
+                        <input
+                          type="text"
+                          value={imgItem.species || ''}
+                          onChange={(e) => updateSingleGalleryItem(idx, { species: e.target.value })}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8]"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Location</label>
+                        <input
+                          type="text"
+                          value={imgItem.location || ''}
+                          onChange={(e) => updateSingleGalleryItem(idx, { location: e.target.value })}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8]"
+                        />
+                      </div>
+
+                      <div className="space-y-1 sm:col-span-2">
+                        <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Story / Caption</label>
+                        <input
+                          type="text"
+                          value={imgItem.caption || ''}
+                          onChange={(e) => updateSingleGalleryItem(idx, { caption: e.target.value })}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#F2F0E8]"
+                        />
+                      </div>
+
+                      <div className="space-y-1">
+                        <label className="text-[9.5px] uppercase tracking-wider text-[#A7A59B] block">Camera Gear & Exif</label>
+                        <input
+                          type="text"
+                          value={imgItem.gear || ''}
+                          onChange={(e) => updateSingleGalleryItem(idx, { gear: e.target.value })}
+                          className="w-full py-1.5 px-2.5 rounded-lg bg-[#111511] border border-[#242923] text-xs text-[#D6A85C]"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-4 border-t border-[#242923] flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => showToast('Portfolio and gallery edits saved!')}
+                  className="py-2.5 px-6 rounded-full bg-[#D6A85C] text-[#080908] text-xs font-bold uppercase tracking-wider cursor-pointer"
+                >
+                  Save Gallery Photos
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 8: Backup, Reset & Passcode */}
           {activeTab === 'backup' && (
             <div className="space-y-6">
               <div>
@@ -1280,7 +1405,7 @@ export default function AdminPanel({ onExitAdmin }) {
                   Content Backup & Restore
                 </h3>
                 <p className="text-xs text-[#A7A59B] leading-relaxed">
-                  Download a complete backup of all custom logos, social links, founders, and tour schedules in a single JSON file. You can commit this file or restore it anytime.
+                  Download a complete backup of all custom logos, social links, founders, tour schedules, and uploaded photography in a single JSON file. You can commit this file or restore it anytime.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-3 pt-1">
