@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSiteContent } from '../../context/SiteContentContext'
 
 export default function ItineraryView({ tour, onBack, onPlanTrip }) {
@@ -17,6 +17,36 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
     const msg = `Hi Vijay, I'm reviewing the "${tourTitle}" (${dest}) itinerary on your website. I'd like to discuss customized departure dates and reserve a seat.`
     window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`, '_blank')
   }
+
+  // Collect 3-4 background hero images for slideshow
+  const tourImages = [
+    currentTour.heroImage,
+    currentTour.gallery?.[0] || currentTour.additionalImages?.[0],
+    currentTour.gallery?.[1] || currentTour.additionalImages?.[1],
+    currentTour.gallery?.[2] || currentTour.additionalImages?.[2],
+  ].filter(Boolean)
+
+  const defaultFallbacks = [
+    'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1200&q=85&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1549366021-9f761d450615?w=1200&q=85&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1575550959106-5a7defe28b56?w=1200&q=85&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1534177616072-ef7dc120449d?w=1200&q=80&auto=format&fit=crop',
+  ]
+
+  const slides = Array.from(new Set([...tourImages, ...defaultFallbacks])).slice(0, 4)
+
+  const [activeSlide, setActiveSlide] = useState(0)
+
+  // Auto-fading slideshow timer (4.5s)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length)
+    }, 4500)
+    return () => clearInterval(timer)
+  }, [slides.length])
+
+  const nextSlide = () => setActiveSlide((prev) => (prev + 1) % slides.length)
+  const prevSlide = () => setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length)
 
   // Fallback Day-by-Day if itinerary array is compact
   const days = currentTour.itinerary && currentTour.itinerary.length > 0 ? currentTour.itinerary : [
@@ -63,16 +93,69 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
         </span>
       </div>
 
-      {/* Hero Banner Section (fototrails 365 style) */}
-      <section className="relative h-[55vh] min-h-[420px] flex items-end overflow-hidden">
-        <img
-          src={currentTour.heroImage}
-          alt={currentTour.packageName || currentTour.title}
-          className="absolute inset-0 w-full h-full object-cover brightness-[0.85]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080908] via-[#080908]/40 to-transparent" />
+      {/* Hero Banner Section with Auto-Fading 4-Photo Slideshow */}
+      <section className="relative h-[60vh] min-h-[460px] flex items-end overflow-hidden group select-none">
+        {/* Background Slides */}
+        {slides.map((imgUrl, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === activeSlide ? 'opacity-100 z-0' : 'opacity-0 -z-10'
+            }`}
+          >
+            <img
+              src={imgUrl}
+              alt={`${currentTour.packageName || currentTour.title} slide ${index + 1}`}
+              className="w-full h-full object-cover brightness-[0.82] transition-transform duration-[8000ms] ease-linear"
+              style={{
+                transform: index === activeSlide ? 'scale(1.06)' : 'scale(1.0)',
+              }}
+            />
+          </div>
+        ))}
 
-        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 md:px-12 pb-14 w-full">
+        {/* Dark Vignette & Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080908] via-[#080908]/40 to-transparent z-10 pointer-events-none" />
+
+        {/* Previous / Next Arrow Buttons */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#080908]/65 hover:bg-[#D6A85C] border border-white/20 hover:border-[#D6A85C] text-[#F2F0E8] hover:text-[#080908] flex items-center justify-center text-lg transition-all opacity-0 group-hover:opacity-100 cursor-pointer backdrop-blur-md shadow-2xl"
+          title="Previous Image"
+        >
+          ‹
+        </button>
+        <button
+          onClick={nextSlide}
+          className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-[#080908]/65 hover:bg-[#D6A85C] border border-white/20 hover:border-[#D6A85C] text-[#F2F0E8] hover:text-[#080908] flex items-center justify-center text-lg transition-all opacity-0 group-hover:opacity-100 cursor-pointer backdrop-blur-md shadow-2xl"
+          title="Next Image"
+        >
+          ›
+        </button>
+
+        {/* Slide Counter & Dot Controls (Bottom Right) */}
+        <div className="absolute bottom-6 right-5 sm:right-8 z-20 flex items-center gap-3 bg-[#080908]/75 backdrop-blur-md px-4 py-2 rounded-full border border-[#242923] shadow-2xl">
+          <span className="font-mono text-xs text-[#D6A85C] tracking-widest font-semibold">
+            0{activeSlide + 1} / 0{slides.length}
+          </span>
+          <div className="flex items-center gap-1.5">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveSlide(idx)}
+                className={`h-2 rounded-full transition-all cursor-pointer ${
+                  idx === activeSlide
+                    ? 'w-6 bg-[#D6A85C]'
+                    : 'w-2 bg-white/40 hover:bg-white/70'
+                }`}
+                title={`Go to photo ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Hero Title & Information */}
+        <div className="relative z-20 max-w-7xl mx-auto px-5 sm:px-8 md:px-12 pb-14 w-full">
           <span className="inline-block bg-[#D6A85C] text-[#080908] text-[10.5px] font-sans font-bold px-3 py-1 uppercase tracking-wider mb-3.5 rounded-full shadow-lg">
             Sample Itinerary — All Tours Customised
           </span>
