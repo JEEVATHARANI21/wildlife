@@ -179,38 +179,56 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'payment' }) 
               <div className="space-y-3.5 pt-2 border-t border-[#242923]">
                 <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-bold text-[#D6A85C] flex items-center gap-2">
                   <span>🔄</span>
-                  <span>2. Cancellation & Refund Schedule</span>
+                  <span>2. Cancellation & Refund Policy</span>
                 </h4>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
-                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] space-y-1">
-                    <span className="text-[#D6A85C] font-semibold block text-xs uppercase tracking-wider">
-                      More than 60 Days Prior
-                    </span>
-                    <p className="text-[#F2F0E8] font-bold text-sm">90% Refund</p>
-                    <p className="text-[#A7A59B] text-[11px] leading-snug">
-                      90% refund of total tour cost or 100% credit transfer for a future VM Wild departure.
-                    </p>
+                <div className="space-y-3">
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] flex items-start gap-3.5 hover:border-[#D6A85C]/40 transition-colors">
+                    <span className="text-emerald-400 text-lg shrink-0 font-bold mt-0.5">✅</span>
+                    <div>
+                      <span className="font-semibold text-[#F2F0E8] text-sm block mb-1">
+                        30–15 Days Before Tour Commencement
+                      </span>
+                      <p className="text-xs text-[#A7A59B] leading-relaxed">
+                        50% of the total tour amount will be refunded.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] space-y-1">
-                    <span className="text-[#D6A85C] font-semibold block text-xs uppercase tracking-wider">
-                      30 to 60 Days Prior
-                    </span>
-                    <p className="text-[#F2F0E8] font-bold text-sm">50% Refund</p>
-                    <p className="text-[#A7A59B] text-[11px] leading-snug">
-                      50% refund of total tour cost.
-                    </p>
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] flex items-start gap-3.5 hover:border-[#D6A85C]/40 transition-colors">
+                    <span className="text-emerald-400 text-lg shrink-0 font-bold mt-0.5">✅</span>
+                    <div>
+                      <span className="font-semibold text-[#F2F0E8] text-sm block mb-1">
+                        Within 15 Days Before Tour Commencement
+                      </span>
+                      <p className="text-xs text-[#A7A59B] leading-relaxed">
+                        25% of the total tour amount will be refunded.
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] sm:col-span-2 space-y-1">
-                    <span className="text-red-400 font-semibold block text-xs uppercase tracking-wider">
-                      Less than 30 Days Prior
-                    </span>
-                    <p className="text-red-400 font-bold text-sm">Non-Refundable</p>
-                    <p className="text-[#A7A59B] text-[11px] leading-snug">
-                      Due to non-refundable forest permits, Gypsy vehicle allotments, and eco-lodge room locks, cancellations within 30 days are non-refundable.
-                    </p>
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] flex items-start gap-3.5 hover:border-[#D6A85C]/40 transition-colors">
+                    <span className="text-emerald-400 text-lg shrink-0 font-bold mt-0.5">✅</span>
+                    <div>
+                      <span className="font-semibold text-[#F2F0E8] text-sm block mb-1">
+                        After Tour Begins / No-Show
+                      </span>
+                      <p className="text-xs text-[#A7A59B] leading-relaxed">
+                        No refund will be provided once the tour begins or in case of a no-show.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] flex items-start gap-3.5 hover:border-[#D6A85C]/40 transition-colors">
+                    <span className="text-emerald-400 text-lg shrink-0 font-bold mt-0.5">✅</span>
+                    <div>
+                      <span className="font-semibold text-[#F2F0E8] text-sm block mb-1">
+                        Third-Party & Supplier Bookings
+                      </span>
+                      <p className="text-xs text-[#A7A59B] leading-relaxed">
+                        Safari permits, accommodation, transportation and other non-refundable bookings are subject to the respective supplier's cancellation policies.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
