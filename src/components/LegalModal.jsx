@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
+export default function LegalModal({ isOpen, onClose, initialTab = 'payment' }) {
   const [activeTab, setActiveTab] = useState(initialTab)
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-10">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-10 font-sans">
       {/* Backdrop */}
       <div
         onClick={onClose}
@@ -36,24 +36,22 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
 
       {/* Modal Container */}
       <div
-        className="relative w-full max-w-3xl max-h-[85vh] flex flex-col rounded-2xl bg-[#151815] border border-[#242923] shadow-2xl overflow-hidden z-10 text-[#F2F0E8]"
+        className="relative w-full max-w-3xl max-h-[88vh] flex flex-col rounded-3xl bg-[#151815] border border-[#242923] shadow-2xl overflow-hidden z-10 text-[#F2F0E8]"
         style={{
-          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.95), 0 0 40px rgba(184, 115, 51, 0.15)',
+          boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.95), 0 0 40px rgba(214, 168, 92, 0.15)',
         }}
       >
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 md:px-8 py-5 border-b border-[#242923] bg-[#080908]">
           <div className="flex items-center gap-3">
-            <img
-              src="/logo.jpeg"
-              alt="VM Wild Expeditions"
-              className="h-9 w-auto object-contain rounded-md border border-[#242923]"
-            />
+            <div className="w-8 h-8 rounded-xl bg-[#151815] border border-[#D6A85C]/40 flex items-center justify-center text-sm font-serif font-bold text-[#D6A85C]">
+              VM
+            </div>
             <div>
-              <span className="font-sans text-xs tracking-[0.25em] uppercase font-bold text-[#F2F0E8]">
-                VM <span className="text-[#B87333] font-normal">WILD EXPEDITIONS</span>
+              <span className="font-sans text-xs tracking-[0.25em] uppercase font-bold text-[#F2F0E8] block">
+                VM <span className="text-[#D6A85C] font-normal">WILD EXPEDITIONS</span>
               </span>
-              <span className="block font-sans text-[8px] tracking-[0.2em] uppercase text-[#D6A85C] font-semibold mt-0.5">
+              <span className="block font-sans text-[8px] tracking-[0.2em] uppercase text-[#A7A59B] font-semibold mt-0.5">
                 Beyond the Map. Into the wild
               </span>
             </div>
@@ -61,7 +59,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
 
           <button
             onClick={onClose}
-            className="w-9 h-9 rounded-full border border-[#242923] flex items-center justify-center text-[#F2F0E8]/70 hover:text-[#F2F0E8] hover:border-[#B87333] hover:bg-[#242923] transition-all text-sm cursor-pointer"
+            className="w-9 h-9 rounded-full border border-[#242923] flex items-center justify-center text-[#F2F0E8]/70 hover:text-[#F2F0E8] hover:border-[#D6A85C] hover:bg-[#242923] transition-all text-sm cursor-pointer"
             title="Close modal (Esc)"
           >
             ✕
@@ -69,32 +67,46 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-[#242923] bg-[#151815] px-6 md:px-8 gap-4 sm:gap-8">
+        <div className="flex border-b border-[#242923] bg-[#111511] px-6 md:px-8 gap-3 sm:gap-6 overflow-x-auto">
+          <button
+            onClick={() => setActiveTab('payment')}
+            className={`py-3.5 font-sans text-xs tracking-[0.15em] uppercase transition-all relative cursor-pointer whitespace-nowrap ${
+              activeTab === 'payment'
+                ? 'text-[#D6A85C] font-semibold'
+                : 'text-[#A7A59B] hover:text-[#F2F0E8]'
+            }`}
+          >
+            💳 Payment & Cancellation
+            {activeTab === 'payment' && (
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D6A85C]" />
+            )}
+          </button>
+
           <button
             onClick={() => setActiveTab('terms')}
-            className={`py-3.5 font-sans text-xs tracking-[0.2em] uppercase transition-all relative cursor-pointer ${
+            className={`py-3.5 font-sans text-xs tracking-[0.15em] uppercase transition-all relative cursor-pointer whitespace-nowrap ${
               activeTab === 'terms'
                 ? 'text-[#D6A85C] font-semibold'
                 : 'text-[#A7A59B] hover:text-[#F2F0E8]'
             }`}
           >
-            Terms of Service
+            📜 Terms of Service
             {activeTab === 'terms' && (
-              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#B87333]" />
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D6A85C]" />
             )}
           </button>
 
           <button
             onClick={() => setActiveTab('privacy')}
-            className={`py-3.5 font-sans text-xs tracking-[0.2em] uppercase transition-all relative cursor-pointer ${
+            className={`py-3.5 font-sans text-xs tracking-[0.15em] uppercase transition-all relative cursor-pointer whitespace-nowrap ${
               activeTab === 'privacy'
                 ? 'text-[#D6A85C] font-semibold'
                 : 'text-[#A7A59B] hover:text-[#F2F0E8]'
             }`}
           >
-            Privacy Policy
+            🔒 Privacy Policy
             {activeTab === 'privacy' && (
-              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#B87333]" />
+              <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D6A85C]" />
             )}
           </button>
         </div>
@@ -105,10 +117,127 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
           className="flex-1 min-h-0 overflow-y-auto p-6 md:p-8 space-y-6 text-sm font-sans font-light leading-relaxed text-[#A7A59B] modal-scroll overscroll-contain"
           onWheel={(e) => e.stopPropagation()}
         >
-          {activeTab === 'terms' ? (
-            <>
+          {/* TAB 1: Payment & Cancellation Policy */}
+          {activeTab === 'payment' && (
+            <div className="space-y-6">
               <div>
-                <h3 className="font-serif text-2xl text-[#F2F0E8] mb-2 font-normal">
+                <h3 className="font-serif text-2xl text-[#F2F0E8] mb-1 font-normal">
+                  Payment & Cancellation Policy
+                </h3>
+                <p className="text-xs text-[#D6A85C] tracking-wider uppercase font-semibold">
+                  Official Booking Terms & Reservation Charter · VM Wild Expeditions
+                </p>
+              </div>
+
+              {/* Section 1: Booking & Payment */}
+              <div className="space-y-3.5">
+                <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-bold text-[#D6A85C] flex items-center gap-2">
+                  <span>💳</span>
+                  <span>1. Booking & Payment</span>
+                </h4>
+
+                <div className="space-y-3">
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] flex items-start gap-3.5 hover:border-[#D6A85C]/40 transition-colors">
+                    <span className="text-emerald-400 text-lg shrink-0 font-bold mt-0.5">✅</span>
+                    <div>
+                      <span className="font-semibold text-[#F2F0E8] text-sm block mb-1">
+                        50% Advance Payment Required
+                      </span>
+                      <p className="text-xs text-[#A7A59B] leading-relaxed">
+                        50% advance payment is required to confirm the tour booking and reserve your seat on the expedition.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] flex items-start gap-3.5 hover:border-[#D6A85C]/40 transition-colors">
+                    <span className="text-emerald-400 text-lg shrink-0 font-bold mt-0.5">✅</span>
+                    <div>
+                      <span className="font-semibold text-[#F2F0E8] text-sm block mb-1">
+                        Remaining 50% Balance (30 Days Prior)
+                      </span>
+                      <p className="text-xs text-[#A7A59B] leading-relaxed">
+                        The remaining 50% balance must be paid at least 30 days before the tour commencement date.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] flex items-start gap-3.5 hover:border-[#D6A85C]/40 transition-colors">
+                    <span className="text-emerald-400 text-lg shrink-0 font-bold mt-0.5">✅</span>
+                    <div>
+                      <span className="font-semibold text-[#F2F0E8] text-sm block mb-1">
+                        Required Payment Confirmation
+                      </span>
+                      <p className="text-xs text-[#A7A59B] leading-relaxed">
+                        Booking will be confirmed only after the required payment is received and verified by our expedition desk.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 2: Cancellation & Refund Schedule */}
+              <div className="space-y-3.5 pt-2 border-t border-[#242923]">
+                <h4 className="font-sans text-xs tracking-[0.2em] uppercase font-bold text-[#D6A85C] flex items-center gap-2">
+                  <span>🔄</span>
+                  <span>2. Cancellation & Refund Schedule</span>
+                </h4>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs">
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] space-y-1">
+                    <span className="text-[#D6A85C] font-semibold block text-xs uppercase tracking-wider">
+                      More than 60 Days Prior
+                    </span>
+                    <p className="text-[#F2F0E8] font-bold text-sm">90% Refund</p>
+                    <p className="text-[#A7A59B] text-[11px] leading-snug">
+                      90% refund of total tour cost or 100% credit transfer for a future VM Wild departure.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] space-y-1">
+                    <span className="text-[#D6A85C] font-semibold block text-xs uppercase tracking-wider">
+                      30 to 60 Days Prior
+                    </span>
+                    <p className="text-[#F2F0E8] font-bold text-sm">50% Refund</p>
+                    <p className="text-[#A7A59B] text-[11px] leading-snug">
+                      50% refund of total tour cost.
+                    </p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#0d100d] border border-[#242923] sm:col-span-2 space-y-1">
+                    <span className="text-red-400 font-semibold block text-xs uppercase tracking-wider">
+                      Less than 30 Days Prior
+                    </span>
+                    <p className="text-red-400 font-bold text-sm">Non-Refundable</p>
+                    <p className="text-[#A7A59B] text-[11px] leading-snug">
+                      Due to non-refundable forest permits, Gypsy vehicle allotments, and eco-lodge room locks, cancellations within 30 days are non-refundable.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3: Payment Assistance */}
+              <div className="p-4 rounded-2xl bg-[#111611] border border-[#D6A85C]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                <div>
+                  <span className="text-[#D6A85C] font-bold block mb-0.5">Need Payment Details or Custom Invoice?</span>
+                  <span className="text-[#A7A59B] text-[11px]">Connect directly with Vijay Mathiew on WhatsApp for bank wire / UPI details.</span>
+                </div>
+                <a
+                  href="https://wa.me/919087394546?text=Hello%20Vijay,%20I'm%20contacting%20you%20regarding%20payment%20details%20for%20a%20VM%20Wild%20Expedition."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2 px-4 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-[#080908] font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer shrink-0"
+                >
+                  💬 WhatsApp Concierge
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: Terms of Service */}
+          {activeTab === 'terms' && (
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-serif text-2xl text-[#F2F0E8] mb-1 font-normal">
                   Terms of Service & Expedition Charter
                 </h3>
                 <p className="text-xs text-[#D6A85C] tracking-wider uppercase mb-4 font-semibold">
@@ -147,11 +276,14 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                   </p>
                 </div>
               </div>
-            </>
-          ) : (
-            <>
+            </div>
+          )}
+
+          {/* TAB 3: Privacy Policy */}
+          {activeTab === 'privacy' && (
+            <div className="space-y-6">
               <div>
-                <h3 className="font-serif text-2xl text-[#F2F0E8] mb-2 font-normal">
+                <h3 className="font-serif text-2xl text-[#F2F0E8] mb-1 font-normal">
                   Privacy Policy & Confidentiality
                 </h3>
                 <p className="text-xs text-[#D6A85C] tracking-wider uppercase mb-4 font-semibold">
@@ -186,22 +318,22 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
                     3. Official Contact
                   </h4>
                   <p>
-                    For inquiries, please contact our desk at <a href="mailto:hello@vmwildexpeditions.com" className="text-[#D6A85C] hover:underline">hello@vmwildexpeditions.com</a> or via our official Instagram <a href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz" target="_blank" rel="noopener noreferrer" className="text-[#D6A85C] hover:underline">@vm_wild_expeditions</a>.
+                    For inquiries, please contact our desk at <a href="mailto:admissions@vmwild.com" className="text-[#D6A85C] hover:underline">admissions@vmwild.com</a> or via our official Instagram <a href="https://www.instagram.com/vm_wild_expeditions?stkn=OTU3MGI0bHR6OWZz" target="_blank" rel="noopener noreferrer" className="text-[#D6A85C] hover:underline">@vm_wild_expeditions</a>.
                   </p>
                 </div>
               </div>
-            </>
+            </div>
           )}
         </div>
 
         {/* Modal Footer */}
         <div className="flex justify-between items-center px-6 md:px-8 py-4 border-t border-[#242923] bg-[#080908]">
           <span className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest">
-            © 2026 VM WILD EXPEDITIONS
+            © {new Date().getFullYear()} VM WILD EXPEDITIONS
           </span>
           <button
             onClick={onClose}
-            className="btn-copper-primary px-6 py-2 rounded-full font-sans text-xs tracking-wider uppercase cursor-pointer shadow-md"
+            className="px-6 py-2 rounded-full bg-[#D6A85C] hover:bg-[#b58b45] text-[#080908] font-bold font-sans text-xs tracking-wider uppercase cursor-pointer shadow-md transition-colors"
           >
             Close
           </button>

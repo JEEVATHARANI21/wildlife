@@ -209,6 +209,13 @@ export default function ContactFooter({ openLegal, onOpenAdmin }) {
           <p>© {new Date().getFullYear()} {brand.siteName} Pvt Ltd. All Rights Reserved.</p>
           <div className="flex items-center gap-5">
             <button
+              onClick={() => openLegal && openLegal('payment')}
+              className="hover:text-[#D6A85C] transition-colors cursor-pointer text-[#D6A85C]"
+            >
+              Payment & Cancellation
+            </button>
+            <span>·</span>
+            <button
               onClick={() => openLegal && openLegal('terms')}
               className="hover:text-[#D6A85C] transition-colors cursor-pointer"
             >
