@@ -141,49 +141,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
               </p>
             </div>
 
-            {/* Target Species Strip */}
-            <div className="p-5 rounded-2xl bg-[#151815] border border-[#242923]">
-              <span className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-2">
-                PRIMARY TARGET SPECIES
-              </span>
-              <div className="flex flex-wrap gap-2">
-                {currentTour.targetSpecies?.map((sp, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1 rounded-full bg-[#080908] border border-[#242923] text-xs text-[#F2F0E8] font-sans"
-                  >
-                    🐾 {sp}
-                  </span>
-                ))}
-              </div>
-            </div>
 
-            {/* Photography Logistics & Masterclass Guarantee */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-[#151815] border border-[#242923] flex items-start gap-3.5">
-                <span className="text-2xl">🚙</span>
-                <div>
-                  <span className="text-[10.5px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
-                    VEHICLE & SHOOTING LOGISTICS
-                  </span>
-                  <p className="text-xs font-sans text-[#F2F0E8]/90 leading-relaxed font-light">
-                    {currentTour.vehicleLogistics || 'Guaranteed Open-top 4x4 Gypsy · Strictly Max 4 photographers (1 per row) · 360° unobstructed shooting angles & beanbag mounts.'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-[#151815] border border-[#242923] flex items-start gap-3.5">
-                <span className="text-2xl">🎓</span>
-                <div>
-                  <span className="text-[10.5px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-1">
-                    1-ON-1 FIELD MASTERCLASS
-                  </span>
-                  <p className="text-xs font-sans text-[#F2F0E8]/90 leading-relaxed font-light">
-                    {currentTour.fieldMasterclass || 'Daily in-Gypsy mentoring by Vijay Mathew on exposure compensation, histogram tracking, and animal anticipation, with evening RAW critiques in Lightroom.'}
-                  </p>
-                </div>
-              </div>
-            </div>
 
             {/* Day by Day Section */}
             <div>
@@ -257,22 +215,6 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
               </button>
             </div>
 
-            {/* 2. Where You'll Stay */}
-            <div className="bg-[#151815] rounded-3xl border border-[#242923] p-6 sm:p-7 shadow-lg">
-              <span className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-2">
-                WHERE YOU'LL STAY
-              </span>
-              <h4 className="font-serif text-lg text-[#F2F0E8] mb-2">
-                {currentTour.whereYouStay?.title || 'Luxury Eco-Lodges & Heritage Tented Camps'}
-              </h4>
-              <p className="text-xs text-[#A7A59B] leading-relaxed font-light mb-3">
-                {currentTour.whereYouStay?.description || 'All accommodation is handpicked for proximity to park gates, hot-water en-suite bathrooms, high-speed charging stations, and delicious chef-prepared meals.'}
-              </p>
-              <span className="text-[11px] text-[#B87333] italic block">
-                {currentTour.whereYouStay?.note || 'Confirmed based on your dates and room preferences during the booking process.'}
-              </span>
-            </div>
-
             {/* 3. Included Checklist (✓) */}
             <div className="bg-[#151815] rounded-3xl border border-[#242923] p-6 sm:p-7 shadow-lg">
               <span className="text-[10px] font-sans uppercase tracking-widest text-emerald-400 font-semibold block mb-3">
@@ -298,21 +240,6 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
                   <li key={i} className="flex items-start gap-2.5 text-xs text-[#A7A59B] font-light">
                     <span className="text-[#A7A59B]/50 shrink-0">—</span>
                     <span className="leading-tight">{exc}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* 5. What to Bring (✦) */}
-            <div className="bg-[#151815] rounded-3xl border border-[#242923] p-6 sm:p-7 shadow-lg">
-              <span className="text-[10px] font-sans uppercase tracking-widest text-[#D6A85C] font-semibold block mb-3">
-                RECOMMENDED PHOTOGRAPHIC GEAR
-              </span>
-              <ul className="space-y-2.5">
-                {(currentTour.recommendedGear || []).map((gear, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-xs text-[#D6A85C]/90 font-light">
-                    <span className="text-[#B87333] shrink-0">✦</span>
-                    <span className="leading-tight">{gear}</span>
                   </li>
                 ))}
               </ul>
