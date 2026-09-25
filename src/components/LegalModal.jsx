@@ -42,7 +42,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'payment' }) 
         }}
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 md:px-8 py-5 border-b border-[#242923] bg-[#080908]">
+        <div className="shrink-0 relative z-20 flex items-center justify-between px-6 md:px-8 py-5 border-b border-[#242923] bg-[#080908]">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-[#151815] border border-[#D6A85C]/40 flex items-center justify-center text-sm font-serif font-bold text-[#D6A85C]">
               VM
@@ -67,7 +67,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'payment' }) 
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-[#242923] bg-[#111511] px-6 md:px-8 gap-3 sm:gap-6 overflow-x-auto">
+        <div className="shrink-0 relative z-20 flex border-b border-[#242923] bg-[#111511] px-6 md:px-8 gap-3 sm:gap-6 overflow-x-auto shadow-md">
           <button
             onClick={() => setActiveTab('payment')}
             className={`py-3.5 font-sans text-xs tracking-[0.15em] uppercase transition-all relative cursor-pointer whitespace-nowrap ${
@@ -114,7 +114,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'payment' }) 
         {/* Modal Scrollable Content */}
         <div
           data-lenis-prevent="true"
-          className="flex-1 min-h-0 overflow-y-auto p-6 md:p-8 space-y-6 text-sm font-sans font-light leading-relaxed text-[#A7A59B] modal-scroll overscroll-contain"
+          className="flex-1 min-h-0 overflow-y-auto p-6 md:p-8 space-y-6 text-sm font-sans font-light leading-relaxed text-[#A7A59B] modal-scroll overscroll-contain relative z-0 bg-[#151815]"
           onWheel={(e) => e.stopPropagation()}
         >
           {/* TAB 1: Payment & Cancellation Policy */}
@@ -345,7 +345,7 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'payment' }) 
         </div>
 
         {/* Modal Footer */}
-        <div className="flex justify-between items-center px-6 md:px-8 py-4 border-t border-[#242923] bg-[#080908]">
+        <div className="shrink-0 relative z-20 flex justify-between items-center px-6 md:px-8 py-4 border-t border-[#242923] bg-[#080908]">
           <span className="font-sans text-[10px] text-[#A7A59B] uppercase tracking-widest">
             © {new Date().getFullYear()} VM WILD EXPEDITIONS
           </span>
