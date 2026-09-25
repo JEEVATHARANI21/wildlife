@@ -228,6 +228,23 @@ export default function PlanExpeditionModal({ isOpen, onClose }) {
 
           {/* Submit Action */}
           <div className="pt-4 border-t border-[#242923] space-y-3">
+            {/* Form Policy Acknowledgement Checkbox */}
+            <div className="flex items-start gap-2 text-[11px] text-[#A7A59B]">
+              <input
+                type="checkbox"
+                id="plan-modal-agree"
+                defaultChecked={true}
+                required
+                className="mt-0.5 rounded accent-[#D6A85C] cursor-pointer"
+              />
+              <label htmlFor="plan-modal-agree" className="cursor-pointer leading-snug">
+                I have read and agree to the{' '}
+                <button type="button" onClick={() => openLegal && openLegal('terms')} className="text-[#D6A85C] underline hover:text-[#F2F0E8]">Terms & Conditions</button>,{' '}
+                <button type="button" onClick={() => openLegal && openLegal('privacy')} className="text-[#D6A85C] underline hover:text-[#F2F0E8]">Privacy Policy</button>, and{' '}
+                <button type="button" onClick={() => openLegal && openLegal('payment')} className="text-[#D6A85C] underline hover:text-[#F2F0E8]">Payment & Cancellation Policy</button>.
+              </label>
+            </div>
+
             <button
               type="submit"
               className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-sans text-xs uppercase tracking-widest font-bold hover:shadow-[0_6px_25px_rgba(37,211,102,0.35)] hover:scale-[1.01] transition-all cursor-pointer flex items-center justify-center gap-2"
