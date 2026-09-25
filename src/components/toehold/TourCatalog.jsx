@@ -46,7 +46,6 @@ export default function TourCatalog({
   onOpenCalendar,
 }) {
   const [destinationFilter, setDestinationFilter] = useState('all')
-  const [regionFilter, setRegionFilter] = useState('all')
   const [monthFilter, setMonthFilter] = useState('all')
   const [durationFilter, setDurationFilter] = useState('all')
   const [availabilityFilter, setAvailabilityFilter] = useState('all')
@@ -54,9 +53,6 @@ export default function TourCatalog({
   const currentList = activeCategory === 'animals' ? animalTours : birdTours
 
   const filteredTours = currentList.filter((tour) => {
-    if (regionFilter !== 'all') {
-      if (tour.region !== regionFilter) return false
-    }
     if (destinationFilter !== 'all') {
       if (!tour.destination.toLowerCase().includes(destinationFilter.toLowerCase())) return false
     }
@@ -85,22 +81,17 @@ export default function TourCatalog({
   })
 
   const hasActiveFilters =
-    regionFilter !== 'all' ||
     destinationFilter !== 'all' ||
     monthFilter !== 'all' ||
     durationFilter !== 'all' ||
     availabilityFilter !== 'all'
 
   const resetFilters = () => {
-    setRegionFilter('all')
     setDestinationFilter('all')
     setMonthFilter('all')
     setDurationFilter('all')
     setAvailabilityFilter('all')
   }
-
-  // Unique regions available
-  const regions = ['All Regions', 'Central India', 'Western Ghats', 'Himalayas', 'North & Arid Plains']
 
   return (
     <section id="destinations" className="py-20 sm:py-24 bg-[#080908] border-b border-[#242923] select-none">
@@ -169,33 +160,6 @@ export default function TourCatalog({
               </span>
               <span>Birds Expeditions</span>
             </button>
-          </div>
-
-          {/* Region Filter Strip */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mt-6">
-            {regions.map((reg) => (
-              <button
-                key={reg}
-                type="button"
-                onClick={() => setRegionFilter(reg === 'All Regions' ? 'all' : reg)}
-                className={`px-3.5 py-1.5 rounded-full text-[11px] font-sans transition-all duration-300 cursor-pointer border ${
-                  (reg === 'All Regions' && regionFilter === 'all') || regionFilter === reg
-                    ? 'bg-[#242923] text-[#D6A85C] border-[#D6A85C]/60 font-semibold shadow-sm'
-                    : 'bg-[#111511] text-[#A7A59B] border-[#242923] hover:text-[#F2F0E8] hover:border-[#384038]'
-                }`}
-              >
-                {reg}
-              </button>
-            ))}
-            {hasActiveFilters && (
-              <button
-                type="button"
-                onClick={resetFilters}
-                className="text-[10px] font-sans uppercase tracking-wider text-[#A7A59B] hover:text-[#D6A85C] ml-2 underline underline-offset-4 cursor-pointer"
-              >
-                Reset Filter
-              </button>
-            )}
           </div>
         </div>
 
