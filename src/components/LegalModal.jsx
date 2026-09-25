@@ -4,8 +4,10 @@ export default function LegalModal({ isOpen, onClose, initialTab = 'terms' }) {
   const [activeTab, setActiveTab] = useState(initialTab)
 
   useEffect(() => {
-    setActiveTab(initialTab)
-  }, [initialTab])
+    if (isOpen) {
+      setActiveTab(initialTab)
+    }
+  }, [isOpen, initialTab])
 
   // Close on Escape key press
   useEffect(() => {

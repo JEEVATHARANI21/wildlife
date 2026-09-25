@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default function PlanExpeditionModal({ isOpen, onClose }) {
+export default function PlanExpeditionModal({ isOpen, onClose, openLegal }) {
   const [interest, setInterest] = useState('Wildlife Photography (Big Cats)')
   const [season, setSeason] = useState('Nov – Dec 2026')
   const [partySize, setPartySize] = useState('1 Photographer (Solo)')

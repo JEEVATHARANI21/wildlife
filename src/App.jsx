@@ -260,6 +260,7 @@ export default function App() {
       <PlanExpeditionModal
         isOpen={planTripModalOpen}
         onClose={() => setPlanTripModalOpen(false)}
+        openLegal={openLegal}
       />
 
       {/* Terms & Privacy Policy Modal */}
