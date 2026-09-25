@@ -111,35 +111,30 @@ body.admin-active {
 
 /* ─── CUSTOM CURSOR ──────────────────────────────────────── */
 @media (hover: hover) and (pointer: fine) {
-  /* Public website uses the custom gold/copper cursor */
+  /* Public website uses custom gold cursor */
   body:not(.admin-active) *:not(.admin-scope, .admin-scope *) {
     cursor: none;
   }
 
-  /* Admin Dashboard MUST have standard visible mouse pointer */
+  /* Admin Dashboard, Modals, Buttons & Forms MUST have visible mouse pointer */
   body.admin-active,
   body.admin-active *,
   .admin-scope,
-  .admin-scope * {
-    cursor: auto !important;
-  }
-
-  body.admin-active button,
-  body.admin-active a,
-  body.admin-active select,
-  body.admin-active label,
-  .admin-scope button,
-  .admin-scope a,
-  .admin-scope select,
-  .admin-scope label,
-  .admin-scope [role="button"] {
+  .admin-scope *,
+  button,
+  a,
+  select,
+  label,
+  [role="button"] {
     cursor: pointer !important;
   }
 
   body.admin-active input,
   body.admin-active textarea,
   .admin-scope input,
-  .admin-scope textarea {
+  .admin-scope textarea,
+  input,
+  textarea {
     cursor: text !important;
   }
 
@@ -150,7 +145,7 @@ body.admin-active {
     background: #B87333;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 10000;
+    z-index: 9999999 !important;
     transform: translate(-50%, -50%);
     transition: transform 0.1s ease, background 0.2s ease, width 0.3s ease, height 0.3s ease;
   }
@@ -159,10 +154,10 @@ body.admin-active {
     position: fixed;
     top: 0; left: 0;
     width: 36px; height: 36px;
-    border: 1px solid rgba(214, 168, 92, 0.45);
+    border: 1px solid rgba(214, 168, 92, 0.65);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 10000;
+    z-index: 9999998 !important;
     transform: translate(-50%, -50%);
     transition: transform 0.12s ease, width 0.4s ease, height 0.4s ease, border-color 0.3s ease;
   }
@@ -175,7 +170,7 @@ body.admin-active {
     color: #080908;
     border-radius: 50%;
     pointer-events: none;
-    z-index: 10000;
+    z-index: 9999998 !important;
     transform: translate(-50%, -50%) scale(0);
     display: flex;
     align-items: center;
