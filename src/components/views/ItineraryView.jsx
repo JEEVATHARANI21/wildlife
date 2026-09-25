@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useSiteContent } from '../../context/SiteContentContext'
+import ContactFooter from '../toehold/ContactFooter'
 
-export default function ItineraryView({ tour, onBack, onPlanTrip }) {
+export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal, onOpenAdmin }) {
   if (!tour) return null
 
   const { content } = useSiteContent()
@@ -329,6 +330,15 @@ export default function ItineraryView({ tour, onBack, onPlanTrip }) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Contact Details & Inquiry Footer */}
+      <div className="mt-16 border-t border-[#242923]">
+        <ContactFooter
+          openLegal={openLegal}
+          onPlanTrip={onPlanTrip}
+          onOpenAdmin={onOpenAdmin}
+        />
       </div>
     </div>
   )

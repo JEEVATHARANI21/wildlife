@@ -200,6 +200,8 @@ export default function App() {
           tour={selectedTour}
           onBack={() => navigateTo('home')}
           onPlanTrip={() => setPlanTripModalOpen(true)}
+          openLegal={openLegal}
+          onOpenAdmin={() => navigateTo('admin')}
         />
       )}
 
