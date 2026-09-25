@@ -203,11 +203,6 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
             <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl text-[#F2F0E8] font-light leading-tight">
               Wilderness <span className="italic text-[#D6A85C] font-normal">Moments</span>
             </h2>
-
-            <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light leading-relaxed mt-2 max-w-xl">
-              An immersive 3D coverflow showcase highlighting raw wildlife encounters across Indian reserves.
-              Drag, swipe, or use keyboard arrows (← / →) to spin the fan.
-            </p>
           </div>
 
           <div className="flex items-center gap-3 self-start sm:self-end">
@@ -269,68 +264,14 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
                   willChange: 'transform, opacity, filter, box-shadow',
                 }}
               >
-                {/* Photo */}
+                {/* Photo Only */}
                 <img
                   src={item.src}
-                  alt={item.title}
-                  className="w-full h-full object-cover brightness-[0.93] transition-transform duration-700 group-hover:scale-105 pointer-events-none"
+                  alt={item.title || 'Wild photograph'}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none"
                   draggable={false}
                   loading="lazy"
                 />
-
-                {/* Shading gradients */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#080908]/95 via-[#080908]/25 to-transparent pointer-events-none" />
-
-                {/* Center Card Top Badge */}
-                {isCenter && (
-                  <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">
-                    <span className="px-3 py-1 rounded-full text-[9px] font-sans tracking-widest uppercase font-bold shadow-lg backdrop-blur-md flex items-center gap-1.5 bg-[#080a08]/90 border border-[#D6A85C]/50 text-[#D6A85C]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D6A85C] animate-pulse" />
-                      <span>{item.category}</span>
-                    </span>
-
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#080a08]/85 text-[#A7A59B] border border-[#242923] text-[8.5px] font-mono tracking-wider">
-                      {index + 1} / {total}
-                    </span>
-                  </div>
-                )}
-
-                {/* Center Card Metadata */}
-                <div
-                  className={`absolute bottom-0 inset-x-0 p-5 sm:p-6 transition-all duration-500 ${
-                    isCenter ? 'opacity-100 translate-y-0' : 'opacity-80 translate-y-1'
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <span className="text-[9.5px] font-sans tracking-widest uppercase font-semibold text-[#D6A85C]">
-                      {item.category}
-                    </span>
-                  </div>
-
-                  <h3 className="font-serif text-lg sm:text-2xl md:text-[26px] text-[#F2F0E8] font-medium leading-tight group-hover:text-[#D6A85C] transition-colors">
-                    {item.location}
-                  </h3>
-
-                  {item.gear && (
-                    <div className="flex items-center gap-1.5 mt-1.5 text-[10.5px] sm:text-xs font-mono text-[#D6A85C]/90">
-                      <span>📷</span>
-                      <span>{item.gear}</span>
-                    </div>
-                  )}
-
-                  {/* Action for Active Center Card */}
-                  {isCenter && (
-                    <div className="mt-3 pt-3 border-t border-[#242923]/90 flex items-center justify-between">
-                      <span className="text-[10px] font-sans text-[#A7A59B] italic">
-                        Authentic Field Frame · EXIF Verified
-                      </span>
-                      <span className="text-[10.5px] font-sans font-bold uppercase tracking-wider text-[#D6A85C] flex items-center gap-1.5 transition-transform group-hover:translate-x-1">
-                        <span>Inspect Frame</span>
-                        <span>→</span>
-                      </span>
-                    </div>
-                  )}
-                </div>
               </div>
             )
           })}
