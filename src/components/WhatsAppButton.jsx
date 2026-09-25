@@ -1,10 +1,14 @@
 import { useState } from 'react'
-
-const WHATSAPP_URL =
-  'https://wa.me/919087394546?text=Hello%20Vijay,%20I%20am%20contacting%20you%20from%20VM%20Wild%20Expeditions%20website%20regarding%20photo%20tours%20/%20photography.'
+import { useSiteContent } from '../context/SiteContentContext'
 
 export default function WhatsAppButton() {
   const [hovered, setHovered] = useState(false)
+  const { content } = useSiteContent()
+  const whatsappNum = content?.social?.whatsappNumber || '919087394546'
+  const siteName = content?.brand?.siteName || 'VM Wild Expeditions'
+
+  const message = `Hello Vijay, I am contacting you from ${siteName} website regarding Wild tours / photography.`
+  const whatsappUrl = `https://wa.me/${whatsappNum}?text=${encodeURIComponent(message)}`
 
   return (
     <aside
@@ -24,7 +28,7 @@ export default function WhatsAppButton() {
 
       {/* Floating Action Button */}
       <a
-        href={WHATSAPP_URL}
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         onMouseEnter={() => setHovered(true)}

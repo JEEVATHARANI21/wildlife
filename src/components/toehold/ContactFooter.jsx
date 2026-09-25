@@ -66,7 +66,7 @@ export default function ContactFooter({ openLegal, onOpenAdmin }) {
               </a>
 
               <a
-                href={`https://wa.me/${social.whatsappNumber}?text=Hi%20Vijay,%20I'm%20reaching%20out%20from%20${encodeURIComponent(brand.siteName)}%20website%20for%20a%20Photo%20Tour%20inquiry.`}
+                href={`https://wa.me/${social.whatsappNumber}?text=Hi%20Vijay,%20I'm%20reaching%20out%20from%20${encodeURIComponent(brand.siteName)}%20website%20for%20a%20Wild%20Tour%20inquiry.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 rounded-2xl bg-[#151815] border border-[#242923] hover:border-[#25D366] transition-colors flex items-center gap-3.5 group"
