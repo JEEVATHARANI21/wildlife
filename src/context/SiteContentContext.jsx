@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import { TOURS_DATA } from '../data/photoToursData'
 import { GALLERY_IMAGES } from '../data/galleryData'
 
-const STORAGE_KEY = 'vm_wild_site_content_v2'
+const STORAGE_KEY = 'vm_wild_site_content_v4'
 
 export const normalizeTour = (tour) => {
   return {

@@ -51,7 +51,7 @@ export default function TourDetailModal({ tour, onClose }) {
               {tour.title}
             </h2>
             <span className="text-xs font-sans text-[#D6A85C]">
-              📍 {tour.destination} ({tour.state}) · 📅 Scheduled: {tour.dateRange}
+              📍 {tour.destination} · 📅 Scheduled: {tour.dateRange}
             </span>
           </div>
         </div>
@@ -73,9 +73,9 @@ export default function TourDetailModal({ tour, onClose }) {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 p-4 rounded-2xl bg-[#242923]/40 border border-[#242923] text-xs font-sans">
             <div>
               <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
-                📍 Location
+                🐾 Key Species
               </span>
-              <span className="text-[#F2F0E8] font-medium truncate block">{tour.state}</span>
+              <span className="text-[#F2F0E8] font-medium truncate block">{tour.targetSpecies[0]}</span>
             </div>
             <div>
               <span className="text-[10px] text-[#A7A59B] uppercase tracking-wider block mb-0.5">
@@ -254,7 +254,7 @@ export default function TourDetailModal({ tour, onClose }) {
               </span>
               <div className="flex flex-wrap items-baseline gap-2 text-[#F2F0E8]">
                 <span className="text-2xl sm:text-3xl font-serif font-light text-[#D6A85C]">
-                  From ₹XX,XXX
+                  From ₹{tour.price ? Number(tour.price).toLocaleString('en-IN') : '79,900'}
                 </span>
                 <span className="text-xs font-sans text-[#A7A59B]">(All-Inclusive Custom Quote)</span>
                 <span className="text-xs font-sans text-[#D6A85C] font-medium bg-[#242923] px-2.5 py-0.5 rounded-full border border-[#D6A85C]/30">

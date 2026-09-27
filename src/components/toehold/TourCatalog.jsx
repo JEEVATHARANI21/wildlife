@@ -24,17 +24,7 @@ const SHORT_DESCRIPTIONS = {
 }
 
 const getCardTitle = (tour) => {
-  if (tour.id === 'tour-ranthambhore-solstice') return 'Ranthambore Tiger Safari'
-  if (tour.id === 'tour-tadoba-feline') return 'Corbett Tiger Safari'
-  if (tour.id === 'tour-jawai-granite') return 'Jawai Leopard Safari'
-  if (tour.id === 'tour-kabini-viceroy') return 'Kabini Leopard Safari'
-  if (tour.id === 'tour-bandipur-primeval') return 'Bandipur Tiger Safari'
-  if (tour.id === 'tour-western-ghats-shola') return 'Western Ghats Hornbill Safari'
-  if (tour.id === 'tour-bharatpur-odyssey') return 'Bharatpur Wetland Safari'
-  if (tour.id === 'tour-thattekad-munnar') return 'Thattekad Rainforest Safari'
-  if (tour.id === 'tour-sattal-pangot') return 'Himalayan Mountain Birds Safari'
-  if (tour.id === 'tour-kutch-flamingos') return 'Kutch Flamingo Safari'
-  return tour.packageName || tour.title
+  return tour.title || tour.packageName || tour.destination
 }
 
 export default function TourCatalog({
@@ -68,17 +58,7 @@ export default function TourCatalog({
     return true
   })
 
-  // Priority order matching reference design (Ranthambore first, then Corbett, then Jawai)
-  const sortedTours = [...filteredTours].sort((a, b) => {
-    const priority = {
-      'tour-ranthambhore-solstice': 1,
-      'tour-tadoba-feline': 2,
-      'tour-jawai-granite': 3,
-      'tour-kabini-viceroy': 4,
-      'tour-bandipur-primeval': 5,
-    }
-    return (priority[a.id] || 99) - (priority[b.id] || 99)
-  })
+  const sortedTours = [...filteredTours]
 
   const hasActiveFilters =
     destinationFilter !== 'all' ||
@@ -231,7 +211,9 @@ export default function TourCatalog({
 
                     <div className="p-2 rounded-xl bg-[#0a0d0a] border border-[#202620]">
                       <span className="text-[9px] uppercase tracking-wider text-[#A7A59B] block font-light">Package</span>
-                      <span className="text-[11px] font-sans font-semibold text-[#D6A85C] block truncate">From ₹XX,XXX</span>
+                      <span className="text-[11px] font-sans font-semibold text-[#D6A85C] block truncate">
+                        From ₹{tour.price ? Number(tour.price).toLocaleString('en-IN') : '79,900'}
+                      </span>
                     </div>
                   </div>
                 </div>
