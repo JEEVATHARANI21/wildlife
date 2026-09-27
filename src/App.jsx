@@ -21,7 +21,6 @@ import FAQView from './components/views/FAQView'
 import CustomCursor from './components/CustomCursor'
 import LegalModal from './components/LegalModal'
 import WhatsAppButton from './components/WhatsAppButton'
-import AdminPanel from './components/admin/AdminPanel'
 
 import { TOURS_DATA } from './data/photoToursData'
 import { useSiteContent } from './context/SiteContentContext'
@@ -32,49 +31,13 @@ export default function App() {
   const { content } = useSiteContent()
   const lenisRef = useRef(null)
 
-  const getInitialView = () => {
-    const path = window.location.pathname.toLowerCase()
-    const hash = window.location.hash.toLowerCase()
-    const search = window.location.search.toLowerCase()
-    if (path.includes('/admin') || hash === '#admin' || search.includes('admin=true') || search.includes('view=admin')) {
-      return 'admin'
-    }
-    return 'home'
-  }
-
-  const [currentView, setCurrentView] = useState(getInitialView) // 'home' | 'gallery' | 'about' | 'itinerary' | 'faq' | 'admin'
+  const [currentView, setCurrentView] = useState('home') // 'home' | 'gallery' | 'about' | 'itinerary' | 'faq'
   const [activeCategory, setActiveCategory] = useState('animals') // 'animals' | 'birds'
   const [selectedTour, setSelectedTour] = useState(null)
   const [calendarOpen, setCalendarOpen] = useState(false)
   const [planTripModalOpen, setPlanTripModalOpen] = useState(false)
   const [legalModalOpen, setLegalModalOpen] = useState(false)
   const [legalTab, setLegalTab] = useState('terms')
-
-  useEffect(() => {
-    const handleUrlChange = () => {
-      const hash = window.location.hash.toLowerCase()
-      const path = window.location.pathname.toLowerCase()
-      const search = window.location.search.toLowerCase()
-      if (hash === '#admin' || path.includes('/admin') || search.includes('admin=true')) {
-        setCurrentView('admin')
-      }
-    }
-    window.addEventListener('hashchange', handleUrlChange)
-    window.addEventListener('popstate', handleUrlChange)
-    return () => {
-      window.removeEventListener('hashchange', handleUrlChange)
-      window.removeEventListener('popstate', handleUrlChange)
-    }
-  }, [])
-
-  const handleExitAdmin = () => {
-    if (window.location.hash === '#admin') {
-      window.history.pushState(null, '', window.location.pathname || '/')
-    } else if (window.location.pathname.includes('/admin')) {
-      window.history.pushState(null, '', '/')
-    }
-    navigateTo('home')
-  }
 
   const openLegal = (tab = 'terms') => {
     setLegalTab(tab)
@@ -133,22 +96,6 @@ export default function App() {
   )
 
   useEffect(() => {
-    const isAdmin = currentView === 'admin'
-    document.body.classList.toggle('admin-active', isAdmin)
-    document.documentElement.classList.toggle('admin-active', isAdmin)
-
-    if (isAdmin) {
-      if (lenisRef.current) lenisRef.current.stop()
-      // Remove Lenis classes that force overflow:hidden
-      document.documentElement.classList.remove('lenis-stopped', 'lenis-smooth')
-      document.body.classList.remove('lenis-stopped', 'lenis-smooth')
-      document.documentElement.style.overflow = 'auto'
-      document.body.style.overflow = 'auto'
-      document.documentElement.style.height = 'auto'
-      document.body.style.height = 'auto'
-      return
-    }
-
     if (!lenisRef.current) return
 
     if (isAnyModalOpen) {
@@ -161,11 +108,7 @@ export default function App() {
       document.body.style.height = ''
       document.documentElement.style.height = ''
     }
-  }, [isAnyModalOpen, currentView])
-
-  if (currentView === 'admin') {
-    return <AdminPanel onExitAdmin={handleExitAdmin} />
-  }
+  }, [isAnyModalOpen])
 
   return (
     <div className="grain" style={{ background: '#080908', color: '#F2F0E8' }}>
@@ -206,7 +149,6 @@ export default function App() {
           onBack={() => navigateTo('home')}
           onPlanTrip={() => setPlanTripModalOpen(true)}
           openLegal={openLegal}
-          onOpenAdmin={() => navigateTo('admin')}
         />
       )}
 
@@ -249,7 +191,6 @@ export default function App() {
           <ContactFooter
             openLegal={openLegal}
             onPlanTrip={() => setPlanTripModalOpen(true)}
-            onOpenAdmin={() => navigateTo('admin')}
           />
         </main>
       )}

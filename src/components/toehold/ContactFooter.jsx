@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useSiteContent } from '../../context/SiteContentContext'
 
-export default function ContactFooter({ openLegal, onOpenAdmin }) {
+export default function ContactFooter({ openLegal }) {
   const { content } = useSiteContent()
   const brand = content?.brand || {
     siteName: 'VM Wild Expeditions',
@@ -277,19 +277,6 @@ export default function ContactFooter({ openLegal, onOpenAdmin }) {
             >
               Payment & Cancellation
             </button>
-            {onOpenAdmin && (
-              <>
-                <span>·</span>
-                <button
-                  onClick={onOpenAdmin}
-                  className="hover:text-[#D6A85C] transition-colors cursor-pointer text-[#A7A59B]/40 hover:text-[#D6A85C] flex items-center gap-1.5"
-                  title="Open Admin CMS Portal"
-                >
-                  <span>⚙️</span>
-                  <span>Admin Portal</span>
-                </button>
-              </>
-            )}
           </div>
         </div>
       </div>

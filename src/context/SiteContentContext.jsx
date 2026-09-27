@@ -83,9 +83,6 @@ export const DEFAULT_CONTENT = {
   animalTours: (TOURS_DATA.animalTours || []).map(normalizeTour),
   birdTours: (TOURS_DATA.birdTours || []).map(normalizeTour),
   galleryImages: GALLERY_IMAGES || [],
-  adminSettings: {
-    passcode: 'vmwild2026',
-  },
 }
 
 const SiteContentContext = createContext(null)
@@ -102,7 +99,6 @@ export function SiteContentProvider({ children }) {
           brand: { ...DEFAULT_CONTENT.brand, ...(parsed.brand || {}) },
           social: { ...DEFAULT_CONTENT.social, ...(parsed.social || {}) },
           hero: { ...DEFAULT_CONTENT.hero, ...(parsed.hero || {}) },
-          adminSettings: { ...DEFAULT_CONTENT.adminSettings, ...(parsed.adminSettings || {}) },
           animalTours: (parsed.animalTours || DEFAULT_CONTENT.animalTours).map(normalizeTour),
           birdTours: (parsed.birdTours || DEFAULT_CONTENT.birdTours).map(normalizeTour),
         }
@@ -200,13 +196,6 @@ export function SiteContentProvider({ children }) {
     }))
   }
 
-  const updateAdminSettings = (newSettings) => {
-    setContent((prev) => ({
-      ...prev,
-      adminSettings: { ...prev.adminSettings, ...newSettings },
-    }))
-  }
-
   const resetToDefaults = () => {
     setContent(DEFAULT_CONTENT)
     localStorage.removeItem(STORAGE_KEY)
@@ -249,7 +238,6 @@ export function SiteContentProvider({ children }) {
         updateSingleTour,
         updateTourById,
         updateGallery,
-        updateAdminSettings,
         resetToDefaults,
         exportContentJSON,
         importContentJSON,

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSiteContent } from '../../context/SiteContentContext'
 import ContactFooter from '../toehold/ContactFooter'
 
-export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal, onOpenAdmin }) {
+export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal }) {
   if (!tour) return null
 
   const { content } = useSiteContent()
@@ -337,7 +337,6 @@ export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal, onO
         <ContactFooter
           openLegal={openLegal}
           onPlanTrip={onPlanTrip}
-          onOpenAdmin={onOpenAdmin}
         />
       </div>
     </div>
