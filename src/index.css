@@ -95,7 +95,11 @@
 
 /* ─── ADMIN PANEL SCROLLING FIX ────────────────────────────── */
 html.admin-active,
-body.admin-active {
+body.admin-active,
+html.admin-active.lenis,
+html.admin-active.lenis-stopped,
+body.admin-active.lenis,
+body.admin-active.lenis-stopped {
   overflow-y: auto !important;
   overflow-x: hidden !important;
   height: auto !important;

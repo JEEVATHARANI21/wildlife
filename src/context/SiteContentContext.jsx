@@ -113,12 +113,21 @@ export function SiteContentProvider({ children }) {
     return DEFAULT_CONTENT
   })
 
+  const [lastSaveStatus, setLastSaveStatus] = useState({ success: true, message: '' })
+
   // Persist to localStorage whenever content updates
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(content))
+      const serialized = JSON.stringify(content)
+      localStorage.setItem(STORAGE_KEY, serialized)
+      setLastSaveStatus({ success: true, message: 'Saved successfully' })
     } catch (e) {
       console.error('Failed to save site content to localStorage', e)
+      const isQuota = e.name === 'QuotaExceededError' || e.code === 22 || e.code === 1014
+      const msg = isQuota
+        ? 'Browser storage quota reached. Please use a smaller image URL or export a backup.'
+        : 'Could not save to browser storage.'
+      setLastSaveStatus({ success: false, message: msg })
     }
   }, [content])
 
@@ -230,6 +239,7 @@ export function SiteContentProvider({ children }) {
     <SiteContentContext.Provider
       value={{
         content,
+        lastSaveStatus,
         updateBrand,
         updateSocial,
         updateHero,

@@ -5,7 +5,7 @@ import { useState, useRef } from 'react'
  * so that uploaded photos become fast, lightweight Data URLs
  * that save reliably into localStorage without quota errors.
  */
-export function compressImageFile(file, maxWidth = 1600, maxHeight = 1600, quality = 0.85) {
+export function compressImageFile(file, maxWidth = 1000, maxHeight = 1000, quality = 0.70) {
   return new Promise((resolve, reject) => {
     if (!file) {
       reject(new Error('No file provided'))

@@ -137,16 +137,21 @@ export default function App() {
     document.body.classList.toggle('admin-active', isAdmin)
     document.documentElement.classList.toggle('admin-active', isAdmin)
 
-    if (!lenisRef.current) return
-
     if (isAdmin) {
-      lenisRef.current.stop()
-      // Restore native scrolling for Admin Dashboard
+      if (lenisRef.current) lenisRef.current.stop()
+      // Remove Lenis classes that force overflow:hidden
+      document.documentElement.classList.remove('lenis-stopped', 'lenis-smooth')
+      document.body.classList.remove('lenis-stopped', 'lenis-smooth')
       document.documentElement.style.overflow = 'auto'
       document.body.style.overflow = 'auto'
       document.documentElement.style.height = 'auto'
       document.body.style.height = 'auto'
-    } else if (isAnyModalOpen) {
+      return
+    }
+
+    if (!lenisRef.current) return
+
+    if (isAnyModalOpen) {
       lenisRef.current.stop()
       document.body.style.overflow = 'hidden'
     } else {

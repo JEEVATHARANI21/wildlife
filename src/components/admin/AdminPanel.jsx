@@ -14,6 +14,7 @@ export default function AdminPanel({ onExitAdmin }) {
 
   const {
     content,
+    lastSaveStatus,
     updateBrand,
     updateSocial,
     updateHero,
@@ -281,6 +282,22 @@ export default function AdminPanel({ onExitAdmin }) {
           </button>
         </div>
       </header>
+
+      {/* Storage Quota Warning Banner */}
+      {lastSaveStatus && !lastSaveStatus.success && (
+        <div className="bg-amber-500/20 border-b border-amber-500/40 text-amber-200 px-5 sm:px-8 py-2.5 text-xs font-sans flex items-center justify-between z-30">
+          <div className="flex items-center gap-2">
+            <span>⚠️</span>
+            <span>{lastSaveStatus.message}</span>
+          </div>
+          <button
+            onClick={exportContentJSON}
+            className="text-[11px] underline hover:text-white cursor-pointer font-semibold"
+          >
+            Export Backup File →
+          </button>
+        </div>
+      )}
 
       {/* Main Admin Content Body */}
       <div className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
