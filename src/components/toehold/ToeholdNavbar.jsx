@@ -88,11 +88,11 @@ export default function ToeholdNavbar({
             alt={`${brand.siteName} Logo`}
             className="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md flex-shrink-0"
           />
-          <div className="flex flex-col border-l border-[#242923] pl-3 py-0.5 flex-shrink-0">
-            <span className="font-serif text-[13px] sm:text-[14px] tracking-[0.18em] uppercase text-[#D6A85C] font-semibold leading-tight whitespace-nowrap">
+          <div className="flex flex-col border-l border-[#242923] pl-2.5 sm:pl-3 py-0.5 flex-shrink-0">
+            <span className="font-serif text-[11.5px] sm:text-[14px] tracking-[0.14em] sm:tracking-[0.18em] uppercase text-[#D6A85C] font-semibold leading-tight whitespace-nowrap">
               {brand.siteName}
             </span>
-            <span className="font-sans text-[8.5px] sm:text-[9.5px] tracking-[0.24em] uppercase text-[#B87333] font-light mt-0.5 whitespace-nowrap">
+            <span className="hidden sm:block font-sans text-[8.5px] sm:text-[9.5px] tracking-[0.24em] uppercase text-[#B87333] font-light mt-0.5 whitespace-nowrap">
               {brand.tagline}
             </span>
           </div>
