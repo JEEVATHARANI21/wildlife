@@ -6,7 +6,7 @@ export const SPECIES_DATA = [
     category: 'Big Cats & Mammals',
     icon: '🐅',
     status: 'Endangered · Apex Predator',
-    image: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1000&q=85&auto=format&fit=crop',
+    image: '/images/animals/animal1.jpg',
     bestDestination: 'Tadoba-Andhari & Ranthambhore',
     bestSeason: 'Nov – May (Peak: Mar – May)',
     photoTips:
@@ -21,7 +21,7 @@ export const SPECIES_DATA = [
     category: 'Big Cats & Mammals',
     icon: '🐆',
     status: 'Extremely Rare · Iconic',
-    image: '/images/user/IMG_4761.JPG',
+    image: '/images/animals/animal6.jpg',
     bestDestination: 'Kabini & Nagarhole National Park',
     bestSeason: 'Oct – May (Peak: Dec – Apr)',
     photoTips:
@@ -36,7 +36,7 @@ export const SPECIES_DATA = [
     category: 'Big Cats & Mammals',
     icon: '🐆',
     status: 'Vulnerable · Highly Agile',
-    image: 'https://images.unsplash.com/photo-1456926631375-92c8ce872def?w=1000&q=85&auto=format&fit=crop',
+    image: '/images/animals/animal2.jpg',
     bestDestination: 'Jawai Bera & Kabini',
     bestSeason: 'Oct – Apr',
     photoTips:
@@ -51,7 +51,7 @@ export const SPECIES_DATA = [
     category: 'Big Cats & Mammals',
     icon: '🐻',
     status: 'Vulnerable · Solitary',
-    image: 'https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=1000&q=85&auto=format&fit=crop',
+    image: '/images/animals/animal7.jpg',
     bestDestination: 'Tadoba & Bandipur',
     bestSeason: 'Dec – May',
     photoTips:
@@ -111,7 +111,7 @@ export const SPECIES_DATA = [
     category: 'Big Cats & Mammals',
     icon: '🐘',
     status: 'Endangered · Keystone Tusker',
-    image: '/images/user/IMG_7965.PNG',
+    image: '/images/animals/animal10.jpg',
     bestDestination: 'Bandipur & Kabini River Corridors',
     bestSeason: 'Nov – May',
     photoTips:
