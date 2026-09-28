@@ -75,12 +75,12 @@ export default function FullGalleryView({ onBackToHome, onPlanTrip }) {
             >
               {/* Photo Area with Optical Viewfinder Reticle & Iris Blades */}
               <div className="relative aspect-[4/3] overflow-hidden bg-[#080908]">
-                {/* Photo: snaps from gentle bokeh blur to razor-sharp focus on hover */}
+                {/* Photo: High resolution crystal-clear rendering */}
                 <img
                   src={photo.src}
                   alt={photo.title}
                   loading="lazy"
-                  className="w-full h-full object-cover filter blur-[1.5px] group-hover:blur-0 transition-all duration-700 group-hover:scale-108 brightness-[0.88] group-hover:brightness-100"
+                  className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105 brightness-100 filter-none"
                 />
 
                 {/* Dark shading gradient */}
