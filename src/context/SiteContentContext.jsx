@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import { TOURS_DATA } from '../data/photoToursData'
 import { GALLERY_IMAGES } from '../data/galleryData'
 
-const STORAGE_KEY = 'vm_wild_site_content_v5'
+const STORAGE_KEY = 'vm_wild_site_content_v6'
 
 export const normalizeTour = (tour) => {
   return {
@@ -77,7 +77,7 @@ export const DEFAULT_CONTENT = {
     headlinePart1: 'Bespoke Photographic',
     headlinePart2: 'Expeditions',
     description: 'Masterclass field tracking, intimate vehicular limits (max 4 per Gypsy), and deep animal behavior anticipation with expedition mentors across India’s wildest national parks.',
-    heroBgImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1920&q=85&auto=format&fit=crop',
+    heroBgImage: '/images/home-bg.png',
   },
   founders: TOURS_DATA.founders || [],
   animalTours: (TOURS_DATA.animalTours || []).map(normalizeTour),

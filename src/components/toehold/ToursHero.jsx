@@ -7,7 +7,7 @@ export default function ToursHero({ onPlanTrip }) {
     headlinePart1: 'Go Where the Wild',
     headlinePart2: 'Still Roams.',
     description: "Expert-led wildlife and bird photography tours across India's most extraordinary wildernesses — designed for photographers, birders, and nature lovers who want more than a typical safari.",
-    heroBgImage: 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=2400&q=90&auto=format&fit=crop',
+    heroBgImage: '/images/home-bg.png',
   }
 
   return (
@@ -15,7 +15,7 @@ export default function ToursHero({ onPlanTrip }) {
       {/* Background High-Impact Cinematic Wildlife Photography Layer */}
       <div className="absolute inset-0 z-0">
         <img
-          src={hero.heroBgImage || 'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=2400&q=90&auto=format&fit=crop'}
+          src={hero.heroBgImage || '/images/home-bg.png'}
           alt="Wild Bengal Tiger — VM Wild Expeditions"
           className="w-full h-full object-cover object-[72%_center] md:object-[80%_center] lg:object-[84%_center] brightness-[0.88] contrast-[1.05]"
         />
