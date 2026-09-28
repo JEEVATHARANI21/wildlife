@@ -19,7 +19,47 @@ export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal }) {
     window.open(`https://wa.me/${whatsappNum}?text=${encodeURIComponent(msg)}`, '_blank')
   }
 
-  // Collect 3-4 background hero images for slideshow
+  // Detect category to use matching fallback background photos
+  const isBird =
+    content?.birdTours?.some((t) => t.id === currentTour.id) ||
+    currentTour.category === 'birdTours' ||
+    currentTour.id?.includes('sattal') ||
+    currentTour.id?.includes('thattekkad') ||
+    currentTour.id?.includes('bharatpur') ||
+    currentTour.id?.includes('ranganathittu') ||
+    currentTour.id?.includes('dandeli') ||
+    currentTour.id?.includes('ladakh') ||
+    currentTour.id?.includes('mahananda') ||
+    currentTour.id?.includes('sikkim') ||
+    currentTour.id?.includes('kutch') ||
+    currentTour.id?.includes('desert')
+
+  const birdFallbacks = [
+    '/images/birds/bird1.png',
+    '/images/birds/bird2.png',
+    '/images/birds/bird3.png',
+    '/images/birds/bird4.png',
+    '/images/birds/bird5.png',
+    '/images/birds/bird6.png',
+    '/images/birds/bird7.png',
+    '/images/birds/bird8.png',
+    '/images/birds/bird9.png',
+    '/images/birds/bird10.png',
+  ]
+
+  const animalFallbacks = [
+    '/images/animals/animal1.jpg',
+    '/images/animals/animal2.jpg',
+    '/images/animals/animal3.jpg',
+    '/images/animals/animal4.jpg',
+    '/images/animals/animal5.jpg',
+    '/images/animals/animal6.jpg',
+    '/images/animals/animal7.jpg',
+    '/images/animals/animal8.jpg',
+    '/images/animals/animal9.jpg',
+  ]
+
+  // Collect background hero images for slideshow
   const tourImages = [
     currentTour.heroImage,
     currentTour.gallery?.[0] || currentTour.additionalImages?.[0],
@@ -27,12 +67,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal }) {
     currentTour.gallery?.[2] || currentTour.additionalImages?.[2],
   ].filter(Boolean)
 
-  const defaultFallbacks = [
-    'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=1200&q=85&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1549366021-9f761d450615?w=1200&q=85&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1575550959106-5a7defe28b56?w=1200&q=85&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1534177616072-ef7dc120449d?w=1200&q=80&auto=format&fit=crop',
-  ]
+  const defaultFallbacks = isBird ? birdFallbacks : animalFallbacks
 
   const slides = Array.from(new Set([...tourImages, ...defaultFallbacks])).slice(0, 4)
 
@@ -40,6 +75,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal }) {
 
   // Auto-fading slideshow timer (4.5s)
   useEffect(() => {
+    if (slides.length <= 1) return
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length)
     }, 4500)
@@ -95,7 +131,7 @@ export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal }) {
       </div>
 
       {/* Hero Banner Section with Auto-Fading 4-Photo Slideshow */}
-      <section className="relative h-[60vh] min-h-[460px] flex items-end overflow-hidden group select-none">
+      <section className="relative h-[55vh] min-h-[420px] md:h-[65vh] md:min-h-[500px] flex items-end overflow-hidden group select-none">
         {/* Background Slides */}
         {slides.map((imgUrl, index) => (
           <div
@@ -107,9 +143,9 @@ export default function ItineraryView({ tour, onBack, onPlanTrip, openLegal }) {
             <img
               src={imgUrl}
               alt={`${currentTour.packageName || currentTour.title} slide ${index + 1}`}
-              className="w-full h-full object-cover brightness-[0.82] transition-transform duration-[8000ms] ease-linear"
+              className="w-full h-full object-cover object-center md:object-[center_35%] brightness-[0.72] contrast-[1.04] transition-transform duration-[8000ms] ease-linear"
               style={{
-                transform: index === activeSlide ? 'scale(1.06)' : 'scale(1.0)',
+                transform: index === activeSlide ? 'scale(1.02)' : 'scale(1.0)',
               }}
             />
           </div>

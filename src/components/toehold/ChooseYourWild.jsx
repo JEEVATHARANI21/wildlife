@@ -7,7 +7,7 @@ export default function ChooseYourWild({ onSelectCategory, onPlanTrip }) {
       highlight: 'Royal Bengal Tigers · Leopards · Black Panthers · Sloth Bears',
       description:
         'Immerse in India’s premier tiger corridors and rocky predator havens. Designed around dawn and dusk golden light with maximum 4 photographers per open 4x4 Gypsy.',
-      image: 'https://images.unsplash.com/photo-1549366021-9f761d450615?w=1200&q=85&auto=format&fit=crop',
+      image: '/images/animals/animal1.jpg',
       ctaText: 'View Wildlife Safaris',
       action: () => {
         if (onSelectCategory) onSelectCategory('animals')
@@ -22,7 +22,7 @@ export default function ChooseYourWild({ onSelectCategory, onPlanTrip }) {
       highlight: 'Western Ghats Endemics · UNESCO Wetlands · Himalayan Valleys',
       description:
         'Purpose-built eye-level hides, rainforest canopy treks, and wetland boat hides to photograph rare and elusive birds under masterclass lighting techniques.',
-      image: 'https://images.unsplash.com/photo-1552728089-57bdde30beb3?w=1200&q=85&auto=format&fit=crop',
+      image: '/images/birds/bird1.png',
       ctaText: 'View Birding Expeditions',
       action: () => {
         if (onSelectCategory) onSelectCategory('birds')
@@ -37,7 +37,7 @@ export default function ChooseYourWild({ onSelectCategory, onPlanTrip }) {
       highlight: 'Dedicated Vehicle · 1-on-1 Skipper · Tailored Species Focus',
       description:
         'Have a specific target species or private group? We engineer tailored multi-park itineraries with exclusive vehicle charters, private guides, and bespoke pacing.',
-      image: 'https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1200&q=85&auto=format&fit=crop',
+      image: '/images/animals/animal6.jpg',
       ctaText: 'Plan Custom Trip',
       action: () => {
         if (onPlanTrip) onPlanTrip()
