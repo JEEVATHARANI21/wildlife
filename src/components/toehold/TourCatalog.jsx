@@ -212,7 +212,7 @@ export default function TourCatalog({
                     <div className="p-2 rounded-xl bg-[#0a0d0a] border border-[#202620]">
                       <span className="text-[9px] uppercase tracking-wider text-[#A7A59B] block font-light">Package</span>
                       <span className="text-[11px] font-sans font-semibold text-[#D6A85C] block truncate">
-                        From ₹{tour.price ? Number(tour.price).toLocaleString('en-IN') : '79,900'}
+                        From ₹XX,XXX
                       </span>
                     </div>
                   </div>
