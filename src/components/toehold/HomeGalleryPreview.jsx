@@ -2,6 +2,133 @@ import { useState, useEffect, useRef } from 'react'
 import * as THREE from 'three'
 import { GALLERY_IMAGES } from '../../data/galleryData'
 
+// Helper: Create rounded rectangle shape for true 3D extruded cards
+function createRoundedRectShape(w, h, r) {
+  const shape = new THREE.Shape()
+  const x = -w / 2
+  const y = -h / 2
+  shape.moveTo(x, y + r)
+  shape.lineTo(x, y + h - r)
+  shape.quadraticCurveTo(x, y + h, x + r, y + h)
+  shape.lineTo(x + w - r, y + h)
+  shape.quadraticCurveTo(x + w, y + h, x + w, y + h - r)
+  shape.lineTo(x + w, y + r)
+  shape.quadraticCurveTo(x + w, y, x + w - r, y)
+  shape.lineTo(x + r, y)
+  shape.quadraticCurveTo(x, y, x, y + r)
+  return shape
+}
+
+// Helper: Render high-definition canvas texture with gold border & HUD optics
+function createLuxuryCardTexture(item, renderer) {
+  const canvas = document.createElement('canvas')
+  canvas.width = 1024
+  canvas.height = 700
+  const ctx = canvas.getContext('2d')
+
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.src = item.src
+    img.onload = () => {
+      // Background fill
+      ctx.fillStyle = '#080908'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      // Object-fit cover cropping for photo
+      const imgAspect = img.width / img.height
+      const canvasAspect = canvas.width / canvas.height
+      let drawW, drawH, drawX, drawY
+
+      if (imgAspect > canvasAspect) {
+        drawH = canvas.height
+        drawW = canvas.height * imgAspect
+        drawX = (canvas.width - drawW) / 2
+        drawY = 0
+      } else {
+        drawW = canvas.width
+        drawH = canvas.width / imgAspect
+        drawX = 0
+        drawY = (canvas.height - drawH) / 2
+      }
+
+      ctx.drawImage(img, drawX, drawY, drawW, drawH)
+
+      // Subtle bottom gradient vignette
+      const grad = ctx.createLinearGradient(0, canvas.height * 0.45, 0, canvas.height)
+      grad.addColorStop(0, 'rgba(8, 9, 8, 0)')
+      grad.addColorStop(1, 'rgba(8, 9, 8, 0.78)')
+      ctx.fillStyle = grad
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      // Category Pill Badge
+      ctx.fillStyle = 'rgba(8, 9, 8, 0.85)'
+      ctx.beginPath()
+      ctx.roundRect(26, 26, 115, 34, 17)
+      ctx.fill()
+      ctx.strokeStyle = '#D6A85C'
+      ctx.lineWidth = 1.8
+      ctx.stroke()
+
+      ctx.fillStyle = '#D6A85C'
+      ctx.font = 'bold 12px sans-serif'
+      ctx.fillText(`• ${item.category.toUpperCase()}`, 38, 48)
+
+      // Camera Optical Viewfinder HUD Brackets (4 corners)
+      ctx.strokeStyle = 'rgba(214, 168, 92, 0.7)'
+      ctx.lineWidth = 2.5
+      const cornerLen = 22
+      const pad = 32
+      // Top-Left
+      ctx.beginPath(); ctx.moveTo(pad, pad + cornerLen); ctx.lineTo(pad, pad); ctx.lineTo(pad + cornerLen, pad); ctx.stroke();
+      // Top-Right
+      ctx.beginPath(); ctx.moveTo(canvas.width - pad - cornerLen, pad); ctx.lineTo(canvas.width - pad, pad); ctx.lineTo(canvas.width - pad, pad + cornerLen); ctx.stroke();
+      // Bottom-Left
+      ctx.beginPath(); ctx.moveTo(pad, canvas.height - pad - cornerLen); ctx.lineTo(pad, canvas.height - pad); ctx.lineTo(pad + cornerLen, canvas.height - pad); ctx.stroke();
+      // Bottom-Right
+      ctx.beginPath(); ctx.moveTo(canvas.width - pad - cornerLen, canvas.height - pad); ctx.lineTo(canvas.width - pad, canvas.height - pad); ctx.lineTo(canvas.width - pad, canvas.height - pad - cornerLen); ctx.stroke();
+
+      // Center Iris Reticle
+      const cx = canvas.width / 2
+      const cy = canvas.height / 2
+      ctx.beginPath()
+      ctx.arc(cx, cy, 26, 0, Math.PI * 2)
+      ctx.strokeStyle = 'rgba(214, 168, 92, 0.55)'
+      ctx.lineWidth = 2
+      ctx.setLineDash([5, 5])
+      ctx.stroke()
+      ctx.setLineDash([])
+
+      ctx.beginPath()
+      ctx.arc(cx, cy, 5, 0, Math.PI * 2)
+      ctx.fillStyle = '#D6A85C'
+      ctx.fill()
+
+      // Gold Luxury Accent Border
+      ctx.strokeStyle = '#D6A85C'
+      ctx.lineWidth = 6
+      ctx.strokeRect(3, 3, canvas.width - 6, canvas.height - 6)
+
+      // Convert canvas to Three.js Texture with Anisotropic Filtering
+      const texture = new THREE.CanvasTexture(canvas)
+      texture.colorSpace = THREE.SRGBColorSpace
+      texture.anisotropy = renderer ? renderer.capabilities.getMaxAnisotropy() : 16
+      texture.minFilter = THREE.LinearMipmapLinearFilter
+      texture.magFilter = THREE.LinearFilter
+      texture.generateMipmaps = true
+
+      resolve(texture)
+    }
+
+    img.onerror = () => {
+      ctx.fillStyle = '#151815'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      const texture = new THREE.CanvasTexture(canvas)
+      resolve(texture)
+    }
+  })
+}
+
 export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGallery, onPlanTrip }) {
   const handleViewGallery = onViewFullGallery || onNavigateToGallery
 
@@ -18,73 +145,112 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
     const width = container.clientWidth
     const height = container.clientHeight
 
-    // 1. Scene, Camera, Renderer (Optimized pixelRatio capped at 1.5)
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100)
-    camera.position.z = width < 640 ? 9.2 : 8.2
-
+    // 1. WebGL Renderer (High Performance + Anisotropy)
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
       powerPreference: 'high-performance',
     })
     renderer.setSize(width, height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2.0))
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
+    renderer.toneMappingExposure = 1.1
     container.appendChild(renderer.domElement)
 
-    // 2. Ambient & Directional Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 2.2)
+    // 2. Camera Setup
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100)
+    camera.position.z = width < 640 ? 9.8 : 8.0
+
+    // 3. Vibrant Lighting Setup
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.5)
     scene.add(ambientLight)
 
-    const directionalLight = new THREE.DirectionalLight(0xfff8ee, 1.6)
-    directionalLight.position.set(4, 6, 5)
-    scene.add(directionalLight)
+    const mainLight = new THREE.DirectionalLight(0xfff5ea, 1.8)
+    mainLight.position.set(5, 8, 6)
+    scene.add(mainLight)
 
-    // 3. Cylinder Group
+    const spotLight = new THREE.SpotLight(0xD6A85C, 3.5)
+    spotLight.position.set(0, 4, 7)
+    spotLight.angle = Math.PI / 4
+    spotLight.penumbra = 0.5
+    scene.add(spotLight)
+
+    // 4. Cylinder Group
     const group = new THREE.Group()
     scene.add(group)
 
-    // 4. Geometry & Textures for 3D Card Ring
-    const textureLoader = new THREE.TextureLoader()
-    const cardGeometry = new THREE.PlaneGeometry(1.65, 2.2, 1, 1)
+    // 5. True 3D Extruded Rounded Card Geometry (Landscape 16:11 Aspect Ratio)
+    const cardW = 2.4
+    const cardH = 1.64
+    const shape = createRoundedRectShape(cardW, cardH, 0.1)
+    const extrudeSettings = {
+      depth: 0.03,
+      bevelEnabled: true,
+      bevelSegments: 3,
+      steps: 1,
+      bevelSize: 0.012,
+      bevelThickness: 0.012,
+    }
+    const cardGeometry = new THREE.ExtrudeGeometry(shape, extrudeSettings)
+    cardGeometry.center()
 
     const count = GALLERY_IMAGES.length
-    const radius = width < 640 ? 3.6 : 4.4
+    const radius = width < 640 ? 3.8 : 4.6
     const meshes = []
     const materials = []
     const textures = []
 
-    GALLERY_IMAGES.forEach((item, index) => {
-      const angle = (index / count) * Math.PI * 2
+    // Load textures and build 3D card meshes asynchronously
+    let isDisposed = false
 
-      const texture = textureLoader.load(item.src)
-      texture.colorSpace = THREE.SRGBColorSpace
-      texture.minFilter = THREE.LinearFilter
-      texture.generateMipmaps = false
-      textures.push(texture)
+    const buildCarousel = async () => {
+      for (let index = 0; index < count; index++) {
+        if (isDisposed) break
+        const item = GALLERY_IMAGES[index]
+        const angle = (index / count) * Math.PI * 2
 
-      const material = new THREE.MeshStandardMaterial({
-        map: texture,
-        side: THREE.DoubleSide,
-        roughness: 0.35,
-        metalness: 0.05,
-      })
-      materials.push(material)
+        const texture = await createLuxuryCardTexture(item, renderer)
+        if (isDisposed) break
+        textures.push(texture)
 
-      const mesh = new THREE.Mesh(cardGeometry, material)
-      mesh.position.x = Math.sin(angle) * radius
-      mesh.position.z = Math.cos(angle) * radius
-      mesh.position.y = Math.sin(index * 0.7) * 0.22
-      mesh.rotation.y = angle
+        // Front texture material & dark back/bevel material
+        const frontMaterial = new THREE.MeshStandardMaterial({
+          map: texture,
+          roughness: 0.25,
+          metalness: 0.1,
+          side: THREE.FrontSide,
+        })
 
-      mesh.userData = { id: item.id, index: index, item: item, angle: angle }
-      group.add(mesh)
-      meshes.push(mesh)
-    })
+        const sideMaterial = new THREE.MeshStandardMaterial({
+          color: 0x111411,
+          roughness: 0.5,
+          metalness: 0.3,
+          side: THREE.DoubleSide,
+        })
 
-    group.rotation.x = 0.06
+        materials.push(frontMaterial, sideMaterial)
 
-    // 5. Interactive Drag & Touch Orbit Controls
+        // Multi-material assignment: front face uses texture, sides/back use dark luxury material
+        const meshMaterials = [sideMaterial, frontMaterial]
+        const mesh = new THREE.Mesh(cardGeometry, meshMaterials)
+
+        mesh.position.x = Math.sin(angle) * radius
+        mesh.position.z = Math.cos(angle) * radius
+        mesh.position.y = Math.sin(index * 0.7) * 0.2
+        mesh.rotation.y = angle
+
+        mesh.userData = { id: item.id, index: index, item: item, angle: angle }
+        group.add(mesh)
+        meshes.push(mesh)
+      }
+    }
+
+    buildCarousel()
+
+    group.rotation.x = 0.05
+
+    // 6. Interactive Drag & Touch Controls
     let isDragging = false
     let prevMouseX = 0
     let targetRotationY = 0
@@ -104,6 +270,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
     }
 
     const updateClosestCard = () => {
+      if (meshes.length === 0) return
       let closestMesh = meshes[0]
       let maxZ = -999
       meshes.forEach((m) => {
@@ -124,11 +291,12 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
       setTimeout(updateClosestCard, 100)
     }
 
-    // 6. Raycaster for clicking cards directly
+    // Raycaster for clicking cards directly
     const raycaster = new THREE.Raycaster()
     const mouse = new THREE.Vector2()
 
     const onClick = (e) => {
+      if (meshes.length === 0) return
       const rect = renderer.domElement.getBoundingClientRect()
       mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
       mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
@@ -173,7 +341,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
     domEl.addEventListener('touchmove', onTouchMove, { passive: true })
     domEl.addEventListener('touchend', onTouchEnd, { passive: true })
 
-    // 7. Intersection Observer for viewport rendering optimization
+    // 7. Intersection Observer to pause WebGL rendering when scrolled offscreen
     let isVisible = true
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -183,7 +351,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
     )
     observer.observe(container)
 
-    // 8. Animation Render Loop
+    // 8. Render Loop
     let animationFrameId
     const clock = new THREE.Clock()
 
@@ -194,32 +362,44 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
       const elapsedTime = clock.getElapsedTime()
 
       if (autoRotate && isRotating) {
-        targetRotationY += 0.002
+        targetRotationY += 0.0018
       }
 
       group.rotation.y += (targetRotationY - group.rotation.y) * 0.08
 
+      // Wave floating motion & dynamic scale accent for front-facing card
       for (let i = 0; i < meshes.length; i++) {
-        meshes[i].position.y = Math.sin(elapsedTime * 1.5 + i) * 0.18
+        const mesh = meshes[i]
+        mesh.position.y = Math.sin(elapsedTime * 1.5 + i) * 0.16
+
+        const worldPos = new THREE.Vector3()
+        mesh.getWorldPosition(worldPos)
+        
+        // Scale accent when card is closest to camera
+        const targetScale = worldPos.z > radius * 0.75 ? 1.12 : 0.95
+        mesh.scale.x += (targetScale - mesh.scale.x) * 0.08
+        mesh.scale.y += (targetScale - mesh.scale.y) * 0.08
+        mesh.scale.z += (targetScale - mesh.scale.z) * 0.08
       }
 
       renderer.render(scene, camera)
     }
     animate()
 
-    // 9. Window Resize Handling
+    // Handle Window Resize
     const handleResize = () => {
       if (!container) return
       const w = container.clientWidth
       const h = container.clientHeight
       camera.aspect = w / h
-      camera.position.z = w < 640 ? 9.2 : 8.2
+      camera.position.z = w < 640 ? 9.8 : 8.0
       camera.updateProjectionMatrix()
       renderer.setSize(w, h)
     }
     window.addEventListener('resize', handleResize)
 
     return () => {
+      isDisposed = true
       cancelAnimationFrame(animationFrameId)
       observer.disconnect()
       window.removeEventListener('resize', handleResize)
@@ -294,7 +474,7 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
         {/* Interaction Hint */}
         <div className="text-center mt-3 mb-6">
           <span className="text-[11px] font-sans text-[#A7A59B] tracking-widest uppercase">
-            [ Drag horizontally to revolve 3D cylinder · Click any specimen card to inspect ]
+            [ Drag horizontally to revolve 3D orbit · Click any specimen card to focus ]
           </span>
         </div>
 
