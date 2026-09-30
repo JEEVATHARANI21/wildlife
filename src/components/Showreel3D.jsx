@@ -1,21 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
+import { GALLERY_IMAGES } from '../data/galleryData'
 
-// All user images from D:\wildlife\images
-const SHOWREEL_IMAGES = [
-  { id: 1, src: '/images/user/IMG_4761.JPG', title: 'Leopard Gaze', category: 'Big Cats', location: 'Jawaï Rocks, India' },
-  { id: 2, src: '/images/user/IMG_4634.JPG', title: 'Emerald Pit Viper', category: 'Reptiles', location: 'Western Ghats, India' },
-  { id: 3, src: '/images/user/IMG_4632.JPG', title: 'Malabar Gliding Frog', category: 'Amphibians', location: 'Agumbe Rainforest' },
-  { id: 4, src: '/images/user/IMG_7965.PNG', title: 'The Ancient Bull', category: 'Giants', location: 'Kabini Reserve' },
-  { id: 5, src: '/images/user/IMG_4642.JPG', title: 'Banded Gecko', category: 'Macro', location: 'Kudremukh Forest' },
-  { id: 6, src: '/images/user/IMG_6853.PNG', title: 'Indian Gaur', category: 'Wildlife', location: 'Nilgiri Biosphere' },
-  { id: 7, src: '/images/user/IMG_4638.JPG', title: 'Night Bullfrog', category: 'Nocturnal', location: 'Anamalai Foothills' },
-  { id: 8, src: '/images/user/IMG_7964.JPG', title: 'Elephant in Mist', category: 'Giants', location: 'Periyar Sanctuary' },
-  { id: 9, src: '/images/user/IMG_4639.JPG', title: 'Bamboo Viper', category: 'Reptiles', location: 'Valparai Canopies' },
-  { id: 10, src: '/images/user/IMG_4637.JPG', title: 'Glass Frog Embryos', category: 'Macro Biology', location: 'Rainforest Stream' },
-  { id: 11, src: '/images/user/IMG_4643.JPG', title: 'Vine Snake Alert', category: 'Reptiles', location: 'Coorg Valley' },
-  { id: 12, src: '/images/user/IMG_4633.JPG', title: 'Golden Tree Frog', category: 'Amphibians', location: 'Silent Valley' },
-]
+const SHOWREEL_IMAGES = GALLERY_IMAGES
 
 export default function Showreel3D() {
   const containerRef = useRef(null)

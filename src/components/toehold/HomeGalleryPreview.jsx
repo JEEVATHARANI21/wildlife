@@ -1,201 +1,261 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import * as THREE from 'three'
 import { GALLERY_IMAGES } from '../../data/galleryData'
 
-export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGallery }) {
+export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGallery, onPlanTrip }) {
   const handleViewGallery = onViewFullGallery || onNavigateToGallery
 
-  // Filter 5 curated featured images for the home preview
-  const previewImages = GALLERY_IMAGES.filter((img) => img.featuredOnHome).slice(0, 5)
-
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
-  const [isDragging, setIsDragging] = useState(false)
-  const [dragStartX, setDragStartX] = useState(0)
-  const [dragDeltaX, setDragDeltaX] = useState(0)
-
-  const total = previewImages.length
-  const activeItem = previewImages[activeIndex] || previewImages[0]
   const containerRef = useRef(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isRotating, setIsRotating] = useState(true)
 
-  // Navigation handlers
-  const handleNext = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % total)
-  }, [total])
+  const activeItem = GALLERY_IMAGES[activeIndex] || GALLERY_IMAGES[0]
 
-  const handlePrev = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + total) % total)
-  }, [total])
-
-  const goToIndex = (idx) => {
-    setActiveIndex(idx)
-  }
-
-  // Autoplay timer (4.2 seconds) - pauses on hover or during drag
   useEffect(() => {
-    if (isPaused || isDragging) return
+    const container = containerRef.current
+    if (!container) return
 
-    const interval = setInterval(() => {
-      handleNext()
-    }, 4200)
+    const width = container.clientWidth
+    const height = container.clientHeight
 
-    return () => clearInterval(interval)
-  }, [isPaused, isDragging, handleNext])
+    // 1. Scene, Camera, Renderer (Optimized pixelRatio capped at 1.5)
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100)
+    camera.position.z = width < 640 ? 9.2 : 8.2
 
-  // Keyboard navigation (ArrowLeft & ArrowRight)
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!containerRef.current) return
-      const rect = containerRef.current.getBoundingClientRect()
-      const inView = rect.top < window.innerHeight && rect.bottom > 0
-      if (!inView) return
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance',
+    })
+    renderer.setSize(width, height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
+    container.appendChild(renderer.domElement)
 
-      if (e.key === 'ArrowRight') {
-        handleNext()
-      } else if (e.key === 'ArrowLeft') {
-        handlePrev()
+    // 2. Ambient & Directional Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 2.2)
+    scene.add(ambientLight)
+
+    const directionalLight = new THREE.DirectionalLight(0xfff8ee, 1.6)
+    directionalLight.position.set(4, 6, 5)
+    scene.add(directionalLight)
+
+    // 3. Cylinder Group
+    const group = new THREE.Group()
+    scene.add(group)
+
+    // 4. Geometry & Textures for 3D Card Ring
+    const textureLoader = new THREE.TextureLoader()
+    const cardGeometry = new THREE.PlaneGeometry(1.65, 2.2, 1, 1)
+
+    const count = GALLERY_IMAGES.length
+    const radius = width < 640 ? 3.6 : 4.4
+    const meshes = []
+    const materials = []
+    const textures = []
+
+    GALLERY_IMAGES.forEach((item, index) => {
+      const angle = (index / count) * Math.PI * 2
+
+      const texture = textureLoader.load(item.src)
+      texture.colorSpace = THREE.SRGBColorSpace
+      texture.minFilter = THREE.LinearFilter
+      texture.generateMipmaps = false
+      textures.push(texture)
+
+      const material = new THREE.MeshStandardMaterial({
+        map: texture,
+        side: THREE.DoubleSide,
+        roughness: 0.35,
+        metalness: 0.05,
+      })
+      materials.push(material)
+
+      const mesh = new THREE.Mesh(cardGeometry, material)
+      mesh.position.x = Math.sin(angle) * radius
+      mesh.position.z = Math.cos(angle) * radius
+      mesh.position.y = Math.sin(index * 0.7) * 0.22
+      mesh.rotation.y = angle
+
+      mesh.userData = { id: item.id, index: index, item: item, angle: angle }
+      group.add(mesh)
+      meshes.push(mesh)
+    })
+
+    group.rotation.x = 0.06
+
+    // 5. Interactive Drag & Touch Orbit Controls
+    let isDragging = false
+    let prevMouseX = 0
+    let targetRotationY = 0
+    let autoRotate = true
+
+    const onMouseDown = (e) => {
+      isDragging = true
+      autoRotate = false
+      prevMouseX = e.clientX
+    }
+
+    const onMouseMove = (e) => {
+      if (!isDragging) return
+      const deltaX = e.clientX - prevMouseX
+      prevMouseX = e.clientX
+      targetRotationY += deltaX * 0.0055
+    }
+
+    const updateClosestCard = () => {
+      let closestMesh = meshes[0]
+      let maxZ = -999
+      meshes.forEach((m) => {
+        const worldPos = new THREE.Vector3()
+        m.getWorldPosition(worldPos)
+        if (worldPos.z > maxZ) {
+          maxZ = worldPos.z
+          closestMesh = m
+        }
+      })
+      if (closestMesh && closestMesh.userData) {
+        setActiveIndex(closestMesh.userData.index)
       }
     }
 
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleNext, handlePrev])
-
-  // Mouse Drag handlers
-  const handleMouseDown = (e) => {
-    setIsDragging(true)
-    setDragStartX(e.clientX)
-    setDragDeltaX(0)
-  }
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return
-    setDragDeltaX(e.clientX - dragStartX)
-  }
-
-  const handleMouseUp = () => {
-    if (!isDragging) return
-    if (dragDeltaX < -45) {
-      handleNext()
-    } else if (dragDeltaX > 45) {
-      handlePrev()
-    }
-    setIsDragging(false)
-    setDragDeltaX(0)
-  }
-
-  // Touch Swipe handlers
-  const handleTouchStart = (e) => {
-    setIsDragging(true)
-    setDragStartX(e.touches[0].clientX)
-    setDragDeltaX(0)
-  }
-
-  const handleTouchMove = (e) => {
-    if (!isDragging) return
-    setDragDeltaX(e.touches[0].clientX - dragStartX)
-  }
-
-  const handleTouchEnd = () => {
-    if (!isDragging) return
-    if (dragDeltaX < -40) {
-      handleNext()
-    } else if (dragDeltaX > 40) {
-      handlePrev()
-    }
-    setIsDragging(false)
-    setDragDeltaX(0)
-  }
-
-  // Compute 3D Coverflow geometry for each card relative to activeIndex
-  const getCardStyle = (index) => {
-    let offset = (index - activeIndex + total) % total
-    if (offset > total / 2) {
-      offset -= total
+    const onMouseUp = () => {
+      isDragging = false
+      setTimeout(updateClosestCard, 100)
     }
 
-    // Offset mapping: -2, -1, 0, 1, 2
-    if (offset === 0) {
-      // CENTER CARD: Lifted forward in 3D, elegant gold accent border and deep stage shadow
-      return {
-        transform: `translate3d(-50%, -50%, 0) translate3d(0px, -18px, 120px) rotateY(0deg) scale(1.08)`,
-        zIndex: 30,
-        opacity: 1,
-        filter: 'brightness(1.02)',
-        pointerEvents: 'auto',
-        boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.9), 0 0 35px 0 rgba(214, 168, 92, 0.22)',
-        borderColor: '#D6A85C',
-      }
-    } else if (offset === -1) {
-      // IMMEDIATE LEFT WING
-      return {
-        transform: `translate3d(-50%, -50%, 0) translate3d(-62%, 0px, -40px) rotateY(32deg) scale(0.86)`,
-        zIndex: 20,
-        opacity: 0.85,
-        filter: 'brightness(0.68)',
-        pointerEvents: 'auto',
-        boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.85)',
-        borderColor: '#242923',
-      }
-    } else if (offset === 1) {
-      // IMMEDIATE RIGHT WING
-      return {
-        transform: `translate3d(-50%, -50%, 0) translate3d(62%, 0px, -40px) rotateY(-32deg) scale(0.86)`,
-        zIndex: 20,
-        opacity: 0.85,
-        filter: 'brightness(0.68)',
-        pointerEvents: 'auto',
-        boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.85)',
-        borderColor: '#242923',
-      }
-    } else if (offset === -2) {
-      // FAR LEFT WING
-      return {
-        transform: `translate3d(-50%, -50%, 0) translate3d(-112%, 12px, -140px) rotateY(46deg) scale(0.72)`,
-        zIndex: 10,
-        opacity: 0.45,
-        filter: 'brightness(0.45)',
-        pointerEvents: 'auto',
-        boxShadow: '0 15px 30px -10px rgba(0, 0, 0, 0.9)',
-        borderColor: '#181c18',
-      }
-    } else {
-      // FAR RIGHT WING (offset === 2)
-      return {
-        transform: `translate3d(-50%, -50%, 0) translate3d(112%, 12px, -140px) rotateY(-46deg) scale(0.72)`,
-        zIndex: 10,
-        opacity: 0.45,
-        filter: 'brightness(0.45)',
-        pointerEvents: 'auto',
-        boxShadow: '0 15px 30px -10px rgba(0, 0, 0, 0.9)',
-        borderColor: '#181c18',
+    // 6. Raycaster for clicking cards directly
+    const raycaster = new THREE.Raycaster()
+    const mouse = new THREE.Vector2()
+
+    const onClick = (e) => {
+      const rect = renderer.domElement.getBoundingClientRect()
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
+
+      raycaster.setFromCamera(mouse, camera)
+      const intersects = raycaster.intersectObjects(meshes)
+      if (intersects.length > 0) {
+        const clickedMesh = intersects[0].object
+        const item = clickedMesh.userData.item
+        if (item) {
+          setActiveIndex(clickedMesh.userData.index)
+          targetRotationY = -clickedMesh.userData.angle
+        }
       }
     }
-  }
+
+    const domEl = renderer.domElement
+    domEl.addEventListener('mousedown', onMouseDown)
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+    domEl.addEventListener('click', onClick)
+
+    // Touch support
+    let touchStartX = 0
+    const onTouchStart = (e) => {
+      touchStartX = e.touches[0].clientX
+      autoRotate = false
+    }
+    const onTouchMove = (e) => {
+      const deltaX = e.touches[0].clientX - touchStartX
+      touchStartX = e.touches[0].clientX
+      targetRotationY += deltaX * 0.0055
+    }
+    const onTouchEnd = () => {
+      onMouseUp()
+      setTimeout(() => {
+        autoRotate = true
+      }, 3000)
+    }
+
+    domEl.addEventListener('touchstart', onTouchStart, { passive: true })
+    domEl.addEventListener('touchmove', onTouchMove, { passive: true })
+    domEl.addEventListener('touchend', onTouchEnd, { passive: true })
+
+    // 7. Intersection Observer for viewport rendering optimization
+    let isVisible = true
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting
+      },
+      { threshold: 0.1 }
+    )
+    observer.observe(container)
+
+    // 8. Animation Render Loop
+    let animationFrameId
+    const clock = new THREE.Clock()
+
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate)
+      if (!isVisible) return
+
+      const elapsedTime = clock.getElapsedTime()
+
+      if (autoRotate && isRotating) {
+        targetRotationY += 0.002
+      }
+
+      group.rotation.y += (targetRotationY - group.rotation.y) * 0.08
+
+      for (let i = 0; i < meshes.length; i++) {
+        meshes[i].position.y = Math.sin(elapsedTime * 1.5 + i) * 0.18
+      }
+
+      renderer.render(scene, camera)
+    }
+    animate()
+
+    // 9. Window Resize Handling
+    const handleResize = () => {
+      if (!container) return
+      const w = container.clientWidth
+      const h = container.clientHeight
+      camera.aspect = w / h
+      camera.position.z = w < 640 ? 9.2 : 8.2
+      camera.updateProjectionMatrix()
+      renderer.setSize(w, h)
+    }
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+      observer.disconnect()
+      window.removeEventListener('resize', handleResize)
+      domEl.removeEventListener('mousedown', onMouseDown)
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+      domEl.removeEventListener('click', onClick)
+      domEl.removeEventListener('touchstart', onTouchStart)
+      domEl.removeEventListener('touchmove', onTouchMove)
+      domEl.removeEventListener('touchend', onTouchEnd)
+      if (container.contains(domEl)) {
+        container.removeChild(domEl)
+      }
+      cardGeometry.dispose()
+      materials.forEach((m) => m.dispose())
+      textures.forEach((t) => t.dispose())
+      renderer.dispose()
+    }
+  }, [isRotating])
 
   return (
     <section
       id="gallery-preview"
-      ref={containerRef}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => {
-        setIsPaused(false)
-        handleMouseUp()
-      }}
-      className="py-24 sm:py-32 bg-[#0a0c0a] border-b border-[#20251f] select-none relative overflow-hidden"
+      className="py-20 sm:py-28 bg-[#090A09] border-b border-[#20251f] select-none relative overflow-hidden"
     >
-      {/* Subtle warm bronze ambient depth (matching luxury dark brand, NO blue/green colors) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[350px] sm:h-[450px] bg-[#B87333]/[0.04] blur-[140px] pointer-events-none" />
+      {/* Warm Ambient Backdrop Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[900px] h-[350px] sm:h-[450px] bg-[#B87333]/[0.05] blur-[140px] pointer-events-none" />
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12 relative z-10">
-        {/* ============================================================ */}
-        {/* SECTION HEADER                                               */}
-        {/* ============================================================ */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 sm:mb-16">
+        {/* Header Section */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 sm:mb-12">
           <div>
             <div className="inline-flex items-center gap-2.5 mb-3">
               <span className="w-7 h-[1.5px] bg-[#B87333]" />
               <span className="font-sans text-[10.5px] tracking-[0.28em] uppercase text-[#D6A85C] font-semibold">
-                CURATED 3D COVERFLOW GALLERY
+                CURATED 3D CYLINDER REVOLVING REEL
               </span>
               <span className="w-7 h-[1.5px] bg-[#B87333]" />
             </div>
@@ -205,157 +265,75 @@ export default function HomeGalleryPreview({ onViewFullGallery, onNavigateToGall
             </h2>
           </div>
 
-          <div className="flex items-center gap-3 self-start sm:self-end">
-            {/* Autoplay status indicator */}
-            <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#111411] border border-[#242923] text-[10px] font-sans text-[#A7A59B]">
-              <span
-                className={`w-2 h-2 rounded-full ${isPaused ? 'bg-[#D6A85C]' : 'bg-[#D6A85C] animate-pulse'}`}
-              />
-              <span>{isPaused ? 'Paused (Hovered)' : 'Autoplaying'}</span>
-            </div>
+          <div className="flex flex-wrap items-center gap-3 self-start sm:self-end">
+            {/* Orbit Pause/Resume Controls */}
+            <button
+              onClick={() => setIsRotating(!isRotating)}
+              className="px-4 py-2 rounded-full bg-[#151815] border border-[#242923] hover:border-[#D6A85C] text-[#F2F0E8] text-xs font-sans tracking-wider uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 shadow-lg"
+            >
+              <span className={`w-2 h-2 rounded-full ${isRotating ? 'bg-[#D6A85C] animate-pulse' : 'bg-[#666]'}`} />
+              <span>{isRotating ? 'Pause Orbit' : 'Resume Orbit'}</span>
+            </button>
 
             <button
               onClick={handleViewGallery}
-              className="px-5 py-3 rounded-full bg-[#151815] border border-[#242923] hover:border-[#D6A85C] hover:bg-[#D6A85C] text-[#F2F0E8] hover:text-[#080908] font-sans text-xs uppercase tracking-wider font-semibold transition-all duration-300 shadow-xl flex items-center gap-2 cursor-pointer group"
+              className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] font-sans text-xs uppercase tracking-wider font-bold hover:shadow-[0_4px_25px_rgba(214,168,92,0.45)] hover:scale-102 transition-all cursor-pointer flex items-center gap-2"
             >
               <span>VIEW FULL GALLERY</span>
-              <span className="group-hover:translate-x-1 transition-transform font-bold">→</span>
+              <span className="font-bold">→</span>
             </button>
           </div>
         </div>
 
-        {/* ============================================================ */}
-        {/* 2. THE 3D COVERFLOW STAGE CONTAINER                           */}
-        {/* ============================================================ */}
+        {/* 3D WebGL Cylinder Canvas Container */}
         <div
-          className="relative w-full h-[380px] sm:h-[480px] md:h-[540px] flex items-center justify-center cursor-grab active:cursor-grabbing"
-          style={{
-            perspective: '1250px',
-            transformStyle: 'preserve-3d',
-          }}
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* Coverflow Cards */}
-          {previewImages.map((item, index) => {
-            let offset = (index - activeIndex + total) % total
-            if (offset > total / 2) offset -= total
-            const isCenter = offset === 0
-            const style = getCardStyle(index)
+          ref={containerRef}
+          className="w-full h-[52vh] sm:h-[62vh] md:h-[68vh] relative cursor-grab active:cursor-grabbing rounded-3xl overflow-hidden border border-[#242923]/60 bg-[#080908]/60 backdrop-blur-sm shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+        />
 
-            return (
-              <div
-                key={item.id}
-                onClick={() => {
-                  if (!isCenter) {
-                    goToIndex(index)
-                  } else {
-                    handleViewGallery()
-                  }
-                }}
-                className="absolute top-1/2 left-1/2 w-[270px] sm:w-[380px] md:w-[460px] aspect-[16/11] rounded-3xl overflow-hidden border transition-all duration-700 ease-out cursor-pointer select-none group"
-                style={{
-                  ...style,
-                  transformStyle: 'preserve-3d',
-                  willChange: 'transform, opacity, filter, box-shadow',
-                }}
-              >
-                {/* Photo Only */}
-                <img
-                  src={item.src}
-                  alt={item.title || 'Wild photograph'}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none"
-                  draggable={false}
-                  loading="lazy"
-                />
-              </div>
-            )
-          })}
-
-          {/* ============================================================ */}
-          {/* 3. STAGE NAVIGATION CONTROLS                                 */}
-          {/* ============================================================ */}
-          {/* Left Arrow Button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              handlePrev()
-            }}
-            aria-label="Previous frame"
-            className="absolute left-2 sm:left-6 md:left-10 z-40 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#0c0f0d]/85 hover:bg-[#181d19] border border-[#242923] hover:border-[#D6A85C] text-[#F2F0E8] flex items-center justify-center text-lg sm:text-xl transition-all duration-300 shadow-2xl backdrop-blur-md cursor-pointer group active:scale-95"
-          >
-            <span className="group-hover:-translate-x-0.5 transition-transform font-bold">‹</span>
-          </button>
-
-          {/* Right Arrow Button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              handleNext()
-            }}
-            aria-label="Next frame"
-            className="absolute right-2 sm:right-6 md:right-10 z-40 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#0c0f0d]/85 hover:bg-[#181d19] border border-[#242923] hover:border-[#D6A85C] text-[#F2F0E8] flex items-center justify-center text-lg sm:text-xl transition-all duration-300 shadow-2xl backdrop-blur-md cursor-pointer group active:scale-95"
-          >
-            <span className="group-hover:translate-x-0.5 transition-transform font-bold">›</span>
-          </button>
+        {/* Interaction Hint */}
+        <div className="text-center mt-3 mb-6">
+          <span className="text-[11px] font-sans text-[#A7A59B] tracking-widest uppercase">
+            [ Drag horizontally to revolve 3D cylinder · Click any specimen card to inspect ]
+          </span>
         </div>
 
-        {/* ============================================================ */}
-        {/* 4. PAGINATION INDICATORS                                     */}
-        {/* ============================================================ */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 pt-4 border-t border-[#1a1f1a]">
-          {/* Pill Indicators in brand gold */}
-          <div className="flex items-center gap-2.5">
-            {previewImages.map((img, i) => {
-              const isActive = i === activeIndex
-              return (
-                <button
-                  key={img.id}
-                  onClick={() => goToIndex(i)}
-                  className={`h-2.5 rounded-full transition-all duration-500 cursor-pointer ${
-                    isActive
-                      ? 'w-10 sm:w-12 bg-[#D6A85C] shadow-[0_0_12px_rgba(214,168,92,0.5)]'
-                      : 'w-2.5 bg-[#242923] hover:bg-[#3a4239]'
-                  }`}
-                  title={img.location}
-                  aria-label={`Go to slide ${i + 1}`}
-                />
-              )
-            })}
-          </div>
-
-          {/* Active Frame Info */}
-          <div className="flex items-center gap-2 text-center sm:text-right">
-            <span className="text-[11px] font-sans text-[#A7A59B]">Featured Location:</span>
-            <span className="text-xs font-sans font-semibold tracking-wide text-[#D6A85C]">
-              {activeItem.location}
+        {/* Active Specimen HUD Info Panel */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#0e120f]/90 border border-[#20251f] flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-2xl">
+          <div className="flex items-baseline gap-4 sm:gap-6">
+            <span className="font-serif text-3xl sm:text-5xl text-[#D6A85C]/40 font-light">
+              {String(activeItem.id || activeIndex + 1).replace('gal-', '').padStart(2, '0')}
             </span>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-full bg-[#D6A85C]/15 border border-[#D6A85C]/40 text-[#D6A85C] text-[9px] font-sans tracking-widest uppercase font-bold">
+                  {activeItem.category}
+                </span>
+                <span className="text-xs font-sans text-[#A7A59B]">📍 {activeItem.location}</span>
+              </div>
+              <h3 className="font-serif text-xl sm:text-3xl text-[#F2F0E8] font-light">
+                {activeItem.title}
+              </h3>
+              <p className="font-sans text-xs text-[#A7A59B] mt-1 font-light italic">
+                Species: {activeItem.species}
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* ============================================================ */}
-        {/* 5. BOTTOM ARCHIVE BANNER                                      */}
-        {/* ============================================================ */}
-        <div className="mt-12 p-6 sm:p-8 rounded-3xl bg-[#0e120f]/90 border border-[#20251f] flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
-          <div>
-            <h4 className="font-serif text-xl sm:text-2xl text-[#F2F0E8] mb-1">
-              Want to see our full 40+ species field collection?
-            </h4>
-            <p className="font-sans text-xs sm:text-sm text-[#A7A59B] font-light">
-              Explore big cats, Western Ghats primates, raptors, and nocturnal venomous macro archives with full EXIF data.
-            </p>
+          <div className="flex flex-wrap items-center gap-6 text-xs text-[#A7A59B] font-sans border-t md:border-t-0 border-[#20251f] pt-4 md:pt-0 w-full md:w-auto justify-between md:justify-end">
+            <div>
+              <span className="block text-[9px] uppercase tracking-widest text-[#D6A85C] mb-0.5">EXIF Camera Gear</span>
+              <span className="text-[#F2F0E8] font-mono text-[11px]">{activeItem.gear || '400mm f/2.8 · 1/1000s'}</span>
+            </div>
+
+            <button
+              onClick={handleViewGallery}
+              className="py-3 px-6 rounded-full bg-[#151815] border border-[#242923] hover:border-[#D6A85C] hover:bg-[#D6A85C] text-[#F2F0E8] hover:text-[#080908] font-sans text-xs uppercase tracking-wider font-semibold transition-all duration-300 shadow-xl flex items-center gap-2 cursor-pointer"
+            >
+              <span>Explore Collection</span>
+              <span>↗</span>
+            </button>
           </div>
-
-          <button
-            onClick={handleViewGallery}
-            className="py-3 px-7 rounded-full bg-gradient-to-r from-[#D6A85C] to-[#B87333] text-[#080908] font-sans text-xs uppercase tracking-wider font-bold hover:shadow-[0_4px_25px_rgba(214,168,92,0.45)] hover:scale-102 active:scale-98 transition-all cursor-pointer whitespace-nowrap"
-          >
-            Open Full Gallery Collection →
-          </button>
         </div>
       </div>
     </section>
